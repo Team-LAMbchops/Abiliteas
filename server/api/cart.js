@@ -14,7 +14,6 @@ router.get('/:UserId', async (req, res, next) => {
       where: {
         cartId: cart.id
       }
-      // include: [{model: Tea}]
     })
     res.json(cartProducts)
   } catch (err) {
