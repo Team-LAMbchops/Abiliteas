@@ -16,9 +16,12 @@ class AllTea extends React.Component {
         <h1>ALL TEAS!!!</h1>
         {teas.map(tea => {
           return (
-            <ul key={tea.id}>
-              <li>{tea.name}</li>
-            </ul>
+            <div key={tea.id}>
+              <h3>{tea.name}</h3>
+              <p>{tea.description}</p>
+              <p>{tea.price}</p>
+              <img src={tea.imageUrl} width={200} height={200} mode="fit" />
+            </div>
           )
         })}
       </div>
