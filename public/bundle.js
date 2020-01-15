@@ -359,7 +359,7 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       var cart = this.props.cart;
-      console.log(cart, "THIS IS OUR CART");
+      console.log(cart, 'THIS IS OUR CART');
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Shopping Cart")), cart.map(function (item) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           key: item.id
@@ -394,7 +394,7 @@ var cartContainer = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(
 /*!************************************!*\
   !*** ./client/components/index.js ***!
   \************************************/
-/*! exports provided: Navbar, UserHome, Login, Signup */
+/*! exports provided: Navbar, UserHome, Login, Signup, SingleTea */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -410,11 +410,15 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Signup", function() { return _auth_form__WEBPACK_IMPORTED_MODULE_2__["Signup"]; });
 
+/* harmony import */ var _singleTea__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./singleTea */ "./client/components/singleTea.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SingleTea", function() { return _singleTea__WEBPACK_IMPORTED_MODULE_3__["default"]; });
+
 /**
  * `components/index.js` exists simply as a 'central export' for our components.
  * This way, we can import all of our components from the same place, rather than
  * having to figure out which file they belong to!
  */
+
 
 
 
@@ -485,6 +489,104 @@ Navbar.propTypes = {
   handleClick: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func.isRequired,
   isLoggedIn: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool.isRequired
 };
+
+/***/ }),
+
+/***/ "./client/components/singleTea.js":
+/*!****************************************!*\
+  !*** ./client/components/singleTea.js ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _store_teas__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store/teas */ "./client/store/teas.js");
+/* harmony import */ var _store_cart__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../store/cart */ "./client/store/cart.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+
+var SingleTea =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(SingleTea, _React$Component);
+
+  function SingleTea() {
+    _classCallCheck(this, SingleTea);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(SingleTea).apply(this, arguments));
+  }
+
+  _createClass(SingleTea, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var id = this.props.match.params.teaId;
+      this.props.getSingleTea(id);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this = this;
+
+      var tea = this.props.singleTea;
+      console.log('this is the specific tea', tea);
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, tea.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, tea.flavor), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        src: tea.imageUrl,
+        width: 200,
+        height: 200,
+        mode: "fit"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Description: ", tea.description), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Price: $", tea.price), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: function onClick() {
+          return _this.props.addToCart(tea);
+        }
+      }, "Add To Cart"));
+    }
+  }]);
+
+  return SingleTea;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    singleTea: state.teas.singleTea
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    getSingleTea: function getSingleTea(id) {
+      return dispatch(Object(_store_teas__WEBPACK_IMPORTED_MODULE_2__["fetchSingleTea"])(id));
+    },
+    addToCart: function addToCart(item) {
+      return dispatch(Object(_store_cart__WEBPACK_IMPORTED_MODULE_3__["addToCart"])(item));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(SingleTea));
 
 /***/ }),
 
@@ -669,6 +771,9 @@ function (_Component) {
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
         path: "/cart/:userId",
         component: _components_cart__WEBPACK_IMPORTED_MODULE_7__["default"]
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+        path: "/tea/:teaId",
+        component: _components__WEBPACK_IMPORTED_MODULE_4__["SingleTea"]
       }), isLoggedIn && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
         path: "/home",
         component: _components__WEBPACK_IMPORTED_MODULE_4__["UserHome"]
@@ -739,14 +844,23 @@ socket.on('connect', function () {
 /*!******************************!*\
   !*** ./client/store/cart.js ***!
   \******************************/
-/*! exports provided: fetchCartProducts, default */
+/*! exports provided: addToCart, fetchCartProducts, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addToCart", function() { return addToCart; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchCartProducts", function() { return fetchCartProducts; });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -763,6 +877,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
  */
 
 var GET_CART = 'GET_CART';
+var ADD_TO_CART = 'ADD_TO_CART';
 /**
  * INITIAL STATE
  */
@@ -782,10 +897,16 @@ var getCartProducts = function getCartProducts(cartProducts) {
     cartProducts: cartProducts
   };
 };
+
+var addToCart = function addToCart(item) {
+  return {
+    type: ADD_TO_CART,
+    item: item
+  };
+};
 /**
  * THUNK CREATORS
  */
-
 
 var fetchCartProducts = function fetchCartProducts(id) {
   return (
@@ -840,6 +961,11 @@ function cartReducer() {
     case GET_CART:
       return _objectSpread({}, state, {
         cart: action.cartProducts
+      });
+
+    case ADD_TO_CART:
+      return _objectSpread({}, state, {
+        cart: [].concat(_toConsumableArray(state.cart), [action.item])
       });
 
     default:
@@ -900,12 +1026,13 @@ var store = Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(reducer, m
 /*!******************************!*\
   !*** ./client/store/teas.js ***!
   \******************************/
-/*! exports provided: fetchTeas, default */
+/*! exports provided: fetchTeas, fetchSingleTea, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTeas", function() { return fetchTeas; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchSingleTea", function() { return fetchSingleTea; });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
@@ -924,12 +1051,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
  */
 
 var GET_TEAS = 'GET_TEAS';
+var GET_SINGLE_TEA = 'GET_SINGLE_TEA';
 /**
  * INITIAL STATE
  */
 
 var initialState = {
-  allTeas: []
+  allTeas: [],
+  singleTea: {}
   /**
    * ACTION CREATORS
    */
@@ -940,6 +1069,13 @@ var getTeas = function getTeas(teas) {
   return {
     type: GET_TEAS,
     teas: teas
+  };
+};
+
+var getSingleTea = function getSingleTea(tea) {
+  return {
+    type: GET_SINGLE_TEA,
+    tea: tea
   };
 };
 /**
@@ -988,6 +1124,47 @@ var fetchTeas = function fetchTeas() {
     }()
   );
 };
+var fetchSingleTea = function fetchSingleTea(id) {
+  return (
+    /*#__PURE__*/
+    function () {
+      var _ref2 = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee2(dispatch) {
+        var res;
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.prev = 0;
+                _context2.next = 3;
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/teas/".concat(id));
+
+              case 3:
+                res = _context2.sent;
+                dispatch(getSingleTea(res.data));
+                _context2.next = 10;
+                break;
+
+              case 7:
+                _context2.prev = 7;
+                _context2.t0 = _context2["catch"](0);
+                console.log(_context2.t0);
+
+              case 10:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, null, [[0, 7]]);
+      }));
+
+      return function (_x2) {
+        return _ref2.apply(this, arguments);
+      };
+    }()
+  );
+};
 /**
  * REDUCER
  */
@@ -1001,6 +1178,13 @@ function teasReducer() {
       return _objectSpread({}, state, {
         allTeas: action.teas
       });
+
+    case GET_SINGLE_TEA:
+      {
+        return _objectSpread({}, state, {
+          singleTea: action.tea
+        });
+      }
 
     default:
       return state;
