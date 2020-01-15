@@ -1,28 +1,38 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchCartProducts} from '../store/cart'
+import {fetchCart} from '../store/cart'
 
 class Cart extends React.Component {
   componentDidMount() {
     const id = this.props.match.params.userId
-    this.props.getCartProducts(id)
+    this.props.getCart(id)
   }
   render() {
     const cart = this.props.cart
-    console.log(cart, 'THIS IS OUR CART')
     return (
       <div>
-        <div>
-          <h1>Shopping Cart</h1>
-        </div>
-        {cart.map(item => {
-          return (
-            <div key={item.id}>
-              <h3>{item.teaId}</h3>
-              <p>quantity:{item.quantity}</p>
-            </div>
-          )
-        })}
+        <h1>Shopping Cart</h1>
+        {this.props.cart ? (
+          <div>
+            {cart.map(item => {
+              return (
+                <div key={item.id}>
+                  <img
+                    src={item.imageUrl}
+                    width={100}
+                    height={100}
+                    mode="fit"
+                  />
+                  <h4>{item.name}</h4>
+                  <p>Quantity: {item.cart_product.quantity}</p>
+                  <p>Price: ${item.price}</p>
+                </div>
+              )
+            })}
+          </div>
+        ) : (
+          <div>Your cart is empty</div>
+        )}
       </div>
     )
   }
@@ -30,13 +40,13 @@ class Cart extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    cart: state.cart.cart
+    cart: state.cart.cart.teas
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    getCartProducts: id => dispatch(fetchCartProducts(id))
+    getCart: id => dispatch(fetchCart(id))
   }
 }
 
