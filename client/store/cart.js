@@ -17,9 +17,9 @@ const initialState = {
 /**
  * ACTION CREATORS
  */
-const getCartProducts = cartProducts => ({
+const getCart = cart => ({
   type: GET_CART,
-  cartProducts
+  cart
 })
 
 export const addToCart = item => ({
@@ -30,10 +30,10 @@ export const addToCart = item => ({
 /**
  * THUNK CREATORS
  */
-export const fetchCartProducts = id => async dispatch => {
+export const fetchCart = id => async dispatch => {
   try {
     const res = await axios.get(`/api/cart/${id}`)
-    dispatch(getCartProducts(res.data))
+    dispatch(getCart(res.data))
   } catch (err) {
     console.error(err)
   }
@@ -45,7 +45,7 @@ export const fetchCartProducts = id => async dispatch => {
 function cartReducer(state = initialState, action) {
   switch (action.type) {
     case GET_CART:
-      return {...state, cart: action.cartProducts}
+      return {...state, cart: action.cart}
     case ADD_TO_CART:
       return {...state, cart: [...state.cart, action.item]}
     default:
