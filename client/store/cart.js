@@ -5,13 +5,13 @@ import axios from 'axios'
  */
 const GET_CART = 'GET_CART'
 const ADD_TO_CART = 'ADD_TO_CART'
+const GET_CART_PRODUCTS = 'GET_CART_PRODUCTS'
 
 /**
  * INITIAL STATE
  */
 const initialState = {
-  cart: [],
-  newItem: {}
+  cart: []
 }
 
 /**
@@ -25,6 +25,10 @@ const getCart = cart => ({
 export const addToCart = item => ({
   type: ADD_TO_CART,
   item
+})
+
+export const getCartProducts = () => ({
+  type: GET_CART_PRODUCTS
 })
 
 /**
@@ -44,6 +48,9 @@ export const fetchCart = id => async dispatch => {
  */
 function cartReducer(state = initialState, action) {
   switch (action.type) {
+    case GET_CART_PRODUCTS: {
+      return state
+    }
     case GET_CART:
       return {...state, cart: action.cart}
     case ADD_TO_CART:
