@@ -5,6 +5,7 @@ import {fetchTeas} from '../store/teas'
 class AllTea extends React.Component {
   componentDidMount() {
     this.props.getAllTeas()
+    console.log(this)
   }
 
   render() {
