@@ -9,6 +9,7 @@ class Cart extends React.Component {
   }
   render() {
     const cart = this.props.cart
+    console.log(cart, 'THIS IS THE CART')
     return (
       <div>
         <h1>Shopping Cart</h1>
