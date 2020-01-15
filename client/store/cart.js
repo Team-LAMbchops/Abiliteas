@@ -10,7 +10,7 @@ const GET_CART_PRODUCTS = 'GET_CART_PRODUCTS'
 /**
  * INITIAL STATE
  */
-const initialState = []
+const cart = {}
 
 /**
  * ACTION CREATORS
@@ -45,15 +45,25 @@ export const fetchCart = id => async dispatch => {
 /**
  * REDUCER
  */
-function cartReducer(state = initialState, action) {
+function cartReducer(state = cart, action) {
   switch (action.type) {
     case GET_CART_PRODUCTS: {
       return state
     }
     case GET_CART:
       return action.cart
-    case ADD_TO_CART:
-      return {...state, cart: [...state.cart, action.item]}
+    case ADD_TO_CART: {
+      if (state[action.item]) {
+        let newState = {...state}
+        newState[action.item]++
+        return newState
+      } else {
+        let newState = {...state}
+        newState[action.item] = 1
+        return newState
+      }
+    }
+
     default:
       return state
   }
