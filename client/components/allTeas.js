@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchTeas} from '../store/teas'
+import cartContainer from './cart'
 
 class AllTea extends React.Component {
   componentDidMount() {
@@ -25,6 +26,7 @@ class AllTea extends React.Component {
             </div>
           )
         })}
+        <cartContainer />
       </div>
     )
   }
