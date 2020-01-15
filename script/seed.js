@@ -14,21 +14,6 @@ async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
 
-  const carts = await Promise.all([
-    Cart.create({
-      userId: 1
-    }),
-    Cart.create({
-      userId: 2
-    }),
-    Cart.create({
-      userId: 3
-    }),
-    Cart.create({
-      userId: 4
-    })
-  ])
-
   const users = await Promise.all([
     User.create({
       firstName: 'Ming',
@@ -61,6 +46,21 @@ async function seed() {
       email: 'lizzo@email.com',
       password: '123',
       isAdmin: false
+    })
+  ])
+
+  const carts = await Promise.all([
+    Cart.create({
+      userId: 1
+    }),
+    Cart.create({
+      userId: 2
+    }),
+    Cart.create({
+      userId: 3
+    }),
+    Cart.create({
+      userId: 4
     })
   ])
 
