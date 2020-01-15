@@ -10,9 +10,7 @@ const GET_CART_PRODUCTS = 'GET_CART_PRODUCTS'
 /**
  * INITIAL STATE
  */
-const initialState = {
-  cart: []
-}
+const initialState = []
 
 /**
  * ACTION CREATORS
@@ -30,6 +28,7 @@ export const addToCart = item => ({
 export const getCartProducts = () => ({
   type: GET_CART_PRODUCTS
 })
+//Hello
 
 /**
  * THUNK CREATORS
@@ -52,7 +51,7 @@ function cartReducer(state = initialState, action) {
       return state
     }
     case GET_CART:
-      return {...state, cart: action.cart}
+      return action.cart
     case ADD_TO_CART:
       return {...state, cart: [...state.cart, action.item]}
     default:
