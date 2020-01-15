@@ -24,10 +24,9 @@ const Tea = db.define('tea', {
     }
   },
   price: {
-    type: Sequelize.DECIMAL(10, 2),
+    type: Sequelize.INTEGER,
     allowNull: false,
     validate: {
-      isDecimal: true,
       notEmpty: true
     }
   },

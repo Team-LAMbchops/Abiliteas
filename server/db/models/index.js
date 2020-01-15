@@ -15,8 +15,6 @@ Cart.belongsTo(User)
 User.hasMany(Order)
 Order.belongsToMany(Tea, {through: OrderProduct})
 Tea.belongsToMany(Order, {through: OrderProduct})
-Cart.belongsToMany(Tea, {through: CartProduct})
-Tea.belongsToMany(Cart, {through: CartProduct})
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,
