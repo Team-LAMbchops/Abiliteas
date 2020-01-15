@@ -12,6 +12,7 @@ router.get('/', async (req, res, next) => {
 })
 
 // path: /orders/:UserId
+// all orders for an individual user
 
 router.get('/:UserId', async (req, res, next) => {
   try {
@@ -28,3 +29,18 @@ router.get('/:UserId', async (req, res, next) => {
 })
 
 // path: /orders/:UserId/:OrdersId
+// a single order for a single user
+router.get('/:UserId/:OrdersId', async (req, res, next) => {
+  try {
+    const orders = await Order.findOne({
+      where: {
+        userId: req.params.UserId,
+        id: req.params.OrdersId
+      },
+      include: [{model: Tea}]
+    })
+    res.json(orders)
+  } catch (err) {
+    next(err)
+  }
+})
