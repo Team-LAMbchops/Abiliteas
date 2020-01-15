@@ -6,13 +6,10 @@ class AllOrders extends React.Component {
   componentDidMount() {
     const userId = this.props.match.params.userId
     this.props.getAllOrders(userId)
-    console.log(this)
   }
 
   render() {
     const orders = this.props.orders
-    console.log('orders!', orders)
-
     return (
       <div>
         <h1>ALL ORDERS FOR SINGLE USER!</h1>

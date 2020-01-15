@@ -11,7 +11,6 @@ class SingleTea extends React.Component {
 
   render() {
     const tea = this.props.singleTea
-    console.log('this is the specific tea', tea)
     return (
       <div>
         <h1>{tea.name}</h1>

@@ -6,13 +6,10 @@ import cartContainer from './cart'
 class AllTea extends React.Component {
   componentDidMount() {
     this.props.getAllTeas()
-    console.log(this)
   }
 
   render() {
     const teas = this.props.teas
-    console.log('teas ****', teas)
-
     return (
       <div>
         <h1>ALL TEAS!!!</h1>

@@ -7,13 +7,9 @@ class Cart extends React.Component {
     // const id = this.props.match.params.userId
     // this.props.getCart(id)
     this.props.getCartProducts()
-    console.log(this.props)
   }
   render() {
-    // const cart = this.props.cart
-    // console.log(cart, 'THIS IS THE CART')
     const cart = this.props.cart
-    console.log(cart, 'THIS IS THE CART')
     return (
       <div>
         <div>
