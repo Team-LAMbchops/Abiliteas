@@ -8,6 +8,7 @@ const ADD_TO_CART = 'ADD_TO_CART'
 const GET_CART_PRODUCTS = 'GET_CART_PRODUCTS'
 const INCREMENT_QTY = 'INCREMENT_QTY'
 const DECREMENT_QTY = 'DECREMENT_QTY'
+const REMOVE_ITEM = 'REMOVE_ITEM'
 
 /**
  * INITIAL STATE
@@ -44,6 +45,11 @@ export const Decrement = id => ({
   id
 })
 
+export const removeItem = id => ({
+  type: REMOVE_ITEM,
+  id
+})
+
 /**
  * THUNK CREATORS
  */
@@ -59,6 +65,7 @@ export const fetchCart = id => async dispatch => {
 /**
  * REDUCER
  */
+// eslint-disable-next-line complexity
 function cartReducer(state = initialCart, action) {
   switch (action.type) {
     case GET_CART_PRODUCTS: {
@@ -109,10 +116,7 @@ function cartReducer(state = initialCart, action) {
         return {
           ...newState,
           items: newItems,
-          qty: {
-            ...newState.qty,
-            newQty
-          }
+          qty: newQty
         }
       } else {
         const decrement = newState.qty[action.id] - 1
@@ -123,6 +127,17 @@ function cartReducer(state = initialCart, action) {
             [action.id]: decrement
           }
         }
+      }
+    }
+    case REMOVE_ITEM: {
+      const newState = {...state}
+      const newItems = newState.items.filter(item => item.id !== action.id)
+      const newQty = newState.qty
+      delete newQty[action.id]
+      return {
+        ...newState,
+        items: newItems,
+        qty: newQty
       }
     }
     default:
