@@ -44,7 +44,7 @@ export const fetchOrders = userId => async dispatch => {
   }
 }
 
-export const fetchSingleTea = (userId, orderId) => async dispatch => {
+export const fetchSingleOrder = (userId, orderId) => async dispatch => {
   try {
     const res = await axios.get(`/api/orders/${userId}/${orderId}`)
     dispatch(getSingleOrder(res.data), {userId})
