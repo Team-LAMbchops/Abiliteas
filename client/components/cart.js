@@ -4,8 +4,6 @@ import {fetchCart, getCartProducts, Increment, Decrement} from '../store/cart'
 
 class Cart extends React.Component {
   componentDidMount() {
-    // const id = this.props.match.params.userId
-    // this.props.getCart(id)
     this.props.getCartProducts()
   }
   render() {
