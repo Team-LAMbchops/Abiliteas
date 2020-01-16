@@ -15,15 +15,26 @@ class Cart extends React.Component {
       <div>
         <div>
           <h1>Shopping Cart</h1>
-          {items.map(item => {
-            return (
-              <div key={item.id}>
-                <h3>{item.name}</h3>
-                <img src={item.imageUrl} width={100} height={100} mode="fit" />
-                <p>Quantity: {qty[item.id]}</p>
-              </div>
-            )
-          })}
+          {!items.length ? (
+            <div>Your cart is empty!</div>
+          ) : (
+            <div>
+              {items.map(item => {
+                return (
+                  <div key={item.id}>
+                    <h3>{item.name}</h3>
+                    <img
+                      src={item.imageUrl}
+                      width={100}
+                      height={100}
+                      mode="fit"
+                    />
+                    <p>Quantity: {qty[item.id]}</p>
+                  </div>
+                )
+              })}
+            </div>
+          )}
         </div>
       </div>
     )
