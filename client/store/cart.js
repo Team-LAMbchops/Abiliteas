@@ -10,7 +10,10 @@ const GET_CART_PRODUCTS = 'GET_CART_PRODUCTS'
 /**
  * INITIAL STATE
  */
-const cart = {}
+const initialCart = {
+  items: [],
+  qty: {}
+}
 
 /**
  * ACTION CREATORS
@@ -45,7 +48,7 @@ export const fetchCart = id => async dispatch => {
 /**
  * REDUCER
  */
-function cartReducer(state = cart, action) {
+function cartReducer(state = initialCart, action) {
   switch (action.type) {
     case GET_CART_PRODUCTS: {
       return state
@@ -53,17 +56,27 @@ function cartReducer(state = cart, action) {
     case GET_CART:
       return action.cart
     case ADD_TO_CART: {
-      if (state[action.item]) {
-        let newState = {...state}
-        newState[action.item]++
-        return newState
+      let teaId = action.item.id
+      if (!state.qty[teaId]) {
+        return {
+          ...state,
+          qty: {
+            ...state.qty,
+            [teaId]: 1
+          },
+          items: [...state.items, action.item]
+        }
       } else {
-        let newState = {...state}
-        newState[action.item] = 1
-        return newState
+        let increment = state.qty[teaId] + 1
+        return {
+          ...state,
+          qty: {
+            ...state.qty,
+            [teaId]: increment
+          }
+        }
       }
     }
-
     default:
       return state
   }
