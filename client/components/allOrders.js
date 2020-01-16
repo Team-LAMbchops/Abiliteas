@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchOrders} from '../store/orders'
+import {Link} from 'react-router-dom'
 
 class AllOrders extends React.Component {
   componentDidMount() {
@@ -16,6 +17,9 @@ class AllOrders extends React.Component {
         {orders.map(order => {
           return (
             <div key={order.id}>
+              <Link to={`/orders/${this.props.userId}/${order.id}`}>
+                order-date: {order.date.substring(0, 10)} status: {order.status}
+              </Link>
               {order.teas.map(tea => {
                 return (
                   <div key={tea.id}>
@@ -49,7 +53,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getAllOrders: userId => dispatch(fetchOrders(userId))
+    getAllOrders: userId => dispatch(fetchOrders(userId)),
+    getSingleOrder: (userId, orderId) =>
+      dispatch(fetchSingleOrder(userId, orderId))
   }
 }
 
