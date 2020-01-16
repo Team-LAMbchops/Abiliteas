@@ -1,8 +1,9 @@
 const router = require('express').Router()
 const {Order, Tea} = require('../db/models')
+const {isAdminMiddleware} = require('./securityMiddleware/check-Auth')
 module.exports = router
 
-router.get('/', async (req, res, next) => {
+router.get('/', isAdminMiddleware, async (req, res, next) => {
   try {
     const orders = await Order.findAll()
     res.json(orders)
@@ -14,7 +15,7 @@ router.get('/', async (req, res, next) => {
 // path: /orders/:UserId
 // all orders for an individual user
 
-router.get('/:UserId', async (req, res, next) => {
+router.get('/:UserId', isAdminMiddleware, async (req, res, next) => {
   try {
     const orders = await Order.findAll({
       where: {
@@ -31,7 +32,7 @@ router.get('/:UserId', async (req, res, next) => {
 
 // path: /orders/:UserId/:OrdersId
 // a single order for a single user
-router.get('/:UserId/:OrdersId', async (req, res, next) => {
+router.get('/:UserId/:OrdersId', isAdminMiddleware, async (req, res, next) => {
   try {
     const orders = await Order.findOne({
       where: {
@@ -50,7 +51,7 @@ router.get('/:UserId/:OrdersId', async (req, res, next) => {
 //path: /cart
 //cart
 
-router.get('/:UserId', async (req, res, next) => {
+router.get('/:UserId', isAdminMiddleware, async (req, res, next) => {
   try {
     const cart = await Order.findOne({
       where: {
