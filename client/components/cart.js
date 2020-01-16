@@ -3,8 +3,8 @@ import {connect} from 'react-redux'
 import {
   fetchCart,
   getCartProducts,
-  Increment,
-  Decrement,
+  incrementQty,
+  decrementQty,
   removeItem
 } from '../store/cart'
 
@@ -74,8 +74,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getCartProducts: () => dispatch(getCartProducts()),
-    increment: id => dispatch(Increment(id)),
-    decrement: id => dispatch(Decrement(id)),
+    increment: id => dispatch(incrementQty(id)),
+    decrement: id => dispatch(decrementQty(id)),
     remove: id => dispatch(removeItem(id))
   }
 }

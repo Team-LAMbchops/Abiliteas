@@ -4,14 +4,14 @@ const db = require('../db')
 const Order = db.define('order', {
   email: {
     type: Sequelize.STRING,
-    allowNull: false,
+    allowNull: true,
     validate: {
       isEmail: true
     }
   },
   address: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: true
   },
   date: {
     type: Sequelize.DATE,

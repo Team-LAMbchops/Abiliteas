@@ -35,12 +35,12 @@ export const getCartProducts = () => ({
   type: GET_CART_PRODUCTS
 })
 
-export const Increment = id => ({
+export const incrementQty = id => ({
   type: INCREMENT_QTY,
   id
 })
 
-export const Decrement = id => ({
+export const decrementQty = id => ({
   type: DECREMENT_QTY,
   id
 })
