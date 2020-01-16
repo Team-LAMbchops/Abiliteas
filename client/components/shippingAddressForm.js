@@ -1,8 +1,7 @@
 import React from 'react'
-// import {connect} from 'react-redux'
+import {connect} from 'react-redux'
 
-export default class BillingAddressForm extends React.Component {
-  //export default for now just to see the form on /billingaddress
+class ShippingAddressForm extends React.Component {
   constructor(props) {
     super(props)
 
@@ -37,39 +36,39 @@ export default class BillingAddressForm extends React.Component {
   render() {
     return (
       <div>
-        <h1>1. Billing Address</h1>
+        <h1>1. Shipping Address </h1>
 
         <form onSubmit={this.handleSubmit}>
           First Name:
           <input
             type="text"
             name="firstName"
-            onChange={this.handleSubmit}
+            onChange={this.handleChange}
             value={this.state.firstName}
           />
           Last Name:
           <input
             type="text"
             name="lastName"
-            onChange={this.handleSubmit}
+            onChange={this.handleChange}
             value={this.state.lastName}
           />
           Address:
           <input
             type="text"
             name="address"
-            onChange={this.handleSubmit}
+            onChange={this.handleChange}
             value={this.state.address}
           />
           Email Address:
           <input
             type="text"
             name="emailAddress"
-            onChange={this.handleSubmit}
+            onChange={this.handleChange}
             value={this.state.email}
           />
           <button type="submit" onClick={this.handleSubmit}>
-            Submit
+            Place Order
           </button>
         </form>
       </div>
@@ -77,6 +76,14 @@ export default class BillingAddressForm extends React.Component {
   }
 }
 
-//mapDispatchToProps here or in checkout page when user clicks place order - for adding shipping address to order table with the user's firstName and lastName and emailAddress persisting to User table
+const mapStateToProps = state => {
+  //use singleOrder state or allOrders state?
+  return {}
+}
 
-//connect to single order redux store? single order hasn't been created
+const mapDispatchToProps = dispatch => {
+  //dispatch the thunk that updates order from 'pending' to 'completed'
+  return {}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ShippingAddressForm)

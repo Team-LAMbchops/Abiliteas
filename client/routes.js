@@ -6,7 +6,7 @@ import {Login, Signup, UserHome, SingleTea, allOrders} from './components'
 import allTeaContainer from './components/allTeas'
 import {me} from './store'
 import cartContainer from './components/cart'
-import checkoutForm from './components/checkoutForm'
+import checkoutPageContainer from './components/checkout-page'
 
 /**
  * COMPONENT
@@ -27,7 +27,8 @@ class Routes extends Component {
         <Route exact path="/teas" component={allTeaContainer} />
         <Route path="/cart/" component={cartContainer} />
         <Route path="/teas/:teaId" component={SingleTea} />
-        <Route path="/cart/:userId/revieworder" component={checkoutForm} />
+        <Route path="/orders/:userId" component={allOrders} />
+        <Route path="/cart/:userId/checkout" component={checkoutPageContainer}/>
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
