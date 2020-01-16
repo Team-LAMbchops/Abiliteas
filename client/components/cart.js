@@ -11,8 +11,6 @@ class Cart extends React.Component {
   render() {
     const items = this.props.cart.items
     const qty = this.props.cart.qty
-    console.log('items arr', items)
-    console.log('qty', qty)
     return (
       <div>
         <div>
@@ -34,7 +32,6 @@ class Cart extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    // cart: state.cart.cart.teas
     cart: state.cart
   }
 }
