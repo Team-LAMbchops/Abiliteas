@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {fetchSingleTea} from '../store/teas'
 import {addToCart} from '../store/cart'
+import CartContainer from './cart'
 class SingleTea extends React.Component {
   componentDidMount() {
     const id = this.props.match.params.teaId
@@ -10,7 +11,6 @@ class SingleTea extends React.Component {
 
   render() {
     const tea = this.props.singleTea
-    console.log('this is the specific tea', tea)
     return (
       <div>
         <h1>{tea.name}</h1>
@@ -19,6 +19,9 @@ class SingleTea extends React.Component {
         <p>Description: {tea.description}</p>
         <p>Price: ${tea.price}</p>
         <button onClick={() => this.props.addToCart(tea)}>Add To Cart</button>
+        <div>
+          <CartContainer />
+        </div>
       </div>
     )
   }
