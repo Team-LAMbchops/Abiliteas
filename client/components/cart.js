@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchCart, getCartProducts} from '../store/cart'
+import {fetchCart, getCartProducts, Increment, Decrement} from '../store/cart'
 
 class Cart extends React.Component {
   componentDidMount() {
@@ -29,7 +29,21 @@ class Cart extends React.Component {
                       height={100}
                       mode="fit"
                     />
-                    <p>Quantity: {qty[item.id]}</p>
+                    <p>
+                      Quantity: {qty[item.id]}
+                      <button
+                        type="button"
+                        onClick={() => this.props.increment(item.id)}
+                      >
+                        INCREMENT
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => this.props.decrement(item.id)}
+                      >
+                        DECREMENT
+                      </button>
+                    </p>
                   </div>
                 )
               })}
@@ -49,7 +63,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getCartProducts: () => dispatch(getCartProducts())
+    getCartProducts: () => dispatch(getCartProducts()),
+    increment: id => dispatch(Increment(id)),
+    decrement: id => dispatch(Decrement(id))
   }
 }
 
