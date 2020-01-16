@@ -4,8 +4,8 @@ import {fetchOrders} from '../store/orders'
 
 class AllOrders extends React.Component {
   componentDidMount() {
-    const userId = this.props.match.params.userId
-    this.props.getAllOrders(userId)
+    console.log()
+    this.props.getAllOrders(this.props.userId)
   }
 
   render() {
@@ -42,7 +42,8 @@ class AllOrders extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    orders: state.orders.allOrders
+    orders: state.orders.allOrders,
+    userId: state.user.id
   }
 }
 

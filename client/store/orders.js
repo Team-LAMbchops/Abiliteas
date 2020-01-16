@@ -37,9 +37,9 @@ export const fetchOrders = userId => async dispatch => {
     console.error(err)
   }
 }
-export const fetchSingleTea = (userId, cartId) => async dispatch => {
+export const fetchSingleTea = (userId, orderId) => async dispatch => {
   try {
-    const res = await axios.get(`/api/orders/${userId}/${cartId}`)
+    const res = await axios.get(`/api/orders/${userId}/${orderId}`)
     dispatch(getSingleOrder(res.data))
   } catch (err) {
     console.log(err)
