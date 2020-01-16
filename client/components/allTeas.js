@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchTeas} from '../store/teas'
-import cartContainer from './cart'
+import {Link} from 'react-router-dom'
 
 class AllTea extends React.Component {
   componentDidMount() {
@@ -16,14 +16,17 @@ class AllTea extends React.Component {
         {teas.map(tea => {
           return (
             <div key={tea.id}>
-              <h3>{tea.name}</h3>
+              <h3>
+                <Link to={`/teas/${tea.id}`}>{tea.name}</Link>
+              </h3>
               <p>{tea.description}</p>
               <p>{tea.price}</p>
-              <img src={tea.imageUrl} width={200} height={200} mode="fit" />
+              <Link to={`/teas/${tea.id}`}>
+                <img src={tea.imageUrl} width={200} height={200} mode="fit" />
+              </Link>
             </div>
           )
         })}
-        <cartContainer />
       </div>
     )
   }
