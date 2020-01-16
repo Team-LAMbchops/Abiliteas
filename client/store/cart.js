@@ -6,6 +6,9 @@ import axios from 'axios'
 const GET_CART = 'GET_CART'
 const ADD_TO_CART = 'ADD_TO_CART'
 const GET_CART_PRODUCTS = 'GET_CART_PRODUCTS'
+const INCREMENT_QTY = 'INCREMENT_QTY'
+const DECREMENT_QTY = 'DECREMENT_QTY'
+const REMOVE_ITEM = 'REMOVE_ITEM'
 
 /**
  * INITIAL STATE
@@ -31,7 +34,21 @@ export const addToCart = item => ({
 export const getCartProducts = () => ({
   type: GET_CART_PRODUCTS
 })
-//Hello
+
+export const Increment = id => ({
+  type: INCREMENT_QTY,
+  id
+})
+
+export const Decrement = id => ({
+  type: DECREMENT_QTY,
+  id
+})
+
+export const removeItem = id => ({
+  type: REMOVE_ITEM,
+  id
+})
 
 /**
  * THUNK CREATORS
@@ -48,6 +65,7 @@ export const fetchCart = id => async dispatch => {
 /**
  * REDUCER
  */
+// eslint-disable-next-line complexity
 function cartReducer(state = initialCart, action) {
   switch (action.type) {
     case GET_CART_PRODUCTS: {
@@ -56,25 +74,70 @@ function cartReducer(state = initialCart, action) {
     case GET_CART:
       return action.cart
     case ADD_TO_CART: {
-      let teaId = action.item.id
-      if (!state.qty[teaId]) {
+      const teaId = action.item.id
+      const newState = {...state}
+      if (!newState.qty[teaId]) {
         return {
-          ...state,
+          ...newState,
           qty: {
-            ...state.qty,
+            ...newState.qty,
             [teaId]: 1
           },
-          items: [...state.items, action.item]
+          items: [...newState.items, action.item]
         }
       } else {
-        let increment = state.qty[teaId] + 1
+        let increment = newState.qty[teaId] + 1
         return {
-          ...state,
+          ...newState,
           qty: {
-            ...state.qty,
+            ...newState.qty,
             [teaId]: increment
           }
         }
+      }
+    }
+    case INCREMENT_QTY: {
+      const newState = {...state}
+      const increment = newState.qty[action.id] + 1
+      return {
+        ...newState,
+        qty: {
+          ...newState.qty,
+          [action.id]: increment
+        }
+      }
+    }
+    case DECREMENT_QTY: {
+      const newState = {...state}
+      if (newState.qty[action.id] === 1) {
+        const newItems = newState.items.filter(item => item.id !== action.id)
+        const newQty = newState.qty
+        delete newQty[action.id]
+        return {
+          ...newState,
+          items: newItems,
+          qty: newQty
+        }
+      } else {
+        const decrement = newState.qty[action.id] - 1
+        return {
+          ...newState,
+          qty: {
+            ...newState.qty,
+            [action.id]: decrement
+          }
+        }
+      }
+    }
+    case REMOVE_ITEM: {
+      const newState = {...state}
+      const newItems = newState.items.filter(item => item.id !== action.id)
+      const newQty = newState.qty
+      delete newQty[action.id]
+      return {
+        ...newState,
+        items: newItems,
+        qty: newQty
       }
     }
     default:
