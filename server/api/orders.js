@@ -65,3 +65,12 @@ router.get('/:UserId', isAdminMiddleware, async (req, res, next) => {
     next(err)
   }
 })
+
+router.post('/', async (req, res, next) => {
+  try {
+    const newOrder = await Order.create(req.body)
+    res.json(newOrder)
+  } catch (err) {
+    next(err)
+  }
+})
