@@ -14,26 +14,29 @@ class CheckoutPage extends React.Component {
   }
 
   render() {
-    const cart = this.props.cart
-    console.log(cart, 'cart!!!!!')
+    const items = this.props.cart.items
     return (
       <div>
         <h1>Checkout</h1>
         <h2>Order Summary:</h2>
         <div>
-          {cart.map(item => {
-            return (
-              <div key={item.id}>
-                <img src={item.imageUrl} width={100} height={100} mode="fit" />
-                <h4>{item.name}</h4>
-                <p>Quantity: {item.cart_product.quantity}</p>
-                <p>Price: ${item.price}</p>
-              </div>
-            )
-          })}
+          <div>
+            {items.map(item => {
+              return (
+                <div key={item.id}>
+                  <h3>{item.name}</h3>
+                  <img
+                    src={item.imageUrl}
+                    width={100}
+                    height={100}
+                    mode="fit"
+                  />
+                  <p>Quantity: {qty[item.id]}</p>
+                </div>
+              )
+            })}
+          </div>
         </div>
-
-        <p>ADD Cart component html here without buttons when it has items</p>
         <ShippingAddressForm />
       </div>
     )
