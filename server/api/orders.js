@@ -75,6 +75,18 @@ router.post('/', async (req, res, next) => {
   }
 })
 
+router.delete('/:orderId', async (req, res, next) => {
+  try {
+    await Order.destory({
+      where: {
+        id: req.params.orderId
+      }
+    })
+  } catch (error) {
+    next(error)
+  }
+})
+
 // router.put('/', async (req, res, next) => {
 //   try {
 //     const orderUpdate = await Order.findOne({

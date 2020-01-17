@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchSingleTea} from '../store/teas'
-import {addToCart} from '../store/cart'
+import {addToCart, fetchCreateOP} from '../store/cart'
 import CartContainer from './cart'
 import {fetchCreateOrder} from '../store/orders'
 class SingleTea extends React.Component {
@@ -9,16 +9,22 @@ class SingleTea extends React.Component {
     const id = this.props.match.params.teaId
     this.props.getSingleTea(id)
   }
-  handleSubmit() {
+  async createOrder() {
+    const currentTea = this.props.singleTea
+    const teaId = currentTea.id
+    const qty = this.props.cart.qty[teaId]
     if (this.props.cart.items.length === 0) {
       if (this.props.user) {
         const userId = this.props.user.id
-        this.props.createOrder(userId)
+        await this.props.createOrder(userId)
       } else {
-        this.props.createOrder()
+        await this.props.createOrder()
       }
     }
+    const orderId = this.props.order.currentOrder.id
+    await this.props.createOP(qty, orderId, teaId)
   }
+
   render() {
     const tea = this.props.singleTea
     return (
@@ -31,8 +37,8 @@ class SingleTea extends React.Component {
         <button
           type="submit"
           onClick={() => {
+            this.createOrder()
             this.props.addToCart(tea)
-            this.handleSubmit()
           }}
         >
           Add To Cart
@@ -49,7 +55,8 @@ const mapStateToProps = state => {
   return {
     singleTea: state.teas.singleTea,
     user: state.user,
-    cart: state.cart
+    cart: state.cart,
+    order: state.orders
   }
 }
 
@@ -58,7 +65,8 @@ const mapDispatchToProps = dispatch => {
     getSingleTea: id => dispatch(fetchSingleTea(id)),
     addToCart: item => dispatch(addToCart(item)),
     createOrder: (orderId, userId) =>
-      dispatch(fetchCreateOrder(orderId, userId))
+      dispatch(fetchCreateOrder(orderId, userId)),
+    createOP: (qty, orderId, teaId) => fetchCreateOP(qty, orderId, teaId)
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(SingleTea)
