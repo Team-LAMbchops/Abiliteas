@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {fetchSingleOrder} from '../store/orders'
 import {Redirect} from 'react-router-dom'
 
-class AllOrders extends React.Component {
+class SingleOrder extends React.Component {
   componentDidMount() {
     this.props.getSingleOrder(
       this.props.userId,
@@ -13,10 +13,6 @@ class AllOrders extends React.Component {
 
   render() {
     const singleOrder = this.props.singleOrder
-    console.log(singleOrder)
-    console.log(singleOrder.teas, 'teassss')
-    console.log(this.props.userId, 'props user Id')
-    console.log(this.props.match.params.userId, '...params')
     return (
       <div>
         <h1>Single Order Page</h1>
@@ -58,8 +54,8 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-const allOrdersContainer = connect(mapStateToProps, mapDispatchToProps)(
-  AllOrders
+const singleOrdersContainer = connect(mapStateToProps, mapDispatchToProps)(
+  SingleOrder
 )
 
-export default allOrdersContainer
+export default singleOrdersContainer
