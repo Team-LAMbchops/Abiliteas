@@ -13,11 +13,7 @@ router.get('/', isAdminMiddleware, async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    const newOrderProduct = await OrderProduct.create({
-      quantity: req.body.qty,
-      orderId: req.body.orderId,
-      teaId: req.body.teaId
-    })
+    const newOrderProduct = await OrderProduct.create(req.body)
     res.json(newOrderProduct)
   } catch (error) {
     next(error)

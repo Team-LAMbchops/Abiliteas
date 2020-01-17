@@ -12,7 +12,8 @@ const CREATE_ORDER = 'CREATE_ORDER'
  */
 const initialState = {
   allOrders: [],
-  singleOrder: {}
+  singleOrder: {},
+  currentOrder: {}
 }
 
 /**
@@ -75,7 +76,8 @@ function ordersReducer(state = initialState, action) {
     case CREATE_ORDER: {
       return {
         ...state,
-        allOrders: [...state.allOrders, action.order]
+        allOrders: [...state.allOrders, action.order],
+        currentOrder: action.order
       }
     }
     default:
