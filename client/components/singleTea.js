@@ -4,6 +4,8 @@ import {fetchSingleTea} from '../store/teas'
 import {addToCart, fetchCreateOP} from '../store/cart'
 import CartContainer from './cart'
 import {fetchCreateOrder} from '../store/orders'
+import {findPrice} from './helperFuncs'
+
 class SingleTea extends React.Component {
   componentDidMount() {
     const id = this.props.match.params.teaId
@@ -33,7 +35,7 @@ class SingleTea extends React.Component {
         <h3>{tea.flavor}</h3>
         <img src={tea.imageUrl} width={200} height={200} mode="fit" />
         <p>Description: {tea.description}</p>
-        <p>Price: ${tea.price}</p>
+        <p>Price: $ {findPrice(tea.price)}</p>
         <button
           type="submit"
           onClick={() => {

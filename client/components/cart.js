@@ -7,6 +7,7 @@ import {
   decrementQty,
   removeItem
 } from '../store/cart'
+import {findPrice, findTotal} from './helperFuncs'
 
 class Cart extends React.Component {
   componentDidMount() {
@@ -15,6 +16,10 @@ class Cart extends React.Component {
   render() {
     const items = this.props.cart.items
     const qty = this.props.cart.qty
+
+    // let priceArr = this.props.cart.items.map(item => item.iditem.price)
+    // console.log(priceArr, "PRICE ARRAY")
+
     return (
       <div>
         <div>
@@ -54,12 +59,20 @@ class Cart extends React.Component {
                         Remove
                       </button>
                     </p>
+                    <p>
+                      {' '}
+                      Price: ${(findPrice(item.price) * qty[item.id]).toFixed(
+                        2
+                      )}
+                    </p>
                   </div>
                 )
               })}
             </div>
           )}
+          Total:${findTotal(items, qty).toFixed(2)}
         </div>
+        <button type="submit">Checkout</button>
       </div>
     )
   }
