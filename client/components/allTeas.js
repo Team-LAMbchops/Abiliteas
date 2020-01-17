@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {fetchTeas} from '../store/teas'
 import {Link} from 'react-router-dom'
-
+import {findPrice} from './helperFuncs'
 class AllTea extends React.Component {
   componentDidMount() {
     this.props.getAllTeas()
@@ -20,7 +20,7 @@ class AllTea extends React.Component {
                 <Link to={`/teas/${tea.id}`}>{tea.name}</Link>
               </h3>
               <p>{tea.description}</p>
-              <p>{tea.price}</p>
+              <p>Price: ${findPrice(tea.price).toFixed(2)}</p>
               <Link to={`/teas/${tea.id}`}>
                 <img src={tea.imageUrl} width={200} height={200} mode="fit" />
               </Link>
