@@ -1,10 +1,12 @@
 import axios from 'axios'
+import Axios from 'axios'
 
 /**
  * ACTION TYPES
  */
 const GET_TEAS = 'GET_TEAS'
 const GET_SINGLE_TEA = 'GET_SINGLE_TEA'
+const REMOVE_SINGLE_TEA = 'REMOVE_SINGLE_TEA'
 
 /**
  * INITIAL STATE
@@ -26,6 +28,12 @@ const getSingleTea = tea => ({
   type: GET_SINGLE_TEA,
   tea
 })
+
+const removeSingleTea = teas => ({
+  type: REMOVE_SINGLE_TEA,
+  teas
+})
+
 /**
  * THUNK CREATORS
  */
@@ -37,10 +45,21 @@ export const fetchTeas = () => async dispatch => {
     console.error(err)
   }
 }
+
 export const fetchSingleTea = id => async dispatch => {
   try {
     const res = await axios.get(`/api/teas/${id}`)
     dispatch(getSingleTea(res.data))
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+export const deleteSingleTea = id => async dispatch => {
+  try {
+    await axios.delete(`/api/teas/${id}`)
+    const {data} = await Axios.get(`/api/teas`)
+    dispatch(removeSingleTea(data))
   } catch (err) {
     console.log(err)
   }
@@ -55,6 +74,9 @@ function teasReducer(state = initialState, action) {
       return {...state, allTeas: action.teas}
     case GET_SINGLE_TEA: {
       return {...state, singleTea: action.tea}
+    }
+    case REMOVE_SINGLE_TEA: {
+      return {...state, allTeas: action.teas}
     }
     default:
       return state

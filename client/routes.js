@@ -9,7 +9,9 @@ import {
   SingleTea,
   allOrders,
   singleOrder,
-  userProfile
+  userProfile,
+  AdminAllTeas,
+  AdminPage
 } from './components'
 import allTeaContainer from './components/allTeas'
 import {me} from './store'
@@ -22,10 +24,11 @@ import checkoutPageContainer from './components/checkout-page'
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData()
+    console.log(this.props)
   }
 
   render() {
-    const {isLoggedIn} = this.props
+    const {isLoggedIn, isAdmin} = this.props
 
     return (
       <Switch>
@@ -43,8 +46,15 @@ class Routes extends Component {
             <Route path="/orders/:userId/:orderId" component={singleOrder} />
             <Route exact path="/orders" component={allOrders} />
             <Route path="/profile" component={userProfile} />
+            {isAdmin && (
+              <Switch>
+                <Route exact path="/admin" component={AdminPage} />
+                <Route exact path="/admin/teas" component={AdminAllTeas} />
+              </Switch>
+            )}
           </Switch>
         )}
+
         {/* Displays our Login component as a fallback */}
         <Route component={Login} />
       </Switch>
@@ -59,7 +69,8 @@ const mapState = state => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    isAdmin: !!state.user.isAdmin
   }
 }
 
@@ -80,5 +91,6 @@ export default withRouter(connect(mapState, mapDispatch)(Routes))
  */
 Routes.propTypes = {
   loadInitialData: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired
+  isLoggedIn: PropTypes.bool.isRequired,
+  isAdmin: PropTypes.bool.isRequired
 }
