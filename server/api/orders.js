@@ -87,10 +87,12 @@ router.delete('/:orderId', async (req, res, next) => {
   }
 })
 
-// router.put('/', async (req, res, next) => {
-//   try {
-//     const orderUpdate = await Order.findOne({
-
-//     })
-//   }
-// })
+router.put('/:orderId', async (req, res, next) => {
+  try {
+    const orderUpdate = await Order.findbyPk(req.params.orderId)
+    orderUpdate.update(req.body)
+    res.json(orderUpdate)
+  } catch (error) {
+    next(error)
+  }
+})
