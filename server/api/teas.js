@@ -22,3 +22,14 @@ router.get('/', async (req, res, next) => {
     next(err)
   }
 })
+
+router.delete('/:teaId', async (req, res, next) => {
+  try {
+    const tea = await Tea.findByPk(req.params.teaId)
+    if (!tea) return res.sendStatus(404)
+    await tea.destroy()
+    res.sendStatus(204)
+  } catch (err) {
+    next(err)
+  }
+})
