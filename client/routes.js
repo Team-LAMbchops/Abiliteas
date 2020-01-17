@@ -8,7 +8,8 @@ import {
   UserHome,
   SingleTea,
   allOrders,
-  singleOrder
+  singleOrder,
+  userProfile
 } from './components'
 import allTeaContainer from './components/allTeas'
 import {me} from './store'
@@ -41,6 +42,7 @@ class Routes extends Component {
             <Route path="/home" component={UserHome} />
             <Route path="/orders/:userId/:orderId" component={singleOrder} />
             <Route exact path="/orders" component={allOrders} />
+            <Route path="/profile" component={userProfile} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}

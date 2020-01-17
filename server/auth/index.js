@@ -16,7 +16,6 @@ router.post('/login', async (req, res, next) => {
       console.log(req.session)
       req.login(user, err => (err ? next(err) : res.json(user)))
     }
-    // req.login(user, err => (err ? (next(err)) : (res.json(user))))
   } catch (err) {
     next(err)
   }
