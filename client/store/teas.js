@@ -6,6 +6,7 @@ import Axios from 'axios'
  */
 const GET_TEAS = 'GET_TEAS'
 const GET_SINGLE_TEA = 'GET_SINGLE_TEA'
+const ADD_SINGLE_TEA = 'ADD_SINGLE_TEA'
 const REMOVE_SINGLE_TEA = 'REMOVE_SINGLE_TEA'
 
 /**
@@ -27,6 +28,11 @@ const getTeas = teas => ({
 const getSingleTea = tea => ({
   type: GET_SINGLE_TEA,
   tea
+})
+
+const addSingleTea = newTea => ({
+  type: ADD_SINGLE_TEA,
+  newTea
 })
 
 const removeSingleTea = teas => ({
@@ -55,6 +61,15 @@ export const fetchSingleTea = id => async dispatch => {
   }
 }
 
+export const createSingleTea = newTea => async dispatch => {
+  try {
+    const {data} = await axios.post(`/api/teas`, newTea)
+    dispatch(addSingleTea(data))
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 export const deleteSingleTea = id => async dispatch => {
   try {
     await axios.delete(`/api/teas/${id}`)
@@ -72,12 +87,12 @@ function teasReducer(state = initialState, action) {
   switch (action.type) {
     case GET_TEAS:
       return {...state, allTeas: action.teas}
-    case GET_SINGLE_TEA: {
+    case GET_SINGLE_TEA:
       return {...state, singleTea: action.tea}
-    }
-    case REMOVE_SINGLE_TEA: {
+    case ADD_SINGLE_TEA:
+      return {...state, allTeas: [...state.allTeas, action.newTea]}
+    case REMOVE_SINGLE_TEA:
       return {...state, allTeas: action.teas}
-    }
     default:
       return state
   }

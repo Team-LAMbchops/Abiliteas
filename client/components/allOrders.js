@@ -5,7 +5,6 @@ import {Link} from 'react-router-dom'
 
 class AllOrders extends React.Component {
   componentDidMount() {
-    console.log()
     this.props.getAllOrders(this.props.userId)
   }
 
