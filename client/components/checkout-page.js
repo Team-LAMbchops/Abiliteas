@@ -2,6 +2,8 @@ import React from 'react'
 import {connect} from 'react-redux'
 import ShippingAddressForm from './shippingAddressForm'
 import {fetchCart} from '../store/cart'
+import {getCartProducts} from '../components/cart'
+import MyStoreCheckout from '../payment-components/MyStoreCheckout'
 
 class CheckoutPage extends React.Component {
   constructor(props) {
@@ -9,33 +11,31 @@ class CheckoutPage extends React.Component {
   }
 
   componentDidMount() {
-    const id = this.props.match.params.userId
-    this.props.getSingleCart(id)
+    // const id = this.props.match.params.userId
+    this.props.getCartProducts()
   }
 
   render() {
     const items = this.props.cart.items
+    const qty = this.props.cart.qty
     return (
       <div>
         <h1>Checkout</h1>
         <h2>Order Summary:</h2>
+        {items.map(item => {
+          return (
+            <div key={item.id}>
+              <h3>{item.name}</h3>
+              <img src={item.imageUrl} width={100} height={100} mode="fit" />
+              Quantity: {qty[item.id]}
+            </div>
+          )
+        })}
         <div>
-          <div>
-            {items.map(item => {
-              return (
-                <div key={item.id}>
-                  <h3>{item.name}</h3>
-                  <img
-                    src={item.imageUrl}
-                    width={100}
-                    height={100}
-                    mode="fit"
-                  />
-                  <p>Quantity: {qty[item.id]}</p>
-                </div>
-              )
-            })}
-          </div>
+          <h2>Payment:</h2>
+          <MyStoreCheckout />
+          <div />
+          <div />
         </div>
         <ShippingAddressForm />
       </div>
@@ -51,7 +51,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getSingleCart: id => dispatch(fetchCart(id))
+    getCartProducts: () => dispatch(fetchCart())
+    //add an order?
   }
 }
 
