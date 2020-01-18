@@ -2,7 +2,18 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {Login, Signup, UserHome, SingleTea, allOrders} from './components'
+import {
+  Login,
+  Signup,
+  UserHome,
+  SingleTea,
+  allOrders,
+  singleOrder,
+  userProfile,
+  AdminAllTeas,
+  AdminPage,
+  AdminAddTea
+} from './components'
 import allTeaContainer from './components/allTeas'
 import {me} from './store'
 import cartContainer from './components/cart'
@@ -14,10 +25,11 @@ import checkoutPageContainer from './components/checkout-page'
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData()
+    console.log(this.props)
   }
 
   render() {
-    const {isLoggedIn} = this.props
+    const {isLoggedIn, isAdmin} = this.props
 
     return (
       <Switch>
@@ -32,8 +44,19 @@ class Routes extends Component {
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route path="/home" component={UserHome} />
+            <Route path="/orders/:userId/:orderId" component={singleOrder} />
+            <Route exact path="/orders" component={allOrders} />
+            <Route path="/profile" component={userProfile} />
+            {isAdmin && (
+              <Switch>
+                <Route exact path="/admin" component={AdminPage} />
+                <Route exact path="/admin/addTea" component={AdminAddTea} />
+                <Route exact path="/admin/teas" component={AdminAllTeas} />
+              </Switch>
+            )}
           </Switch>
         )}
+
         {/* Displays our Login component as a fallback */}
         <Route component={Login} />
       </Switch>
@@ -48,7 +71,8 @@ const mapState = state => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    isAdmin: !!state.user.isAdmin
   }
 }
 
@@ -69,5 +93,6 @@ export default withRouter(connect(mapState, mapDispatch)(Routes))
  */
 Routes.propTypes = {
   loadInitialData: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired
+  isLoggedIn: PropTypes.bool.isRequired,
+  isAdmin: PropTypes.bool.isRequired
 }

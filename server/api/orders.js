@@ -65,3 +65,34 @@ router.get('/:UserId', isAdminMiddleware, async (req, res, next) => {
     next(err)
   }
 })
+
+router.post('/', async (req, res, next) => {
+  try {
+    const newOrder = await Order.create(req.body)
+    res.json(newOrder)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.delete('/:orderId', async (req, res, next) => {
+  try {
+    await Order.destory({
+      where: {
+        id: req.params.orderId
+      }
+    })
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.put('/:orderId', async (req, res, next) => {
+  try {
+    const orderUpdate = await Order.findbyPk(req.params.orderId)
+    orderUpdate.update(req.body)
+    res.json(orderUpdate)
+  } catch (error) {
+    next(error)
+  }
+})

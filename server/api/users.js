@@ -17,3 +17,17 @@ router.get('/', isAdminMiddleware, async (req, res, next) => {
     next(err)
   }
 })
+
+router.get('/:userId', isAdminMiddleware, async (req, res, next) => {
+  try {
+    const singleUser = await User.findOne({
+      where: {
+        id: req.params.userId
+      },
+      attributes: ['id', 'email', 'address']
+    })
+    res.json(singleUser)
+  } catch (err) {
+    next(err)
+  }
+})

@@ -9,6 +9,8 @@ const GET_CART_PRODUCTS = 'GET_CART_PRODUCTS'
 const INCREMENT_QTY = 'INCREMENT_QTY'
 const DECREMENT_QTY = 'DECREMENT_QTY'
 const REMOVE_ITEM = 'REMOVE_ITEM'
+//DB PERSISTENCE
+// const CREATE_ORDER_PRODUCT = 'CREATE_ORDER_PRODUCT'
 
 /**
  * INITIAL STATE
@@ -35,12 +37,12 @@ export const getCartProducts = () => ({
   type: GET_CART_PRODUCTS
 })
 
-export const Increment = id => ({
+export const incrementQty = id => ({
   type: INCREMENT_QTY,
   id
 })
 
-export const Decrement = id => ({
+export const decrementQty = id => ({
   type: DECREMENT_QTY,
   id
 })
@@ -50,6 +52,9 @@ export const removeItem = id => ({
   id
 })
 
+// const createOP = () => ({
+//   type: CREATE_ORDER_PRODUCT,
+// })
 /**
  * THUNK CREATORS
  */
@@ -62,6 +67,13 @@ export const fetchCart = id => async dispatch => {
   }
 }
 
+export const fetchCreateOP = async (qty, orderId, teaId) => {
+  try {
+    await axios.post('/api/orderproducts', {qty, orderId, teaId})
+  } catch (error) {
+    console.log(error)
+  }
+}
 /**
  * REDUCER
  */

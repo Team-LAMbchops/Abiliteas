@@ -4,10 +4,11 @@ import {Link} from 'react-router-dom'
 import {
   fetchCart,
   getCartProducts,
-  Increment,
-  Decrement,
+  incrementQty,
+  decrementQty,
   removeItem
 } from '../store/cart'
+import {findPrice, findTotal} from './helperFuncs'
 
 class Cart extends React.Component {
   componentDidMount() {
@@ -16,6 +17,10 @@ class Cart extends React.Component {
   render() {
     const items = this.props.cart.items
     const qty = this.props.cart.qty
+
+    // let priceArr = this.props.cart.items.map(item => item.iditem.price)
+    // console.log(priceArr, "PRICE ARRAY")
+
     return (
       <div>
         <div>
@@ -56,13 +61,22 @@ class Cart extends React.Component {
                       </button>
                     </p>
 
+
                     <div>{<Link to="/checkout">Checkout</Link>}</div>
+
+                    <p>
+                      Price: ${(findPrice(item.price) * qty[item.id]).toFixed(
+                        2
+                      )}
+                    </p>
                   </div>
                 )
               })}
             </div>
           )}
+          Total:${findTotal(items, qty).toFixed(2)}
         </div>
+        <button type="submit">Checkout</button>
       </div>
     )
   }
@@ -77,8 +91,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getCartProducts: () => dispatch(getCartProducts()),
-    increment: id => dispatch(Increment(id)),
-    decrement: id => dispatch(Decrement(id)),
+    increment: id => dispatch(incrementQty(id)),
+    decrement: id => dispatch(decrementQty(id)),
     remove: id => dispatch(removeItem(id))
   }
 }

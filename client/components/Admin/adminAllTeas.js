@@ -1,9 +1,9 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchTeas} from '../store/teas'
+import {fetchTeas, deleteSingleTea} from '../../store/teas'
 import {Link} from 'react-router-dom'
-import {findPrice} from './helperFuncs'
-class AllTea extends React.Component {
+
+class AdminAllTea extends React.Component {
   componentDidMount() {
     this.props.getAllTeas()
   }
@@ -12,7 +12,9 @@ class AllTea extends React.Component {
     const teas = this.props.teas
     return (
       <div>
-        <h1>ALL TEAS!!!</h1>
+        <h1>Admin All Teas</h1>
+        <Link to="/admin/addTea">Add New Tea</Link>
+
         {teas.map(tea => {
           return (
             <div key={tea.id}>
@@ -20,10 +22,16 @@ class AllTea extends React.Component {
                 <Link to={`/teas/${tea.id}`}>{tea.name}</Link>
               </h3>
               <p>{tea.description}</p>
-              <p>Price: ${findPrice(tea.price).toFixed(2)}</p>
+              <p>{tea.price}</p>
               <Link to={`/teas/${tea.id}`}>
                 <img src={tea.imageUrl} width={200} height={200} mode="fit" />
               </Link>
+              <button
+                type="button"
+                onClick={() => this.props.removeSingleTea(tea.id)}
+              >
+                Remove Tea From Store
+              </button>
             </div>
           )
         })}
@@ -34,16 +42,20 @@ class AllTea extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    teas: state.teas.allTeas
+    teas: state.teas.allTeas,
+    user: state.user.userId
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    getAllTeas: () => dispatch(fetchTeas())
+    getAllTeas: () => dispatch(fetchTeas()),
+    removeSingleTea: teaId => dispatch(deleteSingleTea(teaId))
   }
 }
 
-const allTeaContainer = connect(mapStateToProps, mapDispatchToProps)(AllTea)
+const adminAllTeaContainer = connect(mapStateToProps, mapDispatchToProps)(
+  AdminAllTea
+)
 
-export default allTeaContainer
+export default adminAllTeaContainer
