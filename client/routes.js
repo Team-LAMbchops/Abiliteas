@@ -11,7 +11,8 @@ import {
   singleOrder,
   userProfile,
   AdminAllTeas,
-  AdminPage
+  AdminPage,
+  AdminAddTea
 } from './components'
 import allTeaContainer from './components/allTeas'
 import {me} from './store'
@@ -49,6 +50,7 @@ class Routes extends Component {
             {isAdmin && (
               <Switch>
                 <Route exact path="/admin" component={AdminPage} />
+                <Route exact path="/admin/addTea" component={AdminAddTea} />
                 <Route exact path="/admin/teas" component={AdminAllTeas} />
               </Switch>
             )}

@@ -10,6 +10,7 @@ class AdminPage extends React.Component {
     return (
       <div>
         <h1>Admin Page</h1>
+        <Link to="/admin/teas">Teas</Link>
       </div>
     )
   }

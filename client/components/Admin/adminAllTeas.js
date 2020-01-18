@@ -13,6 +13,8 @@ class AdminAllTea extends React.Component {
     return (
       <div>
         <h1>Admin All Teas</h1>
+        <Link to="/admin/addTea">Add New Tea</Link>
+
         {teas.map(tea => {
           return (
             <div key={tea.id}>
@@ -40,7 +42,8 @@ class AdminAllTea extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    teas: state.teas.allTeas
+    teas: state.teas.allTeas,
+    user: state.user.userId
   }
 }
 
