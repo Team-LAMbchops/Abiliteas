@@ -92,7 +92,9 @@ class AdminAddTea extends React.Component {
             onChange={this.handleChange}
             value={this.state.imageUrl}
           />
-          <button type="submit">Submit</button>
+          <Link to="/admin/teas">
+            <button type="submit">Submit</button>
+          </Link>
         </form>
       </div>
     )
