@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 import {
   fetchCart,
   getCartProducts,
@@ -54,6 +55,8 @@ class Cart extends React.Component {
                         Remove
                       </button>
                     </p>
+
+                    <div>{<Link to="/checkout">Checkout</Link>}</div>
                   </div>
                 )
               })}
