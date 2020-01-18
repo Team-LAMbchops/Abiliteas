@@ -43,6 +43,24 @@ router.post('/', async (req, res, next) => {
   }
 })
 
+router.put('/:teaId', async (req, res, next) => {
+  try {
+    const tea = await Tea.findByPk(req.params.teaId)
+    const {name, flavor, description, price, inventory, imageUrl} = req.body
+    await tea.update({
+      name,
+      flavor,
+      description,
+      price: price * 100,
+      inventory,
+      imageUrl
+    })
+    res.sendStatus(202)
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.delete('/:teaId', async (req, res, next) => {
   try {
     const tea = await Tea.findByPk(req.params.teaId)

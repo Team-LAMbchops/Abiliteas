@@ -26,6 +26,9 @@ class AdminAllTea extends React.Component {
               <Link to={`/teas/${tea.id}`}>
                 <img src={tea.imageUrl} width={200} height={200} mode="fit" />
               </Link>
+              <Link to={`/admin/editTea/${tea.id}`}>
+                <button type="button">Edit Tea</button>
+              </Link>
               <button
                 type="button"
                 onClick={() => this.props.removeSingleTea(tea.id)}
@@ -50,7 +53,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getAllTeas: () => dispatch(fetchTeas()),
-    removeSingleTea: teaId => dispatch(deleteSingleTea(teaId))
+    removeSingleTea: teaId => dispatch(deleteSingleTea(teaId)),
+    getSingleTea: teaId => dispatch(fetchSingleTea(teaId))
   }
 }
 

@@ -1,6 +1,5 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchTeas} from '../../store/teas'
 import {Link} from 'react-router-dom'
 
 class AdminPage extends React.Component {

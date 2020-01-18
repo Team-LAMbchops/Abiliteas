@@ -13,31 +13,46 @@ class AllOrders extends React.Component {
     return (
       <div>
         <h1>ALL ORDERS FOR SINGLE USER!</h1>
-        {orders.map(order => {
-          return (
-            <div key={order.id}>
-              <Link to={`/orders/${this.props.userId}/${order.id}`}>
-                order-date: {order.date.substring(0, 10)} status: {order.status}
-              </Link>
-              {order.teas.map(tea => {
-                return (
-                  <div key={tea.id}>
-                    <h3>{tea.name}</h3>
-                    <span>
-                      {tea.flavor} {tea.price} {tea.order_product.quantity}
-                    </span>
-                    <img
-                      src={tea.imageUrl}
-                      width={200}
-                      height={200}
-                      mode="fit"
-                    />
-                  </div>
-                )
-              })}
-            </div>
-          )
-        })}
+        {!orders.length ? (
+          <div>Your order history is empty</div>
+        ) : (
+          <div>
+            {orders.map(order => {
+              return (
+                <div key={order.id}>
+                  <Link to={`/orders/${this.props.userId}/${order.id}`}>
+                    order-date: {order.date.substring(0, 10)} status:{' '}
+                    {order.status}
+                  </Link>
+
+                  {!order.teas.length ? (
+                    <div>No Items Ordered in this Purchase</div>
+                  ) : (
+                    <div>
+                      {order.teas.map(tea => {
+                        return (
+                          <div key={tea.id}>
+                            <h3>{tea.name}</h3>
+                            <span>
+                              {tea.flavor} {tea.price}{' '}
+                              {tea.order_product.quantity}
+                            </span>
+                            <img
+                              src={tea.imageUrl}
+                              width={200}
+                              height={200}
+                              mode="fit"
+                            />
+                          </div>
+                        )
+                      })}
+                    </div>
+                  )}
+                </div>
+              )
+            })}
+          </div>
+        )}
       </div>
     )
   }

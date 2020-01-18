@@ -8,6 +8,7 @@ const GET_TEAS = 'GET_TEAS'
 const GET_SINGLE_TEA = 'GET_SINGLE_TEA'
 const ADD_SINGLE_TEA = 'ADD_SINGLE_TEA'
 const REMOVE_SINGLE_TEA = 'REMOVE_SINGLE_TEA'
+const UPDATE_SINGLE_TEA = 'EDIT_SINGLE_TEA'
 
 /**
  * INITIAL STATE
@@ -33,6 +34,11 @@ const getSingleTea = tea => ({
 const addSingleTea = newTea => ({
   type: ADD_SINGLE_TEA,
   newTea
+})
+
+const updateSingleTea = teas => ({
+  type: UPDATE_SINGLE_TEA,
+  teas
 })
 
 const removeSingleTea = teas => ({
@@ -70,6 +76,16 @@ export const createSingleTea = newTea => async dispatch => {
   }
 }
 
+export const editSingleTea = (id, editedTea) => async dispatch => {
+  try {
+    await axios.put(`/api/teas/${id}`, editedTea)
+    const {data} = await Axios.get(`/api/teas`)
+    dispatch(updateSingleTea(data))
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 export const deleteSingleTea = id => async dispatch => {
   try {
     await axios.delete(`/api/teas/${id}`)
@@ -92,6 +108,8 @@ function teasReducer(state = initialState, action) {
     case ADD_SINGLE_TEA:
       return {...state, allTeas: [...state.allTeas, action.newTea]}
     case REMOVE_SINGLE_TEA:
+      return {...state, allTeas: action.teas}
+    case UPDATE_SINGLE_TEA:
       return {...state, allTeas: action.teas}
     default:
       return state
