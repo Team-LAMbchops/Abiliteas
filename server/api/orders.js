@@ -53,7 +53,8 @@ router.get('/:UserId', isAdminMiddleware, async (req, res, next) => {
       where: {
         userId: req.params.UserId,
         status: 'Completed'
-      }
+      },
+      include: [Tea]
     })
     res.json(orders)
   } catch (err) {
