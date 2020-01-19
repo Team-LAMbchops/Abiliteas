@@ -11,8 +11,8 @@ class CheckoutPage extends React.Component {
   }
 
   componentDidMount() {
-    // const id = this.props.match.params.userId
-    this.props.getCartProducts()
+    const id = this.props.match.params.userId
+    this.props.getCart(id)
   }
 
   render() {

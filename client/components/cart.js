@@ -1,26 +1,16 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {
-  fetchCart,
-  getCartProducts,
-  incrementQty,
-  decrementQty,
-  removeItem
-} from '../store/cart'
+import {fetchCart, incrementQty, decrementQty, removeItem} from '../store/cart'
 import {findPrice, findTotal} from './helperFuncs'
 
 class Cart extends React.Component {
   componentDidMount() {
-    this.props.getCartProducts()
+    this.props.getCart(this.props.user.id)
   }
   render() {
     const items = this.props.cart.items
     const qty = this.props.cart.qty
-
-    // let priceArr = this.props.cart.items.map(item => item.iditem.price)
-    // console.log(priceArr, "PRICE ARRAY")
-
     return (
       <div>
         <div>
@@ -61,8 +51,6 @@ class Cart extends React.Component {
                       </button>
                     </p>
 
-                    <div>{<Link to="/checkout">Checkout</Link>}</div>
-
                     <p>
                       Price: ${(findPrice(item.price) * qty[item.id]).toFixed(
                         2
@@ -75,7 +63,9 @@ class Cart extends React.Component {
           )}
           Total:${findTotal(items, qty).toFixed(2)}
         </div>
-        <button type="submit">Checkout</button>
+        <button type="submit" onClick={() => this.props.redirect('/checkout')}>
+          Checkout
+        </button>
       </div>
     )
   }
@@ -83,16 +73,18 @@ class Cart extends React.Component {
 
 const mapStateToProps = state => {
   return {
+    user: state.user,
     cart: state.cart
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    getCartProducts: () => dispatch(getCartProducts()),
+    getCart: id => dispatch(fetchCart(id)),
     increment: id => dispatch(incrementQty(id)),
     decrement: id => dispatch(decrementQty(id)),
-    remove: id => dispatch(removeItem(id))
+    remove: id => dispatch(removeItem(id)),
+    redirect: route => ownProps.history.push(route)
   }
 }
 
