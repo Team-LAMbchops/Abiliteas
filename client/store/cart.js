@@ -32,9 +32,9 @@ export const addToCart = (order, item) => ({
   item
 })
 
-export const incrementQty = id => ({
+export const incrementQty = qtyData => ({
   type: INCREMENT_QTY,
-  id
+  qtyData
 })
 
 export const decrementQty = id => ({
@@ -71,6 +71,18 @@ export const fetchCreateOrder = (userId, tea) => async dispatch => {
     console.log(error)
   }
 }
+export const getIncrement = (TeaId, OrderId) => async dispatch => {
+  try {
+    const res = await axios.put(`/api/products/${OrderId}/${TeaId}`, {
+      TeaId,
+      OrderId
+    })
+    dispatch(incrementQty(res.data))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 /**
  * REDUCER
  */
@@ -123,13 +135,11 @@ function cartReducer(state = initialCart, action) {
       }
     }
     case INCREMENT_QTY: {
-      const newState = {...state}
-      const increment = newState.qty[action.id] + 1
       return {
-        ...newState,
+        ...state,
         qty: {
-          ...newState.qty,
-          [action.id]: increment
+          ...state.qty,
+          [action.qtyData.teaId]: action.qtyData.quantity
         }
       }
     }

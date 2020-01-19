@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {fetchCart, incrementQty, decrementQty, removeItem} from '../store/cart'
+import {fetchCart, getIncrement, decrementQty, removeItem} from '../store/cart'
 import {findPrice, findTotal} from './helperFuncs'
 
 class Cart extends React.Component {
@@ -11,6 +11,7 @@ class Cart extends React.Component {
   render() {
     const items = this.props.cart.items
     const qty = this.props.cart.qty
+    const orderId = this.props.cart.currentOrder.id
     return (
       <div>
         <div>
@@ -33,7 +34,7 @@ class Cart extends React.Component {
                       Quantity: {qty[item.id]}
                       <button
                         type="button"
-                        onClick={() => this.props.increment(item.id)}
+                        onClick={() => this.props.increment(item.id, orderId)}
                       >
                         Increment
                       </button>
@@ -81,7 +82,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     getCart: id => dispatch(fetchCart(id)),
-    increment: id => dispatch(incrementQty(id)),
+    increment: (TeaId, OrderId) => dispatch(getIncrement(TeaId, OrderId)),
     decrement: id => dispatch(decrementQty(id)),
     remove: id => dispatch(removeItem(id)),
     redirect: route => ownProps.history.push(route)
