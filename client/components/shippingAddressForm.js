@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {fetchSingleOrder, editOrder} from '../store/orders'
 
 class ShippingAddressForm extends React.Component {
   constructor(props) {
@@ -16,6 +17,11 @@ class ShippingAddressForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
+  componentDidMount() {
+    // const id = this.props.match.params.OrdersId
+    // this.props.fetchSingleOrder(id)
+  }
+
   handleChange(evt) {
     this.setState({
       [evt.target.name]: evt.target.value
@@ -24,6 +30,7 @@ class ShippingAddressForm extends React.Component {
 
   async handleSubmit(evt) {
     evt.preventDefault()
+    // this.props.onSubmitEditSingleOrder(this.props.match.params.orderId, this.state)
 
     this.setState({
       firstName: '',
@@ -78,12 +85,18 @@ class ShippingAddressForm extends React.Component {
 
 const mapStateToProps = state => {
   //use singleOrder state or allOrders state?
-  return {}
+  return {
+    // currOrder: state.order.currentOrder,
+    // oneOrder: state.order.singleOrder
+  }
 }
 
 const mapDispatchToProps = dispatch => {
   //dispatch the thunk that updates order from 'pending' to 'completed'
-  return {}
+  return {
+    // loadSingleOrder: (userId, orderId) => dispatch(fetchSingleOrder(userId, orderId)),
+    // onSubmitEditSingleOrder: (orderId, editedOrder) => dispatch(editOrder(orderId, editedOrder))
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShippingAddressForm)

@@ -77,7 +77,7 @@ router.post('/', async (req, res, next) => {
 
 router.delete('/:orderId', async (req, res, next) => {
   try {
-    await Order.destory({
+    await Order.destroy({
       where: {
         id: req.params.orderId
       }
@@ -89,9 +89,15 @@ router.delete('/:orderId', async (req, res, next) => {
 
 router.put('/:orderId', async (req, res, next) => {
   try {
-    const orderUpdate = await Order.findbyPk(req.params.orderId)
-    orderUpdate.update(req.body)
-    res.json(orderUpdate)
+    const orderUpdate = await Order.findByPk(req.params.orderId)
+    await orderUpdate.update({
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      address: req.body.address,
+      email: req.body.email,
+      status: 'Completed'
+    })
+    res.sendStatus(202)
   } catch (error) {
     next(error)
   }
