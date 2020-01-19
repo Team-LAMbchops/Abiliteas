@@ -10,10 +10,13 @@ const INCREMENT_QTY = 'INCREMENT_QTY'
 const DECREMENT_QTY = 'DECREMENT_QTY'
 const REMOVE_ITEM = 'REMOVE_ITEM'
 
+const CREATE_ORDER = 'CREATE_ORDER'
+
 /**
  * INITIAL STATE
  */
 const initialCart = {
+  currentOrder: {},
   items: [],
   qty: {}
 }
@@ -26,8 +29,9 @@ const getCart = cart => ({
   cart
 })
 
-export const addToCart = item => ({
+export const addToCart = (order, item) => ({
   type: ADD_TO_CART,
+  order,
   item
 })
 
@@ -62,9 +66,14 @@ export const fetchCart = id => async dispatch => {
   }
 }
 
-export const fetchCreateOP = async (qty, orderId, teaId) => {
+export const fetchCreateOrder = (userId, tea) => async dispatch => {
   try {
-    await axios.post('/api/orderproducts', {qty, orderId, teaId})
+    const res = await axios.post(`/api/orders`, {userId, tea})
+    if (Array.isArray(res.data)) {
+      dispatch(addToCart(res.data[0], tea))
+    } else {
+      dispatch(addToCart(res.data, tea))
+    }
   } catch (error) {
     console.log(error)
   }
@@ -87,7 +96,8 @@ function cartReducer(state = initialCart, action) {
             ...newState.qty,
             [teaId]: 1
           },
-          items: [...newState.items, action.item]
+          items: [...newState.items, action.item],
+          currentOrder: action.order
         }
       } else {
         let increment = newState.qty[teaId] + 1
@@ -96,7 +106,8 @@ function cartReducer(state = initialCart, action) {
           qty: {
             ...newState.qty,
             [teaId]: increment
-          }
+          },
+          currentOrder: action.order
         }
       }
     }

@@ -1,9 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchSingleTea} from '../store/teas'
-import {addToCart, fetchCreateOP} from '../store/cart'
+import {addToCart, fetchCreateOrder} from '../store/cart'
 import CartContainer from './cart'
-import {fetchCreateOrder} from '../store/orders'
 import {findPrice} from './helperFuncs'
 
 class SingleTea extends React.Component {

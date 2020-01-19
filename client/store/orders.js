@@ -4,15 +4,13 @@ import axios from 'axios'
  */
 const GET_ORDERS = 'GET_ORDERS'
 const GET_SINGLE_ORDER = 'GET_SINGLE_ORDER'
-const CREATE_ORDER = 'CREATE_ORDER'
 
 /**
  * INITIAL STATE
  */
 const initialState = {
   allOrders: [],
-  singleOrder: {},
-  currentOrder: {}
+  singleOrder: {}
 }
 
 /**
@@ -28,10 +26,6 @@ const getSingleOrder = order => ({
   order
 })
 
-const createOrder = order => ({
-  type: CREATE_ORDER,
-  order
-})
 /**
  * THUNK CREATORS
  */
@@ -53,19 +47,6 @@ export const fetchSingleOrder = (userId, orderId) => async dispatch => {
   }
 }
 
-export const fetchCreateOrder = (userId, tea) => async dispatch => {
-  try {
-    const res = await axios.post(`/api/orders`, {userId, tea})
-    if (Array.isArray(res.data)) {
-      dispatch(createOrder(res.data[0]))
-    } else {
-      dispatch(createOrder(res.data))
-    }
-  } catch (error) {
-    console.log(error)
-  }
-}
-
 /**
  * REDUCER
  */
@@ -75,13 +56,6 @@ function ordersReducer(state = initialState, action) {
       return {...state, allOrders: action.orders}
     case GET_SINGLE_ORDER: {
       return {...state, singleOrder: action.order}
-    }
-    case CREATE_ORDER: {
-      return {
-        ...state,
-        allOrders: [...state.allOrders, action.order],
-        currentOrder: action.order
-      }
     }
     default:
       return state
