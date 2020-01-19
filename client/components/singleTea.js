@@ -15,7 +15,7 @@ class SingleTea extends React.Component {
   async handleClick() {
     const userId = this.props.user.id
     const tea = this.props.singleTea
-    this.props.createOrder(userId, tea)
+    await this.props.createOrder(userId, tea)
   }
 
   render() {
