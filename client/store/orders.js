@@ -5,6 +5,8 @@ import axios from 'axios'
 const GET_ORDERS = 'GET_ORDERS'
 const GET_SINGLE_ORDER = 'GET_SINGLE_ORDER'
 
+const UPDATE_ORDER = 'UPDATE_ORDER'
+
 /**
  * INITIAL STATE
  */
@@ -23,6 +25,11 @@ const getOrders = orders => ({
 
 const getSingleOrder = order => ({
   type: GET_SINGLE_ORDER,
+  order
+})
+
+const updateOrder = order => ({
+  type: UPDATE_ORDER,
   order
 })
 
@@ -47,6 +54,15 @@ export const fetchSingleOrder = (userId, orderId) => async dispatch => {
   }
 }
 
+export const editOrder = (orderId, editedOrder) => async dispatch => {
+  try {
+    await axios.put(`/api/orders/${orderId}`, editedOrder)
+    const {data} = await Axios.get(`/api/orders`)
+    dispatch(updateOrder(data))
+  } catch (error) {
+    console.log(error)
+  }
+}
 /**
  * REDUCER
  */
@@ -57,6 +73,12 @@ function ordersReducer(state = initialState, action) {
     case GET_SINGLE_ORDER: {
       return {...state, singleOrder: action.order}
     }
+UPDATE_ORDER: {
+      return {
+        ...state,
+        allOrders: [...state.allOrders, action.order],
+      }
+    }   
     default:
       return state
   }
