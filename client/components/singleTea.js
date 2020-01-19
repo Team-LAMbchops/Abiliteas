@@ -11,20 +11,11 @@ class SingleTea extends React.Component {
     const id = this.props.match.params.teaId
     this.props.getSingleTea(id)
   }
-  async createOrder() {
-    const currentTea = this.props.singleTea
-    const teaId = currentTea.id
-    const qty = this.props.cart.qty[teaId]
-    if (this.props.cart.items.length === 0) {
-      if (this.props.user) {
-        const userId = this.props.user.id
-        await this.props.createOrder(userId)
-      } else {
-        await this.props.createOrder()
-      }
-    }
-    const orderId = this.props.order.currentOrder.id
-    await this.props.createOP(qty, orderId, teaId)
+
+  async handleClick() {
+    const userId = this.props.user.id
+    const tea = this.props.singleTea
+    this.props.createOrder(userId, tea)
   }
 
   render() {
@@ -39,8 +30,7 @@ class SingleTea extends React.Component {
         <button
           type="submit"
           onClick={() => {
-            this.createOrder()
-            this.props.addToCart(tea)
+            this.handleClick()
           }}
         >
           Add To Cart
@@ -66,9 +56,7 @@ const mapDispatchToProps = dispatch => {
   return {
     getSingleTea: id => dispatch(fetchSingleTea(id)),
     addToCart: item => dispatch(addToCart(item)),
-    createOrder: (orderId, userId) =>
-      dispatch(fetchCreateOrder(orderId, userId)),
-    createOP: (qty, orderId, teaId) => fetchCreateOP(qty, orderId, teaId)
+    createOrder: (userId, tea) => dispatch(fetchCreateOrder(userId, tea))
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(SingleTea)

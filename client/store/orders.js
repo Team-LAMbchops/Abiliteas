@@ -54,10 +54,14 @@ export const fetchSingleOrder = (userId, orderId) => async dispatch => {
   }
 }
 
-export const fetchCreateOrder = (userId = null) => async dispatch => {
+export const fetchCreateOrder = (userId, tea) => async dispatch => {
   try {
-    const res = await axios.post(`/api/orders`, {userId})
-    dispatch(createOrder(res.data))
+    const res = await axios.post(`/api/orders`, {userId, tea})
+    if (Array.isArray(res.data)) {
+      dispatch(createOrder(res.data[0]))
+    } else {
+      dispatch(createOrder(res.data))
+    }
   } catch (error) {
     console.log(error)
   }

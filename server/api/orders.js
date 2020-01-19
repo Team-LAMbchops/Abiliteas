@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Order, Tea} = require('../db/models')
+const {Order, OrderProduct, Tea} = require('../db/models')
 const {isAdminMiddleware} = require('./securityMiddleware/check-Auth')
 module.exports = router
 
@@ -21,8 +21,7 @@ router.get('/:UserId', isAdminMiddleware, async (req, res, next) => {
       where: {
         userId: req.params.UserId,
         status: 'Completed'
-      },
-      include: [{model: Tea}]
+      }
     })
     res.json(orders)
   } catch (err) {
@@ -66,10 +65,24 @@ router.get('/:UserId', isAdminMiddleware, async (req, res, next) => {
   }
 })
 
+//todo: findorCreate an order using the USERID (and teaId), use the teaId and magic method to create orderProduct.
+
 router.post('/', async (req, res, next) => {
   try {
-    const newOrder = await Order.create(req.body)
-    res.json(newOrder)
+    const order = await Order.findOrCreate({
+      where: {
+        userId: req.body.userId,
+        status: 'Pending'
+      },
+      include: [Tea]
+    })
+    //orderId from query
+    const orderId = order[0].dataValues.id
+    const currentOrder = await Order.findByPk(orderId)
+    console.log(req.body.tea.id)
+    //magic method to create throughtable instance
+    await currentOrder.addTea(req.body.tea.id)
+    res.json(order)
   } catch (err) {
     next(err)
   }
@@ -77,7 +90,7 @@ router.post('/', async (req, res, next) => {
 
 router.delete('/:orderId', async (req, res, next) => {
   try {
-    await Order.destory({
+    await Order.destroy({
       where: {
         id: req.params.orderId
       }

@@ -61,7 +61,6 @@ class Cart extends React.Component {
                       </button>
                     </p>
 
-
                     <div>{<Link to="/checkout">Checkout</Link>}</div>
 
                     <p>
