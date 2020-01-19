@@ -12,6 +12,38 @@ router.get('/', isAdminMiddleware, async (req, res, next) => {
   }
 })
 
+//path: /orders/:userId/:userId
+//cart
+//getCartfromDB if there is one
+router.get('/:UserId/:UserId', isAdminMiddleware, async (req, res, next) => {
+  try {
+    const cart = await Order.findOne({
+      where: {
+        userId: req.params.UserId,
+        status: 'Pending'
+      },
+      include: [{model: Tea}]
+    })
+    if (cart) {
+      const cartId = cart.dataValues.id
+      const productOrders = await OrderProduct.findAll({
+        where: {
+          orderId: cartId
+        }
+      })
+      //return the cart & quantity
+      //cart.id = orderId
+      //cart.teas.forEach ==> put into cart.items in redux store
+      //orderProducts.forEach ==> put into cart.qty in redux store as teaId: quantity
+      res.json({
+        cart: cart,
+        orderProducts: productOrders
+      })
+    }
+  } catch (err) {
+    next(err)
+  }
+})
 // path: /orders/:UserId
 // all orders for an individual user
 
@@ -47,24 +79,6 @@ router.get('/:UserId/:OrdersId', isAdminMiddleware, async (req, res, next) => {
   }
 })
 
-//path: /cart
-//cart
-
-router.get('/:UserId', isAdminMiddleware, async (req, res, next) => {
-  try {
-    const cart = await Order.findOne({
-      where: {
-        userId: req.params.UserId,
-        status: 'Pending'
-      },
-      include: [{model: Tea}]
-    })
-    res.json(cart)
-  } catch (err) {
-    next(err)
-  }
-})
-
 //todo: findorCreate an order using the USERID (and teaId), use the teaId and magic method to create orderProduct.
 
 router.post('/', async (req, res, next) => {
@@ -79,7 +93,6 @@ router.post('/', async (req, res, next) => {
     //orderId from query
     const orderId = order[0].dataValues.id
     const currentOrder = await Order.findByPk(orderId)
-    console.log(req.body.tea.id)
     //magic method to create throughtable instance
     await currentOrder.addTea(req.body.tea.id)
     const productOrder = await OrderProduct.findOne({
@@ -100,6 +113,7 @@ router.post('/', async (req, res, next) => {
   }
 })
 
+//delete entire order
 router.delete('/:orderId', async (req, res, next) => {
   try {
     await Order.destroy({
@@ -112,6 +126,7 @@ router.delete('/:orderId', async (req, res, next) => {
   }
 })
 
+//updateOrder
 router.put('/:orderId', async (req, res, next) => {
   try {
     const orderUpdate = await Order.findByPk(req.params.orderId)

@@ -5,12 +5,9 @@ import axios from 'axios'
  */
 const GET_CART = 'GET_CART'
 const ADD_TO_CART = 'ADD_TO_CART'
-const GET_CART_PRODUCTS = 'GET_CART_PRODUCTS'
 const INCREMENT_QTY = 'INCREMENT_QTY'
 const DECREMENT_QTY = 'DECREMENT_QTY'
 const REMOVE_ITEM = 'REMOVE_ITEM'
-
-const CREATE_ORDER = 'CREATE_ORDER'
 
 /**
  * INITIAL STATE
@@ -24,19 +21,15 @@ const initialCart = {
 /**
  * ACTION CREATORS
  */
-const getCart = cart => ({
+const getCart = cartData => ({
   type: GET_CART,
-  cart
+  cartData
 })
 
 export const addToCart = (order, item) => ({
   type: ADD_TO_CART,
   order,
   item
-})
-
-export const getCartProducts = () => ({
-  type: GET_CART_PRODUCTS
 })
 
 export const incrementQty = id => ({
@@ -59,7 +52,7 @@ export const removeItem = id => ({
  */
 export const fetchCart = id => async dispatch => {
   try {
-    const res = await axios.get(`/api/cart/${id}`)
+    const res = await axios.get(`/api/orders/${id}/${id}`)
     dispatch(getCart(res.data))
   } catch (err) {
     console.error(err)
@@ -84,8 +77,26 @@ export const fetchCreateOrder = (userId, tea) => async dispatch => {
 // eslint-disable-next-line complexity
 function cartReducer(state = initialCart, action) {
   switch (action.type) {
-    case GET_CART:
-      return action.cart
+    case GET_CART: {
+      const stateCopy = {...state}
+      const teas = action.cartData.cart.teas
+      const orderProducts = action.cartData.orderProducts
+      teas.forEach(tea => {
+        if (stateCopy.items.filter(item => item.id === tea.id).length === 0) {
+          stateCopy.items.push(tea)
+        }
+      })
+      orderProducts.forEach(orderProduct => {
+        if (!stateCopy.qty[orderProduct.teaId]) {
+          stateCopy.qty[orderProduct.teaId] = orderProduct.quantity
+        }
+      })
+      return {
+        ...stateCopy,
+        currentOrder: action.cartData.cart
+      }
+    }
+
     case ADD_TO_CART: {
       const teaId = action.item.id
       const newState = {...state}
