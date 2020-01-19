@@ -2,7 +2,6 @@ import React from 'react'
 import {connect} from 'react-redux'
 import ShippingAddressForm from './shippingAddressForm'
 import {fetchCart} from '../store/cart'
-import {getCartProducts} from '../components/cart'
 import MyStoreCheckout from '../payment-components/MyStoreCheckout'
 
 class CheckoutPage extends React.Component {
@@ -11,7 +10,7 @@ class CheckoutPage extends React.Component {
   }
 
   componentDidMount() {
-    const id = this.props.match.params.userId
+    const id = this.props.user.id
     this.props.getCart(id)
   }
 
@@ -45,13 +44,14 @@ class CheckoutPage extends React.Component {
 
 const mapStateToProps = state => {
   return {
+    user: state.user,
     cart: state.cart
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    getCartProducts: () => dispatch(fetchCart())
+    getCart: id => dispatch(fetchCart(id))
     //add an order?
   }
 }
