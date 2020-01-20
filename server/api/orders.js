@@ -135,7 +135,7 @@ router.put('/:orderId', async (req, res, next) => {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       address: req.body.address,
-      email: req.body.email,
+      email: req.body.emailAddress,
       status: 'Completed'
     })
     res.sendStatus(202)

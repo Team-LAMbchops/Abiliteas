@@ -49,7 +49,7 @@ export default injectStripe(CheckoutForm)
 
 //     // See our confirmCardPayment documentation for more:
 //     // https://stripe.com/docs/stripe-js/reference#stripe-confirm-card-payment
-//     this.props.stripe.confirmCardPayment('{PAYMENT_INTENT_CLIENT_SECRET}', { // //our secret key from stripe dashboard: sk_test_kDlLx9QNq5asv9pZCmV8uSCu007sTs4ASe
+//     this.props.stripe.confirmCardPayment('process.env.STRIPE_SECRET', { // //our secret key from stripe dashboard: sk_test_kDlLx9QNq5asv9pZCmV8uSCu007sTs4ASe
 //       payment_method: {
 //         card: this.props.elements.getElement('card'),
 //         billing_details: {
