@@ -1,3 +1,4 @@
+/* eslint-disable max-statements */
 import axios from 'axios'
 
 /**
@@ -71,11 +72,12 @@ export const fetchCreateOrder = (userId, tea) => async dispatch => {
     console.log(error)
   }
 }
-export const getIncrement = (TeaId, OrderId) => async dispatch => {
+export const getIncrement = (TeaId, OrderId, type) => async dispatch => {
   try {
     const res = await axios.put(`/api/products/${OrderId}/${TeaId}`, {
       TeaId,
-      OrderId
+      OrderId,
+      type
     })
     dispatch(incrementQty(res.data))
   } catch (error) {
@@ -135,35 +137,25 @@ function cartReducer(state = initialCart, action) {
       }
     }
     case INCREMENT_QTY: {
-      return {
-        ...state,
-        qty: {
-          ...state.qty,
-          [action.qtyData.teaId]: action.qtyData.quantity
-        }
-      }
-    }
-    case DECREMENT_QTY: {
-      const newState = {...state}
-      if (newState.qty[action.id] === 1) {
-        const newItems = newState.items.filter(item => item.id !== action.id)
-        const newQty = newState.qty
-        delete newQty[action.id]
+      if (action.qtyData.quantity === 0) {
+        const newState = {...state}
+        const newItems = newState.items.filter(
+          item => item.id !== action.qtyData.teaId
+        )
+        delete newState.qty[action.qtyData.teaId]
         return {
           ...newState,
           items: newItems,
-          qty: newQty
+          qty: newState.qty
         }
-      } else {
-        const decrement = newState.qty[action.id] - 1
+      } else
         return {
-          ...newState,
+          ...state,
           qty: {
-            ...newState.qty,
-            [action.id]: decrement
+            ...state.qty,
+            [action.qtyData.teaId]: action.qtyData.quantity
           }
         }
-      }
     }
     case REMOVE_ITEM: {
       const newState = {...state}

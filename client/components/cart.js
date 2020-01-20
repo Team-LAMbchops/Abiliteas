@@ -34,13 +34,17 @@ class Cart extends React.Component {
                       Quantity: {qty[item.id]}
                       <button
                         type="button"
-                        onClick={() => this.props.increment(item.id, orderId)}
+                        onClick={() =>
+                          this.props.increment(item.id, orderId, 'increment')
+                        }
                       >
                         Increment
                       </button>
                       <button
                         type="button"
-                        onClick={() => this.props.decrement(item.id)}
+                        onClick={() =>
+                          this.props.increment(item.id, orderId, 'decrement')
+                        }
                       >
                         Decrement
                       </button>
@@ -82,8 +86,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     getCart: id => dispatch(fetchCart(id)),
-    increment: (TeaId, OrderId) => dispatch(getIncrement(TeaId, OrderId)),
-    decrement: id => dispatch(decrementQty(id)),
+    increment: (TeaId, OrderId, type) =>
+      dispatch(getIncrement(TeaId, OrderId, type)),
     remove: id => dispatch(removeItem(id)),
     redirect: route => ownProps.history.push(route)
   }
