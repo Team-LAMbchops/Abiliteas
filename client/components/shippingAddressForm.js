@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchSingleOrder, editOrder} from '../store/orders'
+import {Redirect} from 'react-router-dom'
 
 class ShippingAddressForm extends React.Component {
   constructor(props) {
@@ -22,10 +23,12 @@ class ShippingAddressForm extends React.Component {
       [evt.target.name]: evt.target.value
     })
   }
-
   async handleSubmit(evt) {
     evt.preventDefault()
-    this.props.onSubmitEditSingleOrder(this.props.currentCart.id, this.state)
+    await this.props.onSubmitEditSingleOrder(
+      this.props.currentCart.id,
+      this.state
+    )
 
     this.setState({
       firstName: '',
@@ -33,6 +36,12 @@ class ShippingAddressForm extends React.Component {
       address: '',
       emailAddress: ''
     })
+  }
+
+  redirect = () => {
+    console.log('redirecting...')
+    console.log(this, 'THIS')
+    // this.props.history.push('/confirmation')
   }
 
   render() {
@@ -69,7 +78,13 @@ class ShippingAddressForm extends React.Component {
             onChange={this.handleChange}
             value={this.state.emailAddress}
           />
-          <button type="submit" onClick={this.handleSubmit}>
+          <button
+            type="submit"
+            onClick={evt => {
+              this.handleSubmit(evt)
+              this.redirect()
+            }}
+          >
             Place Order
           </button>
         </form>
@@ -78,9 +93,11 @@ class ShippingAddressForm extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
   return {
-    currentCart: state.cart.currentOrder
+    currentCart: state.cart.currentOrder,
+    userId: state.user.id,
+    history: ownProps.history
   }
 }
 

@@ -22,6 +22,8 @@ import allTeaContainer from './components/allTeas'
 import {me} from './store'
 import cartContainer from './components/cart'
 import checkoutPageContainer from './components/checkout-page'
+import ConfirmationContainer from './components/Confirmation'
+import shippingAddressForm from './components/shippingAddressForm'
 
 /**
  * COMPONENT
@@ -44,6 +46,7 @@ class Routes extends Component {
         <Route exact path="/cart/" component={cartContainer} />
         <Route path="/teas/:teaId" component={SingleTea} />
         <Route path="/checkout" component={checkoutPageContainer} />
+        <Route path="/confirmation" component={ConfirmationContainer} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
