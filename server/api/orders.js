@@ -117,7 +117,7 @@ router.post('/', async (req, res, next) => {
 //delete entire order
 router.delete('/:orderId', async (req, res, next) => {
   try {
-    await Order.destroy({
+    await Order.findOne({
       where: {
         id: req.params.orderId
       }

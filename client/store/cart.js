@@ -37,9 +37,9 @@ export const updateQty = qtyData => ({
   qtyData
 })
 
-export const removeItem = id => ({
+export const removeItem = teaId => ({
   type: REMOVE_ITEM,
-  id
+  teaId
 })
 
 /**
@@ -79,6 +79,17 @@ export const getUpdate = (TeaId, OrderId, type) => async dispatch => {
   }
 }
 
+export const removeProduct = (orderId, teaId) => async dispatch => {
+  try {
+    const res = await axios.delete(`/api/products/${orderId}/${teaId}`, {
+      orderId,
+      teaId
+    })
+    dispatch(removeItem(res.data))
+  } catch (error) {
+    console.log(error)
+  }
+}
 /**
  * REDUCER
  */
@@ -153,9 +164,11 @@ function cartReducer(state = initialCart, action) {
     }
     case REMOVE_ITEM: {
       const newState = {...state}
-      const newItems = newState.items.filter(item => item.id !== action.id)
+      const newItems = newState.items.filter(
+        item => item.id !== action.teaId.teaId
+      )
       const newQty = newState.qty
-      delete newQty[action.id]
+      delete newQty[action.teaId.teaId]
       return {
         ...newState,
         items: newItems,
