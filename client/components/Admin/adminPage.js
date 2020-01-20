@@ -9,7 +9,15 @@ class AdminPage extends React.Component {
     return (
       <div>
         <h1>Admin Page</h1>
-        <Link to="/admin/teas">Teas</Link>
+        <div>
+          <Link to="/admin/teas">Teas</Link>
+        </div>
+        <div>
+          <Link to="/admin/users">Users</Link>
+        </div>
+        <div>
+          <Link to="/admin/orders">Orders</Link>
+        </div>
       </div>
     )
   }

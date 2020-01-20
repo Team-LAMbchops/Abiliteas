@@ -13,7 +13,10 @@ import {
   AdminAllTeas,
   AdminPage,
   AdminAddTea,
-  AdminEditTea
+  AdminEditTea,
+  AdminAllUsers,
+  AdminEditUser,
+  AdminAllOrders
 } from './components'
 import allTeaContainer from './components/allTeas'
 import {me} from './store'
@@ -51,9 +54,17 @@ class Routes extends Component {
             {isAdmin && (
               <Switch>
                 <Route exact path="/admin" component={AdminPage} />
-                <Route exact path="/admin/addTea" component={AdminAddTea} />
                 <Route exact path="/admin/teas" component={AdminAllTeas} />
+                <Route exact path="/admin/addTea" component={AdminAddTea} />
                 <Route path="/admin/editTea/:teaId" component={AdminEditTea} />
+
+                <Route exact path="/admin/users" component={AdminAllUsers} />
+                <Route
+                  path="/admin/editUser/:userId"
+                  component={AdminEditUser}
+                />
+
+                <Route exact path="/admin/orders" component={AdminAllOrders} />
               </Switch>
             )}
           </Switch>

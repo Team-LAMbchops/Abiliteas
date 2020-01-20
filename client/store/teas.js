@@ -1,5 +1,4 @@
 import axios from 'axios'
-import Axios from 'axios'
 
 /**
  * ACTION TYPES
@@ -8,7 +7,7 @@ const GET_TEAS = 'GET_TEAS'
 const GET_SINGLE_TEA = 'GET_SINGLE_TEA'
 const ADD_SINGLE_TEA = 'ADD_SINGLE_TEA'
 const REMOVE_SINGLE_TEA = 'REMOVE_SINGLE_TEA'
-const UPDATE_SINGLE_TEA = 'EDIT_SINGLE_TEA'
+const UPDATE_SINGLE_TEA = 'UPDATE_SINGLE_TEA'
 
 /**
  * INITIAL STATE
@@ -79,7 +78,7 @@ export const createSingleTea = newTea => async dispatch => {
 export const editSingleTea = (id, editedTea) => async dispatch => {
   try {
     await axios.put(`/api/teas/${id}`, editedTea)
-    const {data} = await Axios.get(`/api/teas`)
+    const {data} = await axios.get(`/api/teas`)
     dispatch(updateSingleTea(data))
   } catch (err) {
     console.log(err)
@@ -89,7 +88,7 @@ export const editSingleTea = (id, editedTea) => async dispatch => {
 export const deleteSingleTea = id => async dispatch => {
   try {
     await axios.delete(`/api/teas/${id}`)
-    const {data} = await Axios.get(`/api/teas`)
+    const {data} = await axios.get(`/api/teas`)
     dispatch(removeSingleTea(data))
   } catch (err) {
     console.log(err)

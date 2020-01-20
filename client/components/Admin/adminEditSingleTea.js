@@ -6,14 +6,13 @@ import {Link} from 'react-router-dom'
 class AdminEditTea extends React.Component {
   constructor(props) {
     super(props)
-    let newPrice = String(parseInt(this.props.tea.price) / 100)
     this.state = {
-      name: this.props.tea.name,
-      flavor: this.props.tea.flavor,
-      description: this.props.tea.description,
-      price: newPrice,
-      inventory: this.props.tea.inventory,
-      imageUrl: this.props.tea.imageUrl
+      name: '',
+      flavor: '',
+      description: '',
+      price: '',
+      inventory: '',
+      imageUrl: ''
     }
 
     this.handleChange = this.handleChange.bind(this)
@@ -32,6 +31,7 @@ class AdminEditTea extends React.Component {
   }
 
   handleSubmit(event) {
+    console.log('onsubmit')
     event.preventDefault()
     this.props.onSubmitEditSingleTea(this.props.match.params.teaId, this.state)
   }
@@ -90,9 +90,7 @@ class AdminEditTea extends React.Component {
             onChange={this.handleChange}
             value={this.state.imageUrl}
           />
-          <Link to="/admin/teas">
-            <button type="submit">Submit</button>
-          </Link>
+          <button type="submit">Submit</button>
         </form>
       </div>
     )
