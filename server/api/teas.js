@@ -1,8 +1,9 @@
 const router = require('express').Router()
+const {isAdminMiddleware} = require('./securityMiddleware/check-Auth')
 const {Tea} = require('../db/models')
 module.exports = router
 
-router.get('/:teaId', async (req, res, next) => {
+router.get('/:teaId', isAdminMiddleware, async (req, res, next) => {
   try {
     const singleTea = await Tea.findOne({
       where: {
@@ -15,7 +16,7 @@ router.get('/:teaId', async (req, res, next) => {
   }
 })
 
-router.get('/', async (req, res, next) => {
+router.get('/', isAdminMiddleware, async (req, res, next) => {
   try {
     const teas = await Tea.findAll()
     res.json(teas)
@@ -24,7 +25,7 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.post('/', async (req, res, next) => {
+router.post('/', isAdminMiddleware, async (req, res, next) => {
   try {
     const {name, flavor, description, price, inventory, imageUrl} = req.body
     const newTea = await Tea.create({
@@ -43,7 +44,7 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-router.put('/:teaId', async (req, res, next) => {
+router.put('/:teaId', isAdminMiddleware, async (req, res, next) => {
   try {
     const tea = await Tea.findByPk(req.params.teaId)
     const {name, flavor, description, price, inventory, imageUrl} = req.body
@@ -61,7 +62,7 @@ router.put('/:teaId', async (req, res, next) => {
   }
 })
 
-router.delete('/:teaId', async (req, res, next) => {
+router.delete('/:teaId', isAdminMiddleware, async (req, res, next) => {
   try {
     const tea = await Tea.findByPk(req.params.teaId)
     if (!tea) return res.sendStatus(404)

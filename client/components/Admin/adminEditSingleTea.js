@@ -6,14 +6,13 @@ import {Link} from 'react-router-dom'
 class AdminEditTea extends React.Component {
   constructor(props) {
     super(props)
-    let newPrice = String(parseInt(this.props.tea.price) / 100)
     this.state = {
-      name: this.props.tea.name,
-      flavor: this.props.tea.flavor,
-      description: this.props.tea.description,
-      price: newPrice,
-      inventory: this.props.tea.inventory,
-      imageUrl: this.props.tea.imageUrl
+      name: '',
+      flavor: '',
+      description: '',
+      price: '',
+      inventory: '',
+      imageUrl: ''
     }
 
     this.handleChange = this.handleChange.bind(this)

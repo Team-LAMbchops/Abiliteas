@@ -10,7 +10,15 @@ export {default as SingleTea} from './singleTea'
 export {default as allOrders} from './allOrders'
 export {default as singleOrder} from './singleOrder'
 export {default as userProfile} from './userProfile'
-export {default as AdminAllTeas} from './Admin/adminAllTeas'
+
 export {default as AdminPage} from './Admin/adminPage'
+
+export {default as AdminAllTeas} from './Admin/adminAllTeas'
 export {default as AdminAddTea} from './Admin/adminAddTea'
 export {default as AdminEditTea} from './Admin/adminEditSingleTea'
+
+export {default as AdminAllUsers} from './Admin/adminAllUsers'
+export {default as AdminAddUser} from './Admin/adminAddUser'
+export {default as AdminEditUser} from './Admin/adminEditSingleUser'
+
+export {default as AdminAllOrders} from './Admin/adminAllOrders'

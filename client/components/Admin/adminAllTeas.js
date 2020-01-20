@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {fetchTeas, deleteSingleTea} from '../../store/teas'
 import {Link} from 'react-router-dom'
 
-class AdminAllTea extends React.Component {
+class AdminAllTeas extends React.Component {
   componentDidMount() {
     this.props.getAllTeas()
   }
@@ -53,13 +53,12 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getAllTeas: () => dispatch(fetchTeas()),
-    removeSingleTea: teaId => dispatch(deleteSingleTea(teaId)),
-    getSingleTea: teaId => dispatch(fetchSingleTea(teaId))
+    removeSingleTea: teaId => dispatch(deleteSingleTea(teaId))
   }
 }
 
 const adminAllTeaContainer = connect(mapStateToProps, mapDispatchToProps)(
-  AdminAllTea
+  AdminAllTeas
 )
 
 export default adminAllTeaContainer
