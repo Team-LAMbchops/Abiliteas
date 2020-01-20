@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {fetchCart, getUpdate, removeItem} from '../store/cart'
+import {fetchCart, getUpdate, removeProduct} from '../store/cart'
 import {findPrice, findTotal} from './helperFuncs'
 
 class Cart extends React.Component {
@@ -50,7 +50,7 @@ class Cart extends React.Component {
                       </button>
                       <button
                         type="button"
-                        onClick={() => this.props.remove(item.id)}
+                        onClick={() => this.props.remove(orderId, item.id)}
                       >
                         Remove
                       </button>
@@ -87,7 +87,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     getCart: id => dispatch(fetchCart(id)),
     update: (TeaId, OrderId, type) => dispatch(getUpdate(TeaId, OrderId, type)),
-    remove: id => dispatch(removeItem(id)),
+    remove: (orderId, teaId) => dispatch(removeProduct(orderId, teaId)),
     redirect: route => ownProps.history.push(route)
   }
 }
