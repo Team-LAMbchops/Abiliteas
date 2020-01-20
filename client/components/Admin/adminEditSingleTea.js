@@ -31,6 +31,7 @@ class AdminEditTea extends React.Component {
   }
 
   handleSubmit(event) {
+    console.log('onsubmit')
     event.preventDefault()
     this.props.onSubmitEditSingleTea(this.props.match.params.teaId, this.state)
   }
@@ -89,9 +90,7 @@ class AdminEditTea extends React.Component {
             onChange={this.handleChange}
             value={this.state.imageUrl}
           />
-          <Link to="/admin/teas">
-            <button type="submit">Submit</button>
-          </Link>
+          <button type="submit">Submit</button>
         </form>
       </div>
     )

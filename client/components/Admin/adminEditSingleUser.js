@@ -81,9 +81,7 @@ class AdminEditUser extends React.Component {
             value={this.state.isAdmin}
           />
 
-          <Link to="/admin/users">
-            <button type="submit">Submit</button>
-          </Link>
+          <button type="submit">Submit</button>
         </form>
       </div>
     )

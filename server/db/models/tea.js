@@ -42,10 +42,7 @@ const Tea = db.define('tea', {
     type: Sequelize.STRING,
     defaultValue:
       'http://cdn.shopify.com/s/files/1/0994/9584/products/sweet_tea_leaves-2_600x.jpg?v=1536186114',
-    allowNull: false,
-    validate: {
-      notEmpty: true
-    }
+    allowNull: false
   }
 })
 

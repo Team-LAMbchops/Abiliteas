@@ -9,16 +9,21 @@ class AdminAllOrders extends React.Component {
   }
 
   render() {
-    const orders = this.props.users
+    const orders = this.props.orders
+
+    console.log(orders)
     return (
       <div>
-        <h1>Admin All Users</h1>
+        <h1>Admin All Orders</h1>
 
         {orders.map(order => {
           return (
             <div key={order.id}>
               <h3>
-                <Link to={`/admin/orders/${order.id}`}>{order.date}</Link>
+                <div>{order.id}</div>
+                <Link to={`/admin/orders/${order.id}`}>
+                  {order.date.slice(0, 10)}
+                </Link>
               </h3>
               <p>{order.status}</p>
             </div>

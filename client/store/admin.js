@@ -52,7 +52,7 @@ const getSingleUser = user => ({
 })
 
 const updateSingleUser = users => ({
-  type: UPDATE_USER,
+  type: UPDATE_SINGLE_USER,
   users
 })
 

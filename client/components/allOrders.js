@@ -25,7 +25,7 @@ class AllOrders extends React.Component {
                     {order.status}
                   </Link>
 
-                  {!order.teas.length ? (
+                  {!order.teas ? (
                     <div>No Items Ordered in this Purchase</div>
                   ) : (
                     <div>
