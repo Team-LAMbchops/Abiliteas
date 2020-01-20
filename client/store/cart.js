@@ -1,3 +1,4 @@
+/* eslint-disable max-statements */
 import axios from 'axios'
 
 /**
@@ -5,8 +6,7 @@ import axios from 'axios'
  */
 const GET_CART = 'GET_CART'
 const ADD_TO_CART = 'ADD_TO_CART'
-const INCREMENT_QTY = 'INCREMENT_QTY'
-const DECREMENT_QTY = 'DECREMENT_QTY'
+const UPDATE_QTY = 'UPDATE_QTY'
 const REMOVE_ITEM = 'REMOVE_ITEM'
 
 /**
@@ -32,14 +32,9 @@ export const addToCart = (order, item) => ({
   item
 })
 
-export const incrementQty = qtyData => ({
-  type: INCREMENT_QTY,
+export const updateQty = qtyData => ({
+  type: UPDATE_QTY,
   qtyData
-})
-
-export const decrementQty = id => ({
-  type: DECREMENT_QTY,
-  id
 })
 
 export const removeItem = id => ({
@@ -71,13 +66,14 @@ export const fetchCreateOrder = (userId, tea) => async dispatch => {
     console.log(error)
   }
 }
-export const getIncrement = (TeaId, OrderId) => async dispatch => {
+export const getUpdate = (TeaId, OrderId, type) => async dispatch => {
   try {
     const res = await axios.put(`/api/products/${OrderId}/${TeaId}`, {
       TeaId,
-      OrderId
+      OrderId,
+      type
     })
-    dispatch(incrementQty(res.data))
+    dispatch(updateQty(res.data))
   } catch (error) {
     console.log(error)
   }
@@ -134,36 +130,26 @@ function cartReducer(state = initialCart, action) {
         }
       }
     }
-    case INCREMENT_QTY: {
-      return {
-        ...state,
-        qty: {
-          ...state.qty,
-          [action.qtyData.teaId]: action.qtyData.quantity
-        }
-      }
-    }
-    case DECREMENT_QTY: {
-      const newState = {...state}
-      if (newState.qty[action.id] === 1) {
-        const newItems = newState.items.filter(item => item.id !== action.id)
-        const newQty = newState.qty
-        delete newQty[action.id]
+    case UPDATE_QTY: {
+      if (action.qtyData.quantity === 0) {
+        const newState = {...state}
+        const newItems = newState.items.filter(
+          item => item.id !== action.qtyData.teaId
+        )
+        delete newState.qty[action.qtyData.teaId]
         return {
           ...newState,
           items: newItems,
-          qty: newQty
+          qty: newState.qty
         }
-      } else {
-        const decrement = newState.qty[action.id] - 1
+      } else
         return {
-          ...newState,
+          ...state,
           qty: {
-            ...newState.qty,
-            [action.id]: decrement
+            ...state.qty,
+            [action.qtyData.teaId]: action.qtyData.quantity
           }
         }
-      }
     }
     case REMOVE_ITEM: {
       const newState = {...state}
