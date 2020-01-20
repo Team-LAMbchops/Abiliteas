@@ -91,22 +91,24 @@ router.post('/', async (req, res, next) => {
       },
       include: [Tea]
     })
-    //orderId from query
-    const orderId = order[0].dataValues.id
-    const currentOrder = await Order.findByPk(orderId)
-    //magic method to create throughtable instance
-    await currentOrder.addTea(req.body.tea.id)
-    const productOrder = await OrderProduct.findOne({
-      where: {
-        teaId: req.body.tea.id,
-        orderId: orderId
-      }
-    })
-    //increase quantity per product
-    const qty = productOrder.dataValues.quantity
-    await productOrder.update({
-      quantity: qty + 1
-    })
+    if (req.body.tea) {
+      //orderId from query
+      const orderId = order[0].dataValues.id
+      const currentOrder = await Order.findByPk(orderId)
+      //magic method to create throughtable instance of orderproduct
+      await currentOrder.addTea(req.body.tea.id)
+      const productOrder = await OrderProduct.findOne({
+        where: {
+          teaId: req.body.tea.id,
+          orderId: orderId
+        }
+      })
+      //increase quantity per product
+      const qty = productOrder.dataValues.quantity
+      await productOrder.update({
+        quantity: qty + 1
+      })
+    }
     //send back order
     res.json(order)
   } catch (err) {

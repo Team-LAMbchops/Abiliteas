@@ -8,6 +8,7 @@ const GET_CART = 'GET_CART'
 const ADD_TO_CART = 'ADD_TO_CART'
 const UPDATE_QTY = 'UPDATE_QTY'
 const REMOVE_ITEM = 'REMOVE_ITEM'
+const EMPTY_CART = 'EMPTY_CART'
 
 /**
  * INITIAL STATE
@@ -42,12 +43,15 @@ export const removeItem = teaId => ({
   teaId
 })
 
+export const emptyCart = () => ({
+  type: EMPTY_CART
+})
 /**
  * THUNK CREATORS
  */
-export const fetchCart = id => async dispatch => {
+export const fetchCart = userId => async dispatch => {
   try {
-    const res = await axios.get(`/api/orders/${id}/${id}`)
+    const res = await axios.get(`/api/orders/${userId}/${userId}`)
     dispatch(getCart(res.data))
   } catch (err) {
     console.error(err)
@@ -174,6 +178,10 @@ function cartReducer(state = initialCart, action) {
         items: newItems,
         qty: newQty
       }
+    }
+    case EMPTY_CART: {
+      console.log('CART IS EMPTIED!!!')
+      return initialCart
     }
     default:
       return state

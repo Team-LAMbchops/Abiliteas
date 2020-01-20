@@ -34,9 +34,6 @@ class SingleTea extends React.Component {
         >
           Add To Cart
         </button>
-        <div>
-          <CartContainer />
-        </div>
       </div>
     )
   }

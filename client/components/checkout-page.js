@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import ShippingAddressForm from './shippingAddressForm'
-import {fetchCart} from '../store/cart'
+import {fetchCart, emptyCart} from '../store/cart'
 import MyStoreCheckout from '../payment-components/MyStoreCheckout'
 
 class CheckoutPage extends React.Component {
@@ -51,7 +51,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getCart: id => dispatch(fetchCart(id))
+    getCart: id => dispatch(fetchCart(id)),
+    emptyCart: () => dispatch(emptyCart())
     //add an order?
   }
 }
