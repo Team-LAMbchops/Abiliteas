@@ -75,7 +75,7 @@ function ordersReducer(state = initialState, action) {
     case UPDATE_ORDER: {
       return {
         ...state,
-        allOrders: [...state.allOrders, action.order]
+        allOrders: action.order
       }
     }
     default:

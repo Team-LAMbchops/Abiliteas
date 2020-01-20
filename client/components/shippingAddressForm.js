@@ -17,11 +17,6 @@ class ShippingAddressForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  componentDidMount() {
-    // const id = this.props.match.params.OrdersId
-    // this.props.fetchSingleOrder(id)
-  }
-
   handleChange(evt) {
     this.setState({
       [evt.target.name]: evt.target.value
@@ -30,20 +25,20 @@ class ShippingAddressForm extends React.Component {
 
   async handleSubmit(evt) {
     evt.preventDefault()
-    // this.props.onSubmitEditSingleOrder(this.props.match.params.orderId, this.state)
+    this.props.onSubmitEditSingleOrder(this.props.currentCart.id, this.state)
 
     this.setState({
       firstName: '',
       lastName: '',
       address: '',
-      email: ''
+      emailAddress: ''
     })
   }
 
   render() {
     return (
       <div>
-        <h1>1. Shipping Address </h1>
+        <h2> Shipping Address </h2>
 
         <form onSubmit={this.handleSubmit}>
           First Name:
@@ -72,7 +67,7 @@ class ShippingAddressForm extends React.Component {
             type="text"
             name="emailAddress"
             onChange={this.handleChange}
-            value={this.state.email}
+            value={this.state.emailAddress}
           />
           <button type="submit" onClick={this.handleSubmit}>
             Place Order
@@ -84,10 +79,8 @@ class ShippingAddressForm extends React.Component {
 }
 
 const mapStateToProps = state => {
-  //use singleOrder state or allOrders state?
   return {
-    // currOrder: state.order.currentOrder,
-    // oneOrder: state.order.singleOrder
+    currentCart: state.cart.currentOrder
   }
 }
 
@@ -95,7 +88,8 @@ const mapDispatchToProps = dispatch => {
   //dispatch the thunk that updates order from 'pending' to 'completed'
   return {
     // loadSingleOrder: (userId, orderId) => dispatch(fetchSingleOrder(userId, orderId)),
-    // onSubmitEditSingleOrder: (orderId, editedOrder) => dispatch(editOrder(orderId, editedOrder))
+    onSubmitEditSingleOrder: (orderId, editedOrder) =>
+      dispatch(editOrder(orderId, editedOrder))
   }
 }
 
