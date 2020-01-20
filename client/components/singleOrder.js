@@ -4,10 +4,12 @@ import {fetchSingleOrder} from '../store/orders'
 
 class SingleOrder extends React.Component {
   componentDidMount() {
+    console.log('compodid before')
     this.props.getSingleOrder(
       this.props.userId,
       this.props.match.params.orderId
     )
+    console.log('Component Did Mount after')
   }
 
   render() {
@@ -15,24 +17,27 @@ class SingleOrder extends React.Component {
     return (
       <div>
         <h1>Single Order Page</h1>
-        <div>
-          {' '}
-          {singleOrder.id} {singleOrder.date}{' '}
-        </div>
+        <div />
         {!singleOrder.date ? (
-          <div>Your Order History!</div>
+          <div>Single Order - Loading</div>
         ) : (
-          singleOrder.teas.map(tea => {
-            return (
-              <div key={tea.id}>
-                <h3>{tea.name}</h3>
-                <span>
-                  {tea.flavor} {tea.price} {tea.order_product.quantity}
-                </span>
-                <img src={tea.imageUrl} width={200} height={200} mode="fit" />
-              </div>
-            )
-          })
+          <div>
+            <h1>
+              {singleOrder.id} {singleOrder.date.slice(0, 10)}
+            </h1>
+
+            {singleOrder.teas.map(tea => {
+              return (
+                <div key={tea.id}>
+                  <h3>{tea.name}</h3>
+                  <span>
+                    {tea.flavor} {tea.price} {tea.order_product.quantity}
+                  </span>
+                  <img src={tea.imageUrl} width={200} height={200} mode="fit" />
+                </div>
+              )
+            })}
+          </div>
         )}
       </div>
     )
