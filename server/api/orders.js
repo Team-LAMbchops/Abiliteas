@@ -12,6 +12,26 @@ router.get('/', isAdminMiddleware, async (req, res, next) => {
   }
 })
 
+// path: /orders/:UserId
+// all orders for an individual user
+router.get('/:UserId', isAdminMiddleware, async (req, res, next) => {
+  try {
+    const orders = await Order.findAll({
+      where: {
+        userId: req.params.UserId,
+        status: 'Completed'
+      },
+      include: [Tea]
+    })
+    if (orders) {
+      res.json(orders)
+    }
+    res.json([])
+  } catch (err) {
+    next(err)
+  }
+})
+
 //path: /orders/:userId/:userId
 //cart
 //getCartfromDB if there is one
@@ -44,45 +64,32 @@ router.get('/:UserId/:UserId', isAdminMiddleware, async (req, res, next) => {
     next(err)
   }
 })
-// path: /orders/:UserId
-// all orders for an individual user
-
-router.get('/:UserId', isAdminMiddleware, async (req, res, next) => {
-  try {
-    const orders = await Order.findAll({
-      where: {
-        userId: req.params.UserId,
-        status: 'Completed'
-      },
-      include: [Tea]
-    })
-    res.json(orders)
-  } catch (err) {
-    next(err)
-  }
-})
 
 // path: /orders/:UserId/:OrdersId
 // a single order for a single user
-router.get('/:UserId/:OrdersId', isAdminMiddleware, async (req, res, next) => {
-  try {
-    const orders = await Order.findOne({
-      where: {
-        userId: req.params.UserId,
-        id: req.params.OrdersId,
-        status: 'Completed'
-      },
-      include: [{model: Tea}]
-    })
-    res.json(orders)
-  } catch (err) {
-    next(err)
+router.get(
+  '/singleOrder/:UserId/:OrdersId',
+  isAdminMiddleware,
+  async (req, res, next) => {
+    try {
+      const orders = await Order.findOne({
+        where: {
+          userId: req.params.UserId,
+          id: req.params.OrdersId,
+          status: 'Completed'
+        },
+        include: [{model: Tea}]
+      })
+      res.json(orders)
+    } catch (err) {
+      next(err)
+    }
   }
-})
+)
 
 //todo: findorCreate an order using the USERID (and teaId), use the teaId and magic method to create orderProduct.
 
-router.post('/', async (req, res, next) => {
+router.post('/', isAdminMiddleware, async (req, res, next) => {
   try {
     const order = await Order.findOrCreate({
       where: {
@@ -115,7 +122,7 @@ router.post('/', async (req, res, next) => {
 })
 
 //delete entire order
-router.delete('/:orderId', async (req, res, next) => {
+router.delete('/:orderId', isAdminMiddleware, async (req, res, next) => {
   try {
     await Order.findOne({
       where: {
