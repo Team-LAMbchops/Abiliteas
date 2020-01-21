@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {fetchSingleTea, editSingleTea} from '../../store/teas'
 import {Link} from 'react-router-dom'
+import {withRouter} from 'react-router-dom'
 
 class AdminEditTea extends React.Component {
   constructor(props) {
@@ -34,6 +35,7 @@ class AdminEditTea extends React.Component {
     console.log('onsubmit')
     event.preventDefault()
     this.props.onSubmitEditSingleTea(this.props.match.params.teaId, this.state)
+    this.props.history.push('/admin/teas')
   }
 
   render() {
@@ -115,4 +117,4 @@ const adminEditTeaContainer = connect(mapStateToProps, mapDispatchToProps)(
   AdminEditTea
 )
 
-export default adminEditTeaContainer
+export default withRouter(adminEditTeaContainer)

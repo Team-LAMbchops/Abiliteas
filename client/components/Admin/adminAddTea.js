@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {createSingleTea} from '../../store/teas'
 import {Link} from 'react-router-dom'
+import {withRouter} from 'react-router-dom'
 
 class AdminAddTea extends React.Component {
   constructor(props) {
@@ -36,6 +37,7 @@ class AdminAddTea extends React.Component {
       inventory: '',
       imageUrl: ''
     })
+    this.props.history.push('/admin/teas')
   }
 
   render() {
@@ -115,4 +117,4 @@ const adminAddTeaContainer = connect(mapStateToProps, mapDispatchToProps)(
   AdminAddTea
 )
 
-export default adminAddTeaContainer
+export default withRouter(adminAddTeaContainer)
