@@ -8,6 +8,12 @@ import cartReducer from './cart'
 import ordersReducer from './orders'
 import adminReducer from './admin'
 
+const RESET_APP = 'RESET_APP'
+
+export const resetApp = () => ({
+  type: RESET_APP
+})
+
 const reducer = combineReducers({
   user: usersReducer,
   teas: teasReducer,
@@ -15,10 +21,17 @@ const reducer = combineReducers({
   orders: ordersReducer,
   admin: adminReducer
 })
+
+const rootReducer = (state, action) => {
+  if (action.type === 'RESET_APP') {
+    state = undefined
+  }
+  return reducer(state, action)
+}
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 )
-const store = createStore(reducer, middleware)
+const store = createStore(rootReducer, middleware)
 
 export default store
 export * from './user'
