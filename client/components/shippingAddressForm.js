@@ -1,10 +1,14 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {withRouter} from 'react-router-dom'
 import {editOrder} from '../store/orders'
+
 
 class ShippingAddressForm extends React.Component {
   constructor(props) {
     super(props)
+
+    console.log('PROPS **', props)
 
     this.state = {
       firstName: '',
@@ -73,8 +77,10 @@ class ShippingAddressForm extends React.Component {
           />
           <button
             type="submit"
-            onClick={async evt => {
-              await this.handleSubmit(evt)
+
+            onClick={evt => {
+              this.handleSubmit(evt)
+              this.props.history.push('/confirmation')
             }}
           >
             Place Order
@@ -85,11 +91,10 @@ class ShippingAddressForm extends React.Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = state => {
   return {
     currentCart: state.cart.currentOrder,
-    userId: state.user.id,
-    history: ownProps.history
+    userId: state.user.id
   }
 }
 
@@ -101,4 +106,6 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ShippingAddressForm)
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(ShippingAddressForm)
+)
