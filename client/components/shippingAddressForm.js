@@ -1,7 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchSingleOrder, editOrder} from '../store/orders'
-import {Redirect} from 'react-router-dom'
+import {editOrder} from '../store/orders'
 
 class ShippingAddressForm extends React.Component {
   constructor(props) {
@@ -36,12 +35,6 @@ class ShippingAddressForm extends React.Component {
       address: '',
       emailAddress: ''
     })
-  }
-
-  redirect = () => {
-    console.log('redirecting...')
-    console.log(this, 'THIS')
-    // this.props.history.push('/confirmation')
   }
 
   render() {
@@ -80,9 +73,8 @@ class ShippingAddressForm extends React.Component {
           />
           <button
             type="submit"
-            onClick={evt => {
-              this.handleSubmit(evt)
-              this.redirect()
+            onClick={async evt => {
+              await this.handleSubmit(evt)
             }}
           >
             Place Order
@@ -104,7 +96,6 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = dispatch => {
   //dispatch the thunk that updates order from 'pending' to 'completed'
   return {
-    // loadSingleOrder: (userId, orderId) => dispatch(fetchSingleOrder(userId, orderId)),
     onSubmitEditSingleOrder: (orderId, editedOrder) =>
       dispatch(editOrder(orderId, editedOrder))
   }
