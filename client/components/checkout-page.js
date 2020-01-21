@@ -5,10 +5,6 @@ import {fetchCart, emptyCart} from '../store/cart'
 import MyStoreCheckout from '../payment-components/MyStoreCheckout'
 
 class CheckoutPage extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
   componentDidMount() {
     const id = this.props.user.id
     this.props.getCart(id)
@@ -17,6 +13,7 @@ class CheckoutPage extends React.Component {
   render() {
     const items = this.props.cart.items
     const qty = this.props.cart.qty
+    const total = this.props.cart.total
     return (
       <div>
         <h1>Checkout</h1>
@@ -30,6 +27,7 @@ class CheckoutPage extends React.Component {
             </div>
           )
         })}
+        <h3>Order Total: ${total}</h3>
         <div>
           <h2>Payment:</h2>
           <MyStoreCheckout />

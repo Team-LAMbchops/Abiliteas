@@ -1,7 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
-import {fetchCart, getUpdate, removeProduct} from '../store/cart'
+import {fetchCart, getUpdate, removeProduct, getTotal} from '../store/cart'
 import {findPrice, findTotal} from './helperFuncs'
 
 class Cart extends React.Component {
@@ -66,9 +65,16 @@ class Cart extends React.Component {
               })}
             </div>
           )}
-          Total:${findTotal(items, qty).toFixed(2)}
+          <h3>Subtotal:${findTotal(items, qty).toFixed(2)}</h3>
         </div>
-        <button type="submit" onClick={() => this.props.redirect('/checkout')}>
+        <button
+          type="submit"
+          onClick={() => {
+            this.props.redirect('/checkout')
+            const total = findTotal(items, qty).toFixed(2)
+            this.props.getTotal(total)
+          }}
+        >
           Checkout
         </button>
       </div>
@@ -88,7 +94,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     getCart: id => dispatch(fetchCart(id)),
     update: (TeaId, OrderId, type) => dispatch(getUpdate(TeaId, OrderId, type)),
     remove: (orderId, teaId) => dispatch(removeProduct(orderId, teaId)),
-    redirect: route => ownProps.history.push(route)
+    redirect: route => ownProps.history.push(route),
+    getTotal: totalPrice => dispatch(getTotal(totalPrice))
   }
 }
 

@@ -25,7 +25,7 @@ class SingleTea extends React.Component {
         <h3>{tea.flavor}</h3>
         <img src={tea.imageUrl} width={200} height={200} mode="fit" />
         <p>Description: {tea.description}</p>
-        <p>Price: $ {findPrice(tea.price)}</p>
+        <p>Price: $ {findPrice(tea.price).toFixed(2)}</p>
         <button
           type="submit"
           onClick={() => {
