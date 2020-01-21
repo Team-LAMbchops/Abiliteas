@@ -1,7 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchSingleOrder, editOrder} from '../store/orders'
 import {withRouter} from 'react-router-dom'
+import {editOrder} from '../store/orders'
+
 
 class ShippingAddressForm extends React.Component {
   constructor(props) {
@@ -76,6 +77,7 @@ class ShippingAddressForm extends React.Component {
           />
           <button
             type="submit"
+
             onClick={evt => {
               this.handleSubmit(evt)
               this.props.history.push('/confirmation')

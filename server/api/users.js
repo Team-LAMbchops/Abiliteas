@@ -1,5 +1,8 @@
 const router = require('express').Router()
-const {isAdminMiddleware} = require('./securityMiddleware/check-Auth')
+const {
+  isAdminMiddleware,
+  isAuthMiddleware
+} = require('./securityMiddleware/check-Auth')
 const {User} = require('../db/models')
 
 module.exports = router
@@ -18,7 +21,7 @@ router.get('/', isAdminMiddleware, async (req, res, next) => {
   }
 })
 
-router.get('/:userId', isAdminMiddleware, async (req, res, next) => {
+router.get('/:userId', isAuthMiddleware, async (req, res, next) => {
   try {
     const singleUser = await User.findOne({
       where: {
@@ -32,7 +35,7 @@ router.get('/:userId', isAdminMiddleware, async (req, res, next) => {
   }
 })
 
-router.put('/:userId', async (req, res, next) => {
+router.put('/:userId', isAuthMiddleware, async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.userId)
     const {firstName, lastName, email, address, isAdmin} = req.body
@@ -49,7 +52,7 @@ router.put('/:userId', async (req, res, next) => {
   }
 })
 
-router.delete('/:userId', async (req, res, next) => {
+router.delete('/:userId', isAuthMiddleware, async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.userId)
     if (!user) return res.sendStatus(404)

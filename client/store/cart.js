@@ -16,7 +16,6 @@ const GET_TOTAL = 'GET_TOTAL'
  */
 const initialCart = {
   currentOrder: {},
-  items: [],
   qty: {},
   total: 0
 }
@@ -40,13 +39,10 @@ export const updateQty = qtyData => ({
   qtyData
 })
 
-export const removeItem = teaId => ({
+export const removeItem = (teaId, newCart) => ({
   type: REMOVE_ITEM,
-  teaId
-})
-
-export const emptyCart = () => ({
-  type: EMPTY_CART
+  teaId,
+  newCart
 })
 
 export const getTotal = totalPrice => ({
@@ -56,27 +52,34 @@ export const getTotal = totalPrice => ({
 /**
  * THUNK CREATORS
  */
+//get the cart when you click on the cart component
 export const fetchCart = userId => async dispatch => {
   try {
-    const res = await axios.get(`/api/orders/${userId}/${userId}`)
+    const res = await axios.get(`/api/orders/cart/${userId}/`)
     dispatch(getCart(res.data))
   } catch (err) {
     console.error(err)
   }
 }
 
+//get the cart or create the cart when you click add to cart
 export const fetchCreateOrder = (userId, tea) => async dispatch => {
   try {
-    const res = await axios.post(`/api/orders`, {userId, tea})
-    if (Array.isArray(res.data)) {
-      dispatch(addToCart(res.data[0], tea))
+    if (userId) {
+      const res = await axios.post(`/api/orders`, {userId, tea})
+      if (Array.isArray(res.data)) {
+        dispatch(addToCart(res.data[0], tea))
+      } else {
+        dispatch(addToCart(res.data, tea))
+      }
     } else {
-      dispatch(addToCart(res.data, tea))
+      dispatch(addToCart({}, tea))
     }
   } catch (error) {
     console.log(error)
   }
 }
+//update cart when you click increment and decrement
 export const getUpdate = (TeaId, OrderId, type) => async dispatch => {
   try {
     const res = await axios.put(`/api/products/${OrderId}/${TeaId}`, {
@@ -90,13 +93,14 @@ export const getUpdate = (TeaId, OrderId, type) => async dispatch => {
   }
 }
 
+//remove product when user removes product from cart
 export const removeProduct = (orderId, teaId) => async dispatch => {
   try {
-    const res = await axios.delete(`/api/products/${orderId}/${teaId}`, {
+    await axios.delete(`/api/products/${orderId}/${teaId}`, {
       orderId,
       teaId
     })
-    dispatch(removeItem(res.data))
+    dispatch(removeItem(teaId))
   } catch (error) {
     console.log(error)
   }
@@ -109,13 +113,8 @@ function cartReducer(state = initialCart, action) {
   switch (action.type) {
     case GET_CART: {
       const stateCopy = {...state}
-      const teas = action.cartData.cart.teas
       const orderProducts = action.cartData.orderProducts
-      teas.forEach(tea => {
-        if (stateCopy.items.filter(item => item.id === tea.id).length === 0) {
-          stateCopy.items.push(tea)
-        }
-      })
+
       orderProducts.forEach(orderProduct => {
         if (!stateCopy.qty[orderProduct.teaId]) {
           stateCopy.qty[orderProduct.teaId] = orderProduct.quantity
@@ -137,7 +136,6 @@ function cartReducer(state = initialCart, action) {
             ...newState.qty,
             [teaId]: 1
           },
-          items: [...newState.items, action.item],
           currentOrder: action.order
         }
       } else {
@@ -155,13 +153,9 @@ function cartReducer(state = initialCart, action) {
     case UPDATE_QTY: {
       if (action.qtyData.quantity === 0) {
         const newState = {...state}
-        const newItems = newState.items.filter(
-          item => item.id !== action.qtyData.teaId
-        )
         delete newState.qty[action.qtyData.teaId]
         return {
           ...newState,
-          items: newItems,
           qty: newState.qty
         }
       } else
@@ -175,14 +169,10 @@ function cartReducer(state = initialCart, action) {
     }
     case REMOVE_ITEM: {
       const newState = {...state}
-      const newItems = newState.items.filter(
-        item => item.id !== action.teaId.teaId
-      )
       const newQty = newState.qty
-      delete newQty[action.teaId.teaId]
+      delete newQty[action.teaId]
       return {
-        ...newState,
-        items: newItems,
+        ...state,
         qty: newQty
       }
     }
@@ -192,10 +182,7 @@ function cartReducer(state = initialCart, action) {
         total: action.totalPrice
       }
     }
-    case EMPTY_CART: {
-      console.log('CART IS EMPTIED!!!')
-      return initialCart
-    }
+
     default:
       return state
   }

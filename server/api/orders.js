@@ -32,10 +32,11 @@ router.get('/:UserId', isAuthMiddleware, async (req, res, next) => {
   }
 })
 
-//path: /orders/:userId/:userId
+//path: /orders/cart/:userId
 //cart
 //getCartfromDB if there is one
-router.get('/:UserId/:UserId', isAdminMiddleware, async (req, res, next) => {
+router.get('/cart/:UserId', isAuthMiddleware, async (req, res, next) => {
+
   try {
     const cart = await Order.findOne({
       where: {
@@ -69,7 +70,7 @@ router.get('/:UserId/:UserId', isAdminMiddleware, async (req, res, next) => {
 // a single order for a single user
 router.get(
   '/singleOrder/:UserId/:OrdersId',
-  isAdminMiddleware,
+  isAuthMiddleware,
   async (req, res, next) => {
     try {
       const orders = await Order.findOne({
@@ -89,7 +90,7 @@ router.get(
 
 //todo: findorCreate an order using the USERID (and teaId), use the teaId and magic method to create orderProduct.
 
-router.post('/', isAdminMiddleware, async (req, res, next) => {
+router.post('/', isAuthMiddleware, async (req, res, next) => {
   try {
     const order = await Order.findOrCreate({
       where: {
@@ -137,7 +138,7 @@ router.delete('/:orderId', isAdminMiddleware, async (req, res, next) => {
 })
 
 //updateOrder
-router.put('/:orderId', async (req, res, next) => {
+router.put('/:orderId', isAuthMiddleware, async (req, res, next) => {
   try {
     const orderUpdate = await Order.findByPk(req.params.orderId)
     await orderUpdate.update({
