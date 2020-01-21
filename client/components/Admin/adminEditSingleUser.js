@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {editSingleUser} from '../../store/admin'
 import {Link} from 'react-router-dom'
+import {withRouter} from 'react-router-dom'
 
 class AdminEditUser extends React.Component {
   constructor(props) {
@@ -32,6 +33,7 @@ class AdminEditUser extends React.Component {
       this.props.match.params.userId,
       this.state
     )
+    this.props.history.push('/admin/users')
   }
 
   render() {
@@ -105,4 +107,4 @@ const adminEditUserContainer = connect(mapStateToProps, mapDispatchToProps)(
   AdminEditUser
 )
 
-export default adminEditUserContainer
+export default withRouter(adminEditUserContainer)
