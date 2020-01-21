@@ -1,6 +1,9 @@
 const router = require('express').Router()
 const {Order, OrderProduct, Tea} = require('../db/models')
-const {isAdminMiddleware} = require('./securityMiddleware/check-Auth')
+const {
+  isAdminMiddleware,
+  isAuthMiddleware
+} = require('./securityMiddleware/check-Auth')
 module.exports = router
 
 router.get('/', isAdminMiddleware, async (req, res, next) => {
@@ -14,7 +17,7 @@ router.get('/', isAdminMiddleware, async (req, res, next) => {
 
 // path: /orders/:UserId
 // all orders for an individual user
-router.get('/:UserId', isAdminMiddleware, async (req, res, next) => {
+router.get('/:UserId', isAuthMiddleware, async (req, res, next) => {
   try {
     const orders = await Order.findAll({
       where: {
