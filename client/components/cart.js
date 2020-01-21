@@ -2,20 +2,22 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {fetchCart, getUpdate, removeProduct, getTotal} from '../store/cart'
 import {findPrice, findTotal} from './helperFuncs'
+import Axios from 'axios'
 
 class Cart extends React.Component {
-  componentDidMount() {
-    this.props.getCart(this.props.user.id)
+  async componentDidMount() {
+    const userId = this.props.user.id
+    await this.props.getCart(userId)
   }
   render() {
-    const items = this.props.cart.items
     const qty = this.props.cart.qty
     const orderId = this.props.cart.currentOrder.id
+    const items = this.props.cart.currentOrder.teas
     return (
       <div>
         <div>
           <h1>Shopping Cart</h1>
-          {!items.length ? (
+          {!items ? (
             <div>Your cart is empty!</div>
           ) : (
             <div>
@@ -49,7 +51,10 @@ class Cart extends React.Component {
                       </button>
                       <button
                         type="button"
-                        onClick={() => this.props.remove(orderId, item.id)}
+                        onClick={async () => {
+                          await this.props.remove(orderId, item.id)
+                          await this.props.getCart(this.props.user.id)
+                        }}
                       >
                         Remove
                       </button>
@@ -63,9 +68,9 @@ class Cart extends React.Component {
                   </div>
                 )
               })}
+              <h3>Subtotal:${findTotal(items, qty).toFixed(2)}</h3>
             </div>
           )}
-          <h3>Subtotal:${findTotal(items, qty).toFixed(2)}</h3>
         </div>
         <button
           type="submit"
