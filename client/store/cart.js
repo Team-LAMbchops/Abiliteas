@@ -9,6 +9,7 @@ const ADD_TO_CART = 'ADD_TO_CART'
 const UPDATE_QTY = 'UPDATE_QTY'
 const REMOVE_ITEM = 'REMOVE_ITEM'
 const EMPTY_CART = 'EMPTY_CART'
+const GET_TOTAL = 'GET_TOTAL'
 
 /**
  * INITIAL STATE
@@ -16,7 +17,8 @@ const EMPTY_CART = 'EMPTY_CART'
 const initialCart = {
   currentOrder: {},
   items: [],
-  qty: {}
+  qty: {},
+  total: 0
 }
 
 /**
@@ -45,6 +47,11 @@ export const removeItem = teaId => ({
 
 export const emptyCart = () => ({
   type: EMPTY_CART
+})
+
+export const getTotal = totalPrice => ({
+  type: GET_TOTAL,
+  totalPrice
 })
 /**
  * THUNK CREATORS
@@ -177,6 +184,12 @@ function cartReducer(state = initialCart, action) {
         ...newState,
         items: newItems,
         qty: newQty
+      }
+    }
+    case GET_TOTAL: {
+      return {
+        ...state,
+        total: action.totalPrice
       }
     }
     case EMPTY_CART: {
