@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {emptyCart} from '../store/cart'
 
 class ConfirmationPage extends React.Component {
-  async omponentDidMount() {
+  async componentDidMount() {
     await this.props.emptyCart()
   }
   render() {
