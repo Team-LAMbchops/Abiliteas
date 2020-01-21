@@ -58,7 +58,7 @@ export const getTotal = totalPrice => ({
  */
 export const fetchCart = userId => async dispatch => {
   try {
-    const res = await axios.get(`/api/orders/${userId}/${userId}`)
+    const res = await axios.get(`/api/orders/cart/${userId}/`)
     dispatch(getCart(res.data))
   } catch (err) {
     console.error(err)
