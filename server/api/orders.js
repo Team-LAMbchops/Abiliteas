@@ -32,10 +32,10 @@ router.get('/:UserId', isAuthMiddleware, async (req, res, next) => {
   }
 })
 
-//path: /orders/:userId/:userId
+//path: /orders/cart/:userId
 //cart
 //getCartfromDB if there is one
-router.get('/:UserId/:UserId', isAdminMiddleware, async (req, res, next) => {
+router.get('/cart/:UserId', isAdminMiddleware, async (req, res, next) => {
   try {
     const cart = await Order.findOne({
       where: {

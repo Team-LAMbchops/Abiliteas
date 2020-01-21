@@ -11,7 +11,7 @@ class CheckoutPage extends React.Component {
   }
 
   render() {
-    const items = this.props.cart.items
+    const items = this.props.cart.currentOrder.teas
     const qty = this.props.cart.qty
     const total = this.props.cart.total
     return (
@@ -49,9 +49,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getCart: id => dispatch(fetchCart(id)),
-    emptyCart: () => dispatch(emptyCart())
-    //add an order?
+    getCart: id => dispatch(fetchCart(id))
   }
 }
 
