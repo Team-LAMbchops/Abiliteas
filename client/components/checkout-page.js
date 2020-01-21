@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import ShippingAddressForm from './shippingAddressForm'
-import {fetchCart, emptyCart} from '../store/cart'
+import {fetchCart} from '../store/cart'
 import MyStoreCheckout from '../payment-components/MyStoreCheckout'
 
 class CheckoutPage extends React.Component {

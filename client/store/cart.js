@@ -49,6 +49,9 @@ export const getTotal = totalPrice => ({
   type: GET_TOTAL,
   totalPrice
 })
+export const emptyCart = () => ({
+  type: EMPTY_CART
+})
 /**
  * THUNK CREATORS
  */
@@ -181,6 +184,9 @@ function cartReducer(state = initialCart, action) {
         ...state,
         total: action.totalPrice
       }
+    }
+    case EMPTY_CART: {
+      return initialCart
     }
 
     default:

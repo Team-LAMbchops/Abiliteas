@@ -3,13 +3,9 @@ import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import {editOrder} from '../store/orders'
 
-
 class ShippingAddressForm extends React.Component {
   constructor(props) {
     super(props)
-
-    console.log('PROPS **', props)
-
     this.state = {
       firstName: '',
       lastName: '',
@@ -77,10 +73,9 @@ class ShippingAddressForm extends React.Component {
           />
           <button
             type="submit"
-
-            onClick={evt => {
-              this.handleSubmit(evt)
-              this.props.history.push('/confirmation')
+            onClick={async evt => {
+              await this.handleSubmit(evt)
+              await this.props.history.push('/confirmation')
             }}
           >
             Place Order
