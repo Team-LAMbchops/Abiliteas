@@ -1,11 +1,13 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchSingleOrder, editOrder} from '../store/orders'
-import {Redirect} from 'react-router-dom'
+import {withRouter} from 'react-router-dom'
 
 class ShippingAddressForm extends React.Component {
   constructor(props) {
     super(props)
+
+    console.log('PROPS **', props)
 
     this.state = {
       firstName: '',
@@ -36,12 +38,6 @@ class ShippingAddressForm extends React.Component {
       address: '',
       emailAddress: ''
     })
-  }
-
-  redirect = () => {
-    console.log('redirecting...')
-    console.log(this, 'THIS')
-    // this.props.history.push('/confirmation')
   }
 
   render() {
@@ -82,7 +78,7 @@ class ShippingAddressForm extends React.Component {
             type="submit"
             onClick={evt => {
               this.handleSubmit(evt)
-              this.redirect()
+              this.props.history.push('/confirmation')
             }}
           >
             Place Order
@@ -93,21 +89,21 @@ class ShippingAddressForm extends React.Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = state => {
   return {
     currentCart: state.cart.currentOrder,
-    userId: state.user.id,
-    history: ownProps.history
+    userId: state.user.id
   }
 }
 
 const mapDispatchToProps = dispatch => {
   //dispatch the thunk that updates order from 'pending' to 'completed'
   return {
-    // loadSingleOrder: (userId, orderId) => dispatch(fetchSingleOrder(userId, orderId)),
     onSubmitEditSingleOrder: (orderId, editedOrder) =>
       dispatch(editOrder(orderId, editedOrder))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ShippingAddressForm)
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(ShippingAddressForm)
+)
