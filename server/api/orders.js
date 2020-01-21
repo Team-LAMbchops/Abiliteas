@@ -21,12 +21,9 @@ router.get('/:UserId', isAdminMiddleware, async (req, res, next) => {
         userId: req.params.UserId,
         status: 'Completed'
       },
-      include: [Tea]
+      include: [{model: Tea}]
     })
-    if (orders) {
-      res.json(orders)
-    }
-    res.json([])
+    res.json(orders)
   } catch (err) {
     next(err)
   }
