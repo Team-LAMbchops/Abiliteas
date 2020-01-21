@@ -1,8 +1,10 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {emptyCart} from '../store/cart'
+
 class ConfirmationPage extends React.Component {
-  componentDidMount() {
-    this.props.emptyCart()
+  async componentDidMount() {
+    await this.props.emptyCart()
   }
   render() {
     return (
@@ -20,7 +22,9 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => {
-  return {}
+  return {
+    emptyCart: () => dispatch(emptyCart())
+  }
 }
 
 const ConfirmationContainer = connect(mapStateToProps, mapDispatchToProps)(
