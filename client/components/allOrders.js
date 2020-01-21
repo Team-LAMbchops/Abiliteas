@@ -21,8 +21,9 @@ class AllOrders extends React.Component {
               return (
                 <div key={order.id}>
                   <Link to={`/orders/${this.props.userId}/${order.id}`}>
-                    order-date: {order.date.substring(0, 10)} status:{' '}
-                    {order.status}
+                    order-date: {order.date.substring(0, 10)} status:{
+                      order.status
+                    }
                   </Link>
 
                   {!order.teas ? (
@@ -67,9 +68,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getAllOrders: userId => dispatch(fetchOrders(userId)),
-    getSingleOrder: (userId, orderId) =>
-      dispatch(fetchSingleOrder(userId, orderId))
+    getAllOrders: userId => dispatch(fetchOrders(userId))
   }
 }
 
