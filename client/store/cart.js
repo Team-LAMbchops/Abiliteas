@@ -52,14 +52,20 @@ export const getTotal = totalPrice => ({
 export const emptyCart = () => ({
   type: EMPTY_CART
 })
+
 /**
  * THUNK CREATORS
  */
 //get the cart when you click on the cart component
 export const fetchCart = userId => async dispatch => {
   try {
-    const res = await axios.get(`/api/orders/cart/${userId}/`)
-    dispatch(getCart(res.data))
+    //if guest
+    if (!userId) {
+      dispatch(getCart(null))
+    } else {
+      const res = await axios.get(`/api/orders/cart/${userId}/`)
+      dispatch(getCart(res.data))
+    }
   } catch (err) {
     console.error(err)
   }
@@ -68,15 +74,11 @@ export const fetchCart = userId => async dispatch => {
 //get the cart or create the cart when you click add to cart
 export const fetchCreateOrder = (userId, tea) => async dispatch => {
   try {
-    if (userId) {
-      const res = await axios.post(`/api/orders`, {userId, tea})
-      if (Array.isArray(res.data)) {
-        dispatch(addToCart(res.data[0], tea))
-      } else {
-        dispatch(addToCart(res.data, tea))
-      }
+    const res = await axios.post(`/api/orders`, {userId, tea})
+    if (Array.isArray(res.data)) {
+      dispatch(addToCart(res.data[0], tea))
     } else {
-      dispatch(addToCart({}, tea))
+      dispatch(addToCart(res.data, tea))
     }
   } catch (error) {
     console.log(error)
@@ -115,18 +117,23 @@ export const removeProduct = (orderId, teaId) => async dispatch => {
 function cartReducer(state = initialCart, action) {
   switch (action.type) {
     case GET_CART: {
-      const newState = {...state}
-      const orderProducts = action.cartData.orderProducts
-      //map through the OP array and set qtys on newState qty obj.
-      orderProducts.forEach(orderProduct => {
-        if (!newState.qty[orderProduct.teaId]) {
-          newState.qty[orderProduct.teaId] = orderProduct.quantity
+      //if guest
+      if (!action.cartData) {
+        return state
+      } else {
+        const newState = {...state}
+        const orderProducts = action.cartData.orderProducts
+        //map through the OP array and set qtys on newState qty obj.
+        orderProducts.forEach(orderProduct => {
+          if (!newState.qty[orderProduct.teaId]) {
+            newState.qty[orderProduct.teaId] = orderProduct.quantity
+          }
+        })
+        return {
+          ...newState,
+          currentOrderId: action.cartData.cart.id,
+          items: action.cartData.cart.teas
         }
-      })
-      return {
-        ...newState,
-        currentOrderId: action.cartData.cart.id,
-        items: action.cartData.cart.teas
       }
     }
     //note: this action.type is just to keep the redux store updated without having to getCart
