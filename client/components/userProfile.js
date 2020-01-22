@@ -28,11 +28,13 @@ class UserProfile extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.user,
+    isAdmin: !!state.user.isAdmin
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {}
 }
+
 export default connect(mapStateToProps, mapDispatchToProps)(UserProfile)

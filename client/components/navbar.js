@@ -7,35 +7,92 @@ import {emptyCart} from '../store/cart'
 
 const Navbar = ({handleClick, isLoggedIn, isAdmin}) => (
   <div>
-    <h1>ABILITEAS</h1>
-    <nav id="nav">
+    <nav className="navBackground">
       {isLoggedIn ? (
-        <div>
+        <div className="navBar">
           {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
-          <Link to="/orders">Orders</Link>
-          <Link to="/cart">Cart</Link>
-          <Link to="/teas">See Our Teas</Link>
-          <Link to="/profile">Profile</Link>
-          <a href="#" onClick={handleClick}>
-            Logout
-          </a>
-
-          {isAdmin ? (
-            <div>
-              <Link to="/admin">Admin</Link>
-            </div>
-          ) : (
-            <div />
-          )}
+          <span>
+            <Link to="/home">
+              <img
+                src="/abiliteasheaderlogo.png"
+                width={70}
+                height={70}
+                mode="fit"
+              />
+            </Link>
+          </span>
+          <span className="navBarRight">
+            <span className="navBarIcon">
+              <Link to="/teas">
+                <img src="/tea.png" width={30} height={30} mode="fit" />
+              </Link>
+            </span>
+            <span className="navBarIcon">
+              <Link to="/profile">
+                <img src="/profile.png" width={30} height={30} mode="fit" />
+              </Link>
+            </span>
+            <span className="navBarIcon">
+              <Link to="/cart">
+                <img
+                  src="/shoppingCart.png"
+                  width={30}
+                  height={30}
+                  mode="fit"
+                />
+              </Link>
+            </span>
+            <span className="navBarIcon">
+              <a href="#" onClick={handleClick}>
+                <img src="/logout.png" width={30} height={30} mode="fit" />
+              </a>
+            </span>
+            {isAdmin ? (
+              <span className="navBarIcon">
+                <Link to="/admin">
+                  <img src="/adminLogo.png" width={30} height={30} mode="fit" />
+                </Link>
+              </span>
+            ) : (
+              <span />
+            )}
+          </span>
         </div>
       ) : (
-        <div>
+        <div className="navBar">
           {/* The navbar will show these links before you log in */}
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
-          <Link to="/cart">Cart</Link>
-          <Link to="/teas">See Our Teas</Link>
+          <span>
+            <Link to="/home">
+              <img
+                src="/abiliteasheaderlogo.png"
+                width={70}
+                height={70}
+                mode="fit"
+              />
+            </Link>
+          </span>
+          <span className="navBarRight">
+            <span className="navBarIcon">
+              <Link to="/teas">
+                <img src="/tea.png" width={30} height={30} mode="fit" />
+              </Link>
+            </span>
+            <span className="navBarIcon">
+              <Link to="/login">
+                <img src="/profile.png" width={30} height={30} mode="fit" />
+              </Link>
+            </span>
+            <span className="navBarIcon">
+              <Link to="/cart">
+                <img
+                  src="/shoppingCart.png"
+                  width={30}
+                  height={30}
+                  mode="fit"
+                />
+              </Link>
+            </span>
+          </span>
         </div>
       )}
     </nav>
