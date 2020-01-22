@@ -10,7 +10,7 @@ class LandingPage extends React.Component {
 
   render() {
     const teas = this.props.teas
-    return <div>Landing Page Container</div>
+    return <div id="showcase" />
   }
 }
 
