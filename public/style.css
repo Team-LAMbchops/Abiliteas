@@ -3,7 +3,13 @@
   padding: 0;
 }
 #showcase {
-  background-image: url('../ABILITEAS\ LANDING\ PAGE.png');
+  background-image: url('./ABILITEAS\ LANDING\ PAGE.png');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+}
+#showcase2 {
+  background-image: url('./Thank-you-page.png');
   background-size: cover;
   background-position: center;
   height: 100vh;

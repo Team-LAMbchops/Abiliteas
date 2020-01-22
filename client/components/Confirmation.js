@@ -7,11 +7,7 @@ class ConfirmationPage extends React.Component {
     await this.props.emptyCart()
   }
   render() {
-    return (
-      <div>
-        <h1>Thank you for your order!</h1>
-      </div>
-    )
+    return <div id="showcase2" />
   }
 }
 
