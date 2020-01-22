@@ -16,6 +16,7 @@
   background-position: center;
   height: 100vh;
 }
+
 #center {
   display: flex;
   justify-content: center;
@@ -67,4 +68,30 @@
 .fa fa-cart-plus:active {
   position: relative;
   top: 1px;
+
+.navBackground {
+  background-color: black;
+  height: 80px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+.navBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+  padding-top: 10px;
+  padding-right: 10px;
+  padding-left: 10px;
+  border: 0px;
+}
+
+.navBarRight {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.navBarIcon {
+  padding-left: 30px;
 }
