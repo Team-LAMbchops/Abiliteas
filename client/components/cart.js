@@ -50,9 +50,8 @@ class Cart extends React.Component {
                       </button>
                       <button
                         type="button"
-                        onClick={async () => {
-                          await this.props.remove(orderId, item.id)
-                          await this.props.getCart(this.props.user.id)
+                        onClick={() => {
+                          this.props.remove(orderId, item.id)
                         }}
                       >
                         Remove

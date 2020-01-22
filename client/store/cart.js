@@ -40,10 +40,9 @@ export const updateQty = qtyData => ({
   qtyData
 })
 
-export const removeItem = (teaId, newCart) => ({
+export const removeItem = teaId => ({
   type: REMOVE_ITEM,
-  teaId,
-  newCart
+  teaId
 })
 
 export const getTotal = totalPrice => ({
@@ -130,40 +129,46 @@ function cartReducer(state = initialCart, action) {
         items: action.cartData.cart.teas
       }
     }
-
+    //note: this action.type is just to keep the redux store updated without having to getCart
     case ADD_TO_CART: {
       const teaId = action.item.id
       const newState = {...state}
       if (!newState.qty[teaId]) {
         return {
           ...newState,
+          currentOrderId: action.order.id,
           qty: {
             ...newState.qty,
             [teaId]: 1
           },
-          currentOrder: action.order
+          items: [...newState.items, action.item]
         }
       } else {
         let increment = newState.qty[teaId] + 1
         return {
           ...newState,
+          currentOrderId: action.order.id,
           qty: {
             ...newState.qty,
             [teaId]: increment
-          },
-          currentOrder: action.order
+          }
         }
       }
     }
+
     case UPDATE_QTY: {
+      //if quantity is 0, delete the instance in our qty obj.
       if (action.qtyData.quantity === 0) {
         const newState = {...state}
         delete newState.qty[action.qtyData.teaId]
         return {
           ...newState,
+          //return the state with the new qty obj and a filtered items arr that no long has that specific item.
+          items: state.items.filter(items => items.id !== action.qtyData.teaId),
           qty: newState.qty
         }
       } else
+        //otherwise, return the new quantity from the db.
         return {
           ...state,
           qty: {
@@ -176,8 +181,10 @@ function cartReducer(state = initialCart, action) {
       const newState = {...state}
       const newQty = newState.qty
       delete newQty[action.teaId]
+      //return the new qty an the filtered items.
       return {
-        ...state,
+        ...newState,
+        items: state.items.filter(item => item.id !== action.teaId),
         qty: newQty
       }
     }

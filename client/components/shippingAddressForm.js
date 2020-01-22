@@ -16,7 +16,6 @@ class ShippingAddressForm extends React.Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
-
   handleChange(evt) {
     this.setState({
       [evt.target.name]: evt.target.value
@@ -25,9 +24,10 @@ class ShippingAddressForm extends React.Component {
   async handleSubmit(evt) {
     evt.preventDefault()
     await this.props.onSubmitEditSingleOrder(
-      this.props.currentCart.id,
+      this.props.currentCartId,
       this.state
     )
+    this.props.history.push('/confirmation')
 
     this.setState({
       firstName: '',
@@ -71,13 +71,7 @@ class ShippingAddressForm extends React.Component {
             onChange={this.handleChange}
             value={this.state.emailAddress}
           />
-          <button
-            type="submit"
-            onClick={async evt => {
-              await this.handleSubmit(evt)
-              await this.props.history.push('/confirmation')
-            }}
-          >
+          <button type="submit" onClick={this.handleSubmit}>
             Place Order
           </button>
         </form>
@@ -88,7 +82,7 @@ class ShippingAddressForm extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    currentCart: state.cart.currentOrder,
+    currentCartId: state.cart.currentOrderId,
     userId: state.user.id
   }
 }

@@ -34,7 +34,7 @@ router.get('/:UserId', isAuthMiddleware, async (req, res, next) => {
 
 //path: /orders/cart/:userId
 //CART => getCartfromDB if there is one
-router.get('/cart/:UserId', async (req, res, next) => {
+router.get('/cart/:UserId', isAuthMiddleware, async (req, res, next) => {
   try {
     const cart = await Order.findOne({
       where: {
@@ -86,7 +86,8 @@ router.get(
   }
 )
 
-//todo: findorCreate an order using the USERID (and teaId), use the teaId and magic method to create orderProduct.
+//findorCreate an order using the USERID (and teaId), use the teaId and magic method to create orderProduct.
+//(ADD TO CART BUTTON)
 
 router.post('/', isAuthMiddleware, async (req, res, next) => {
   try {
@@ -116,6 +117,7 @@ router.post('/', isAuthMiddleware, async (req, res, next) => {
       })
     }
     //send back order
+    //note: if order did not have to create, it will send back: an array with [order, false], which is why we have to filter through an array in the thunk.
     res.json(order)
   } catch (err) {
     next(err)
