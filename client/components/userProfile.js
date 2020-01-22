@@ -1,7 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import AllOrders from './allOrders'
-import PropTypes from 'prop-types'
 
 class UserProfile extends React.Component {
   componentDidMount() {}

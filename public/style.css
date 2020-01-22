@@ -18,6 +18,9 @@
 .navBackground {
   background-color: black;
   height: 80px;
+  position: fixed;
+  top: 0;
+  width: 100%;
 }
 .navBar {
   display: flex;

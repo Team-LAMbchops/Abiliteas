@@ -15,8 +15,8 @@ const Navbar = ({handleClick, isLoggedIn, isAdmin}) => (
             <Link to="/home">
               <img
                 src="/abiliteasheaderlogo.png"
-                width={50}
-                height={50}
+                width={70}
+                height={70}
                 mode="fit"
               />
             </Link>
@@ -65,8 +65,8 @@ const Navbar = ({handleClick, isLoggedIn, isAdmin}) => (
             <Link to="/home">
               <img
                 src="/abiliteasheaderlogo.png"
-                width={50}
-                height={50}
+                width={70}
+                height={70}
                 mode="fit"
               />
             </Link>
