@@ -89,7 +89,7 @@ router.get(
 //findorCreate an order using the USERID (and teaId), use the teaId and magic method to create orderProduct.
 //(ADD TO CART BUTTON)
 
-router.post('/', isAuthMiddleware, async (req, res, next) => {
+router.post('/', async (req, res, next) => {
   try {
     //if guest
     let order
@@ -149,7 +149,7 @@ router.delete('/:orderId', isAdminMiddleware, async (req, res, next) => {
 })
 
 //updateOrder
-router.put('/:orderId', isAuthMiddleware, async (req, res, next) => {
+router.put('/:orderId', async (req, res, next) => {
   try {
     const orderUpdate = await Order.findByPk(req.params.orderId)
     const updatedOrder = await orderUpdate.update({

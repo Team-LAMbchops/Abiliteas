@@ -7,7 +7,7 @@ const {
 module.exports = router
 
 //delete orderProduct--remove button
-router.delete('/:orderId/:teaId', isAuthMiddleware, async (req, res, next) => {
+router.delete('/:orderId/:teaId', async (req, res, next) => {
   try {
     const currentOrder = await Order.findByPk(req.params.orderId)
     if (!currentOrder) return res.sendState(404)
@@ -27,7 +27,7 @@ router.delete('/:orderId/:teaId', isAuthMiddleware, async (req, res, next) => {
 })
 
 //increment and decrement
-router.put('/:OrderId/:TeaId', isAuthMiddleware, async (req, res, next) => {
+router.put('/:OrderId/:TeaId', async (req, res, next) => {
   try {
     const productOrder = await OrderProduct.findOne({
       where: {
