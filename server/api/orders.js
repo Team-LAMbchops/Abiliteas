@@ -89,7 +89,7 @@ router.get(
 //findorCreate an order using the USERID (and teaId), use the teaId and magic method to create orderProduct.
 //(ADD TO CART BUTTON)
 
-router.post('/', async (req, res, next) => {
+router.post('/', isAuthMiddleware, async (req, res, next) => {
   try {
     //if guest
     let order
