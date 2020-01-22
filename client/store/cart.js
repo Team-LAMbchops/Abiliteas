@@ -92,6 +92,7 @@ export const getUpdate = (TeaId, OrderId, type) => async dispatch => {
       OrderId,
       type
     })
+    console.log(res.data)
     dispatch(updateQty(res.data))
   } catch (error) {
     console.log(error)

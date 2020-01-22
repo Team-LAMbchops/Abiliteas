@@ -11,7 +11,6 @@ class AdminAllOrders extends React.Component {
   render() {
     const orders = this.props.orders
 
-    console.log(orders)
     return (
       <div>
         <h1>Admin All Orders</h1>

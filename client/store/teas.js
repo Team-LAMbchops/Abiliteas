@@ -35,14 +35,14 @@ const addSingleTea = newTea => ({
   newTea
 })
 
-const updateSingleTea = teas => ({
+const updateSingleTea = editedTea => ({
   type: UPDATE_SINGLE_TEA,
-  teas
+  editedTea
 })
 
-const removeSingleTea = teas => ({
+const removeSingleTea = deletedTea => ({
   type: REMOVE_SINGLE_TEA,
-  teas
+  deletedTea
 })
 
 /**
@@ -77,9 +77,9 @@ export const createSingleTea = newTea => async dispatch => {
 
 export const editSingleTea = (id, editedTea) => async dispatch => {
   try {
-    await axios.put(`/api/teas/${id}`, editedTea)
-    const {data} = await axios.get(`/api/teas`)
-    dispatch(updateSingleTea(data))
+    const res = await axios.put(`/api/teas/${id}`, editedTea)
+    console.log(res, 'response from put request')
+    dispatch(updateSingleTea(res.data))
   } catch (err) {
     console.log(err)
   }
@@ -87,9 +87,9 @@ export const editSingleTea = (id, editedTea) => async dispatch => {
 
 export const deleteSingleTea = id => async dispatch => {
   try {
-    await axios.delete(`/api/teas/${id}`)
-    const {data} = await axios.get(`/api/teas`)
-    dispatch(removeSingleTea(data))
+    const res = await axios.delete(`/api/teas/${id}`)
+    console.log(res, 'response from delete request')
+    dispatch(removeSingleTea(res.data))
   } catch (err) {
     console.log(err)
   }
@@ -107,9 +107,24 @@ function teasReducer(state = initialState, action) {
     case ADD_SINGLE_TEA:
       return {...state, allTeas: [...state.allTeas, action.newTea]}
     case REMOVE_SINGLE_TEA:
-      return {...state, allTeas: action.teas}
+      return {
+        allTeas: [
+          ...state.allTeas.filter(
+            teaObject => teaObject.id !== action.deletedTea.id
+          )
+        ],
+        singleTea: {}
+      }
     case UPDATE_SINGLE_TEA:
-      return {...state, allTeas: action.teas}
+      return {
+        allTeas: [
+          ...state.allTeas.filter(
+            teaObject => teaObject.id !== action.editedTea.id
+          ),
+          action.editedTea
+        ],
+        singleTea: {}
+      }
     default:
       return state
   }

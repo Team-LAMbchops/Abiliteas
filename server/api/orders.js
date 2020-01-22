@@ -152,14 +152,14 @@ router.delete('/:orderId', isAdminMiddleware, async (req, res, next) => {
 router.put('/:orderId', isAuthMiddleware, async (req, res, next) => {
   try {
     const orderUpdate = await Order.findByPk(req.params.orderId)
-    await orderUpdate.update({
+    const updatedOrder = await orderUpdate.update({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       address: req.body.address,
       email: req.body.emailAddress,
       status: 'Completed'
     })
-    res.sendStatus(202)
+    res.json(updatedOrder)
   } catch (error) {
     next(error)
   }

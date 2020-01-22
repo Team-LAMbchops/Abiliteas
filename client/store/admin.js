@@ -35,9 +35,9 @@ const getSingleOrder = order => ({
   order
 })
 
-const updateOrder = orders => ({
+const updateOrder = updatedOrder => ({
   type: UPDATE_ORDER,
-  orders
+  updatedOrder
 })
 
 //Users
@@ -51,14 +51,14 @@ const getSingleUser = user => ({
   user
 })
 
-const updateSingleUser = users => ({
+const updateSingleUser = updatedUser => ({
   type: UPDATE_SINGLE_USER,
-  users
+  updatedUser
 })
 
-const deleteUser = users => ({
+const deleteUser = deletedUser => ({
   type: DELETE_USER,
-  users
+  deletedUser
 })
 /**
  * THUNK CREATORS
@@ -84,8 +84,7 @@ export const fetchSingleOrder = orderId => async dispatch => {
 
 export const editOrder = (orderId, editedOrder) => async dispatch => {
   try {
-    await axios.put(`/api/orders/${orderId}`, editedOrder)
-    const {data} = await axios.get(`/api/orders`)
+    const {data} = await axios.put(`/api/orders/${orderId}`, editedOrder)
     dispatch(updateOrder(data))
   } catch (error) {
     console.log(error)
@@ -113,8 +112,7 @@ export const fetchSingleUser = userId => async dispatch => {
 
 export const editSingleUser = (userId, editedUser) => async dispatch => {
   try {
-    await axios.put(`/api/users/${userId}`, editedUser)
-    const {data} = await axios.get(`/api/users`)
+    const {data} = await axios.put(`/api/users/${userId}`, editedUser)
     dispatch(updateSingleUser(data))
   } catch (error) {
     console.log(error)
@@ -123,8 +121,7 @@ export const editSingleUser = (userId, editedUser) => async dispatch => {
 
 export const deleteSingleUser = userId => async dispatch => {
   try {
-    await axios.delete(`/api/users/${userId}`)
-    const {data} = await axios.get(`/api/users`)
+    const {data} = await axios.delete(`/api/users/${userId}`)
     dispatch(deleteUser(data))
   } catch (error) {
     console.log(error)
@@ -141,15 +138,39 @@ function adminReducer(state = initialState, action) {
     case GET_SINGLE_ORDER:
       return {...state, singleOrder: action.order}
     case UPDATE_ORDER:
-      return {...state, allOrders: action.orders}
+      return {
+        ...state,
+        allOrders: [
+          ...state.allOrders.filter(
+            orderObject => orderObject.id !== action.updatedOrder.id
+          ),
+          action.updatedOrder
+        ],
+        singleOrder: {}
+      }
     case GET_USERS:
       return {...state, allUsers: action.users}
     case GET_SINGLE_USER:
       return {...state, singleUser: action.user}
     case UPDATE_SINGLE_USER:
-      return {...state, allUsers: action.users}
+      return {
+        ...state,
+        allUsers: [
+          ...state.allUsers.filter(
+            userObject => userObject.id !== action.updatedUser.id
+          ),
+          action.updatedUser
+        ],
+        singleUser: {}
+      }
     case DELETE_USER:
-      return {...state, allUsers: action.users}
+      return {
+        ...state,
+        allUsers: state.allUsers.filter(
+          userObject => userObject.id !== action.deletedUser.id
+        ),
+        singleUser: {}
+      }
     default:
       return state
   }
