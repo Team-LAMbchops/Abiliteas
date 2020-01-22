@@ -33,10 +33,8 @@ router.get('/:UserId', isAuthMiddleware, async (req, res, next) => {
 })
 
 //path: /orders/cart/:userId
-//cart
-//getCartfromDB if there is one
+//CART => getCartfromDB if there is one
 router.get('/cart/:UserId', isAuthMiddleware, async (req, res, next) => {
-
   try {
     const cart = await Order.findOne({
       where: {
@@ -53,9 +51,9 @@ router.get('/cart/:UserId', isAuthMiddleware, async (req, res, next) => {
         }
       })
       //return the cart & quantity
-      //cart.id = orderId
-      //cart.teas.forEach ==> put into cart.items in redux store
-      //orderProducts.forEach ==> put into cart.qty in redux store as teaId: quantity
+      //cartData.id = orderId
+      //cartData.cart.teas = products in cart
+      //cartData.orderProducts.forEach => put into cart.qty in redux store as teaId: quantity
       res.json({
         cart: cart,
         orderProducts: productOrders
@@ -88,36 +86,49 @@ router.get(
   }
 )
 
-//todo: findorCreate an order using the USERID (and teaId), use the teaId and magic method to create orderProduct.
+//findorCreate an order using the USERID (and teaId), use the teaId and magic method to create orderProduct.
+//(ADD TO CART BUTTON)
 
 router.post('/', isAuthMiddleware, async (req, res, next) => {
   try {
-    const order = await Order.findOrCreate({
-      where: {
-        userId: req.body.userId,
-        status: 'Pending'
-      },
-      include: [Tea]
-    })
-    if (req.body.tea) {
-      //orderId from query
-      const orderId = order[0].dataValues.id
-      const currentOrder = await Order.findByPk(orderId)
-      //magic method to create throughtable instance of orderproduct
-      await currentOrder.addTea(req.body.tea.id)
-      const productOrder = await OrderProduct.findOne({
+    //if guest
+    let order
+    if (!req.body.userId) {
+      order = await Order.findOrCreate({
         where: {
-          teaId: req.body.tea.id,
-          orderId: orderId
-        }
+          userId: null,
+          status: 'Pending'
+        },
+        include: [Tea]
       })
-      //increase quantity per product
-      const qty = productOrder.dataValues.quantity
-      await productOrder.update({
-        quantity: qty + 1
+    } else {
+      //if user
+      order = await Order.findOrCreate({
+        where: {
+          userId: req.body.userId,
+          status: 'Pending'
+        },
+        include: [Tea]
       })
     }
+    // //orderId from query
+    const orderId = order[0].dataValues.id
+    const currentOrder = await Order.findByPk(orderId)
+    //magic method to create throughtable instance of orderproduct
+    await currentOrder.addTea(req.body.tea.id)
+    const productOrder = await OrderProduct.findOne({
+      where: {
+        teaId: req.body.tea.id,
+        orderId: orderId
+      }
+    })
+    //increase quantity per product
+    const qty = productOrder.dataValues.quantity
+    await productOrder.update({
+      quantity: qty + 1
+    })
     //send back order
+    //note: if order did not have to create, it will send back: an array with [order, false], which is why we have to filter through an array in the thunk.
     res.json(order)
   } catch (err) {
     next(err)

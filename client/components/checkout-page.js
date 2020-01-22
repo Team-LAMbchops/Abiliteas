@@ -11,7 +11,7 @@ class CheckoutPage extends React.Component {
   }
 
   render() {
-    const items = this.props.cart.currentOrder.teas
+    const items = this.props.cart.items
     const qty = this.props.cart.qty
     const total = this.props.cart.total
     return (

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout, resetApp} from '../store'
+import {emptyCart} from '../store/cart'
 
 const Navbar = ({handleClick, isLoggedIn, isAdmin}) => (
   <div>
@@ -54,9 +55,12 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    handleClick() {
-      dispatch(logout())
-      dispatch(resetApp())
+    async handleClick() {
+      await Promise.all([
+        dispatch(logout()),
+        dispatch(resetApp()),
+        dispatch(emptyCart())
+      ])
     }
   }
 }

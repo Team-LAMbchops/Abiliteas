@@ -15,7 +15,8 @@ const GET_TOTAL = 'GET_TOTAL'
  * INITIAL STATE
  */
 const initialCart = {
-  currentOrder: {},
+  currentOrderId: null,
+  items: [],
   qty: {},
   total: 0
 }
@@ -39,10 +40,9 @@ export const updateQty = qtyData => ({
   qtyData
 })
 
-export const removeItem = (teaId, newCart) => ({
+export const removeItem = teaId => ({
   type: REMOVE_ITEM,
-  teaId,
-  newCart
+  teaId
 })
 
 export const getTotal = totalPrice => ({
@@ -52,14 +52,20 @@ export const getTotal = totalPrice => ({
 export const emptyCart = () => ({
   type: EMPTY_CART
 })
+
 /**
  * THUNK CREATORS
  */
 //get the cart when you click on the cart component
 export const fetchCart = userId => async dispatch => {
   try {
-    const res = await axios.get(`/api/orders/cart/${userId}/`)
-    dispatch(getCart(res.data))
+    //if guest
+    if (!userId) {
+      dispatch(getCart(null))
+    } else {
+      const res = await axios.get(`/api/orders/cart/${userId}/`)
+      dispatch(getCart(res.data))
+    }
   } catch (err) {
     console.error(err)
   }
@@ -68,15 +74,11 @@ export const fetchCart = userId => async dispatch => {
 //get the cart or create the cart when you click add to cart
 export const fetchCreateOrder = (userId, tea) => async dispatch => {
   try {
-    if (userId) {
-      const res = await axios.post(`/api/orders`, {userId, tea})
-      if (Array.isArray(res.data)) {
-        dispatch(addToCart(res.data[0], tea))
-      } else {
-        dispatch(addToCart(res.data, tea))
-      }
+    const res = await axios.post(`/api/orders`, {userId, tea})
+    if (Array.isArray(res.data)) {
+      dispatch(addToCart(res.data[0], tea))
     } else {
-      dispatch(addToCart({}, tea))
+      dispatch(addToCart(res.data, tea))
     }
   } catch (error) {
     console.log(error)
@@ -115,53 +117,65 @@ export const removeProduct = (orderId, teaId) => async dispatch => {
 function cartReducer(state = initialCart, action) {
   switch (action.type) {
     case GET_CART: {
-      const stateCopy = {...state}
-      const orderProducts = action.cartData.orderProducts
-
-      orderProducts.forEach(orderProduct => {
-        if (!stateCopy.qty[orderProduct.teaId]) {
-          stateCopy.qty[orderProduct.teaId] = orderProduct.quantity
+      //if guest
+      if (!action.cartData) {
+        return state
+      } else {
+        const newState = {...state}
+        const orderProducts = action.cartData.orderProducts
+        //map through the OP array and set qtys on newState qty obj.
+        orderProducts.forEach(orderProduct => {
+          if (!newState.qty[orderProduct.teaId]) {
+            newState.qty[orderProduct.teaId] = orderProduct.quantity
+          }
+        })
+        return {
+          ...newState,
+          currentOrderId: action.cartData.cart.id,
+          items: action.cartData.cart.teas
         }
-      })
-      return {
-        ...stateCopy,
-        currentOrder: action.cartData.cart
       }
     }
-
+    //note: this action.type is just to keep the redux store updated without having to getCart
     case ADD_TO_CART: {
       const teaId = action.item.id
       const newState = {...state}
       if (!newState.qty[teaId]) {
         return {
           ...newState,
+          currentOrderId: action.order.id,
           qty: {
             ...newState.qty,
             [teaId]: 1
           },
-          currentOrder: action.order
+          items: [...newState.items, action.item]
         }
       } else {
         let increment = newState.qty[teaId] + 1
         return {
           ...newState,
+          currentOrderId: action.order.id,
           qty: {
             ...newState.qty,
             [teaId]: increment
-          },
-          currentOrder: action.order
+          }
         }
       }
     }
+
     case UPDATE_QTY: {
+      //if quantity is 0, delete the instance in our qty obj.
       if (action.qtyData.quantity === 0) {
         const newState = {...state}
         delete newState.qty[action.qtyData.teaId]
         return {
           ...newState,
+          //return the state with the new qty obj and a filtered items arr that no long has that specific item.
+          items: state.items.filter(items => items.id !== action.qtyData.teaId),
           qty: newState.qty
         }
       } else
+        //otherwise, return the new quantity from the db.
         return {
           ...state,
           qty: {
@@ -174,8 +188,10 @@ function cartReducer(state = initialCart, action) {
       const newState = {...state}
       const newQty = newState.qty
       delete newQty[action.teaId]
+      //return the new qty an the filtered items.
       return {
-        ...state,
+        ...newState,
+        items: state.items.filter(item => item.id !== action.teaId),
         qty: newQty
       }
     }
