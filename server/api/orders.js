@@ -33,10 +33,8 @@ router.get('/:UserId', isAuthMiddleware, async (req, res, next) => {
 })
 
 //path: /orders/cart/:userId
-//cart
-//getCartfromDB if there is one
-router.get('/cart/:UserId', isAuthMiddleware, async (req, res, next) => {
-
+//CART => getCartfromDB if there is one
+router.get('/cart/:UserId', async (req, res, next) => {
   try {
     const cart = await Order.findOne({
       where: {
@@ -53,9 +51,9 @@ router.get('/cart/:UserId', isAuthMiddleware, async (req, res, next) => {
         }
       })
       //return the cart & quantity
-      //cart.id = orderId
-      //cart.teas.forEach ==> put into cart.items in redux store
-      //orderProducts.forEach ==> put into cart.qty in redux store as teaId: quantity
+      //cartData.id = orderId
+      //cartData.cart.teas = products in cart
+      //cartData.orderProducts.forEach => put into cart.qty in redux store as teaId: quantity
       res.json({
         cart: cart,
         orderProducts: productOrders

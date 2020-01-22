@@ -2,7 +2,6 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {fetchCart, getUpdate, removeProduct, getTotal} from '../store/cart'
 import {findPrice, findTotal} from './helperFuncs'
-import Axios from 'axios'
 
 class Cart extends React.Component {
   async componentDidMount() {
@@ -11,13 +10,13 @@ class Cart extends React.Component {
   }
   render() {
     const qty = this.props.cart.qty
-    const orderId = this.props.cart.currentOrder.id
-    const items = this.props.cart.currentOrder.teas
+    const orderId = this.props.cart.currentOrderId
+    const items = this.props.cart.items
     return (
       <div>
         <div>
           <h1>Shopping Cart</h1>
-          {!items ? (
+          {!items.length ? (
             <div>Your cart is empty!</div>
           ) : (
             <div>

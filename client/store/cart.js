@@ -15,7 +15,8 @@ const GET_TOTAL = 'GET_TOTAL'
  * INITIAL STATE
  */
 const initialCart = {
-  currentOrder: {},
+  currentOrderId: null,
+  items: [],
   qty: {},
   total: 0
 }
@@ -115,17 +116,18 @@ export const removeProduct = (orderId, teaId) => async dispatch => {
 function cartReducer(state = initialCart, action) {
   switch (action.type) {
     case GET_CART: {
-      const stateCopy = {...state}
+      const newState = {...state}
       const orderProducts = action.cartData.orderProducts
-
+      //map through the OP array and set qtys on newState qty obj.
       orderProducts.forEach(orderProduct => {
-        if (!stateCopy.qty[orderProduct.teaId]) {
-          stateCopy.qty[orderProduct.teaId] = orderProduct.quantity
+        if (!newState.qty[orderProduct.teaId]) {
+          newState.qty[orderProduct.teaId] = orderProduct.quantity
         }
       })
       return {
-        ...stateCopy,
-        currentOrder: action.cartData.cart
+        ...newState,
+        currentOrderId: action.cartData.cart.id,
+        items: action.cartData.cart.teas
       }
     }
 
