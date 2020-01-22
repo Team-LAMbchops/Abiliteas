@@ -16,7 +16,8 @@ import {
   AdminEditTea,
   AdminAllUsers,
   AdminEditUser,
-  AdminAllOrders
+  AdminAllOrders,
+  LandingPage
 } from './components'
 import allTeaContainer from './components/allTeas'
 import {me} from './store'
@@ -74,7 +75,7 @@ class Routes extends Component {
         )}
 
         {/* Displays our Login component as a fallback */}
-        <Route component={Login} />
+        <Route component={LandingPage} />
       </Switch>
     )
   }
