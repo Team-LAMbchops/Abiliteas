@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import AllOrders from './allOrders'
+import PropTypes from 'prop-types'
 
 class UserProfile extends React.Component {
   componentDidMount() {}
@@ -28,11 +29,13 @@ class UserProfile extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.user,
+    isAdmin: !!state.user.isAdmin
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {}
 }
+
 export default connect(mapStateToProps, mapDispatchToProps)(UserProfile)
