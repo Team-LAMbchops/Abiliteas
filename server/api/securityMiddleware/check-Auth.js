@@ -4,9 +4,7 @@ const isAdminMiddleware = (req, res, next) => {
       next()
     }
   } catch (error) {
-    return res.status(401).json({
-      message: 'Auth for this user failed'
-    })
+    res.redirect('/')
   }
 }
 
@@ -16,9 +14,7 @@ const isAuthMiddleware = (req, res, next) => {
       next()
     }
   } catch (error) {
-    return res.status(401).json({
-      message: 'Auth for this user failed'
-    })
+    res.redirect('/')
   }
 }
 
