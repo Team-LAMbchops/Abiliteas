@@ -51,7 +51,7 @@ router.put('/:teaId', isAdminMiddleware, async (req, res, next) => {
   try {
     const tea = await Tea.findByPk(req.params.teaId)
     const {name, flavor, description, price, inventory, imageUrl} = req.body
-    await tea.update({
+    const updatedTea = await tea.update({
       name,
       flavor,
       description,
@@ -59,7 +59,7 @@ router.put('/:teaId', isAdminMiddleware, async (req, res, next) => {
       inventory,
       imageUrl
     })
-    res.sendStatus(202)
+    res.json(updatedTea)
   } catch (err) {
     next(err)
   }
@@ -70,7 +70,7 @@ router.delete('/:teaId', isAdminMiddleware, async (req, res, next) => {
     const tea = await Tea.findByPk(req.params.teaId)
     if (!tea) return res.sendStatus(404)
     await tea.destroy()
-    res.sendStatus(204)
+    res.json(tea)
   } catch (err) {
     next(err)
   }

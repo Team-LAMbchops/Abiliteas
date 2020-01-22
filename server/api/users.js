@@ -39,14 +39,14 @@ router.put('/:userId', isAuthMiddleware, async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.userId)
     const {firstName, lastName, email, address, isAdmin} = req.body
-    await user.update({
+    const updatedUser = await user.update({
       firstName,
       lastName,
       email,
       address,
       isAdmin
     })
-    res.sendStatus(202)
+    res.json(updatedUser)
   } catch (err) {
     next(err)
   }
@@ -57,7 +57,7 @@ router.delete('/:userId', isAuthMiddleware, async (req, res, next) => {
     const user = await User.findByPk(req.params.userId)
     if (!user) return res.sendStatus(404)
     await user.destroy()
-    res.sendStatus(204)
+    res.json(user)
   } catch (err) {
     next(err)
   }

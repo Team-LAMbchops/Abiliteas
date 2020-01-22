@@ -32,7 +32,6 @@ class AdminEditTea extends React.Component {
   }
 
   handleSubmit(event) {
-    console.log('onsubmit')
     event.preventDefault()
     this.props.onSubmitEditSingleTea(this.props.match.params.teaId, this.state)
     this.props.history.push('/admin/teas')

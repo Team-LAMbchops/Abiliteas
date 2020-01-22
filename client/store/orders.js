@@ -27,9 +27,9 @@ const getSingleOrder = order => ({
   order
 })
 
-const updateOrder = order => ({
+const updateOrder = updatedOrder => ({
   type: UPDATE_ORDER,
-  order
+  updatedOrder
 })
 
 /**
@@ -46,9 +46,7 @@ export const fetchOrders = userId => async dispatch => {
 
 export const fetchSingleOrder = (userId, orderId) => async dispatch => {
   try {
-    console.log('fetchingtheSingleOrder')
     const res = await axios.get(`/api/orders/singleOrder/${userId}/${orderId}`)
-    console.log('res.data', res.data)
     dispatch(getSingleOrder(res.data))
   } catch (err) {
     console.log(err)
@@ -57,8 +55,8 @@ export const fetchSingleOrder = (userId, orderId) => async dispatch => {
 
 export const editOrder = (orderId, editedOrder) => async dispatch => {
   try {
-    await axios.put(`/api/orders/${orderId}`, editedOrder)
-    const {data} = await axios.get(`/api/orders`)
+    const {data} = await axios.put(`/api/orders/${orderId}`, editedOrder)
+    console.log('information from UPDATE ORDER data', data)
     dispatch(updateOrder(data))
   } catch (error) {
     console.log(error)
@@ -75,8 +73,13 @@ function ordersReducer(state = initialState, action) {
       return {...state, singleOrder: action.order}
     case UPDATE_ORDER:
       return {
-        ...state,
-        allOrders: action.order
+        allOrders: [
+          ...state.allOrders.filter(
+            orderObject => orderObject.id !== action.updatedOrder.id
+          ),
+          action.updatedOrder
+        ],
+        singleOrder: {}
       }
     default:
       return state

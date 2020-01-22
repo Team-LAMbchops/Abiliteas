@@ -4,12 +4,10 @@ import {fetchSingleOrder} from '../store/orders'
 
 class SingleOrder extends React.Component {
   componentDidMount() {
-    console.log('compodid before')
     this.props.getSingleOrder(
       this.props.userId,
       this.props.match.params.orderId
     )
-    console.log('Component Did Mount after')
   }
 
   render() {
