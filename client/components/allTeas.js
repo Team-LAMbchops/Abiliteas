@@ -2,31 +2,56 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {fetchTeas} from '../store/teas'
 import {Link} from 'react-router-dom'
-import {findPrice} from './helperFuncs'
+import {fetchCreateOrder} from '../store/cart'
+
 class AllTea extends React.Component {
   componentDidMount() {
     this.props.getAllTeas()
+  }
+  async handleClick(tea) {
+    const teaObj = tea
+    const userId = this.props.user.id
+    await this.props.createOrder(userId, teaObj)
   }
 
   render() {
     const teas = this.props.teas
     return (
       <div>
-        <h1>ALL TEAS!!!</h1>
-        {teas.map(tea => {
-          return (
-            <div key={tea.id}>
-              <h3>
-                <Link to={`/teas/${tea.id}`}>{tea.name}</Link>
-              </h3>
-              <p>{tea.description}</p>
-              <p>Price: ${findPrice(tea.price).toFixed(2)}</p>
-              <Link to={`/teas/${tea.id}`}>
-                <img src={tea.imageUrl} width={200} height={200} mode="fit" />
-              </Link>
-            </div>
-          )
-        })}
+        <header id="center">
+          <img src="/pagelogo.png" width={150} />
+        </header>
+        <section className="products">
+          {teas.map(tea => {
+            return (
+              <div key={tea.id}>
+                <div className="product-card">
+                  <div className="product-image">
+                    <Link to={`/teas/${tea.id}`}>
+                      <img
+                        src={tea.imageUrl}
+                        width={200}
+                        height={200}
+                        mode="fit"
+                      />
+                    </Link>
+                  </div>
+                  <div className="product-info">
+                    <h5>{tea.name}</h5>
+
+                    <button
+                      type="submit"
+                      className="fa fa-cart-plus"
+                      onClick={() => {
+                        this.handleClick(tea)
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+            )
+          })}
+        </section>
       </div>
     )
   }
@@ -34,13 +59,15 @@ class AllTea extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    teas: state.teas.allTeas
+    teas: state.teas.allTeas,
+    user: state.user
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    getAllTeas: () => dispatch(fetchTeas())
+    getAllTeas: () => dispatch(fetchTeas()),
+    createOrder: (userId, tea) => dispatch(fetchCreateOrder(userId, tea))
   }
 }
 

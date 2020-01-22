@@ -1,6 +1,8 @@
 * {
   margin: 0;
   padding: 0;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+    'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 #showcase {
   background-image: url('./ABILITEAS\ LANDING\ PAGE.png');
@@ -14,6 +16,58 @@
   background-position: center;
   height: 100vh;
 }
+
+#center {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.products {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.product-card {
+  padding: 2%;
+  flex: 1 25%;
+}
+
+.product-image img {
+  max-width: 100%;
+}
+
+.product-info {
+  display: flex;
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.fa fa-cart-plus {
+  box-shadow: inset 0px 1px 0px 0px #ffffff;
+  background: linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
+  background-color: #ffffff;
+  border-radius: 42px;
+  display: inline-block;
+  cursor: pointer;
+  color: #666666;
+  font-family: Arial;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 20px 24px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #ffffff;
+}
+.fa fa-cart-plus:hover {
+  background: linear-gradient(to bottom, #f6f6f6 5%, #ffffff 100%);
+  background-color: #f6f6f6;
+}
+.fa fa-cart-plus:active {
+  position: relative;
+  top: 1px;
 
 .navBackground {
   background-color: black;

@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchSingleTea} from '../store/teas'
-import {addToCart, fetchCreateOrder} from '../store/cart'
+import {fetchCreateOrder} from '../store/cart'
 import {findPrice} from './helperFuncs'
 
 class SingleTea extends React.Component {
@@ -50,7 +50,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getSingleTea: id => dispatch(fetchSingleTea(id)),
-    addToCart: item => dispatch(addToCart(item)),
     createOrder: (userId, tea) => dispatch(fetchCreateOrder(userId, tea))
   }
 }
