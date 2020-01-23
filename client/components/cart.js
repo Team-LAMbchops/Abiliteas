@@ -53,7 +53,7 @@ class Cart extends React.Component {
                             this.props.update(item.id, orderId, 'decrement')
                           }
                         >
-                          +
+                          -
                         </button>
                         Qty: {qty[item.id]}
                         <button
@@ -63,7 +63,7 @@ class Cart extends React.Component {
                             this.props.update(item.id, orderId, 'increment')
                           }
                         >
-                          -
+                          +
                         </button>
                       </div>
                       <p>
