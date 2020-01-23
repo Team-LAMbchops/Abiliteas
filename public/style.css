@@ -205,6 +205,7 @@
   font-style: bold;
   justify-content: space-between;
   padding-bottom: 30px;
+  align-items: center;
 }
 
 #brewInstructions {
@@ -474,12 +475,6 @@ input:focus {
   padding-bottom: 20px;
 }
 
-/* Order History Page */
-.orderHistoryEmpty {
-  font-size: 20px;
-  font-style: italic;
-}
-
 .entirecheckout {
   margin-top: 70px;
   display: flex;
@@ -494,6 +489,7 @@ input:focus {
   display: flex;
   flex-direction: column;
 }
+
 
 /*Checkout Form*/
 #checkoutform_wrapper {
@@ -533,4 +529,59 @@ input:focus {
 
 .checkoutqty {
   margin-left: 5px;
+  
+/* Order History Page */
+#orderHistoryEmpty {
+  font-size: 20px;
+  font-style: italic;
+}
+
+#singleProductHistory {
+  padding-top: 20px;
+  display: flex;
+  width: 700px;
+  justify-content: space-between;
+}
+
+#orderHistoryTitle {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-content: space-between;
+  align-items: center;
+  padding-top: 20px;
+  font-size: 15px;
+  font-style: bold;
+}
+
+#orderHistorySingleOrder {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-content: space-between;
+  align-items: center;
+}
+
+#singleTeaNameOrderPage {
+  font-size: 40px;
+  line-height: 30px;
+}
+
+#singleTeaFlavorOrderPage {
+  font-size: 20px;
+  font-style: italic;
+  padding-bottom: 20px;
+}
+
+#singleTeaQuantityPriceOrderPage {
+  font-size: 15px;
+  font-style: bold;
+}
+
+/*single order page */
+#singleOrderPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
