@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {fetchOrders} from '../store/orders'
 import {Link} from 'react-router-dom'
+import {findPrice} from './helperFuncs'
 
 class AllOrders extends React.Component {
   componentDidMount() {
@@ -15,15 +16,19 @@ class AllOrders extends React.Component {
         {!orders.length ? (
           <div id="orderHistoryEmpty">Your order history is empty</div>
         ) : (
-          <div id="orderHistorySingleOrder">
+          <div>
             {orders.map(order => {
               return (
-                <div key={order.id}>
-                  <Link to={`/orders/${this.props.userId}/${order.id}`}>
-                    order-date: {order.date.substring(0, 10)} status:{
-                      order.status
-                    }
-                  </Link>
+                <div key={order.id} id="orderHistorySingleOrder">
+                  <div>
+                    <Link
+                      to={`/orders/${this.props.userId}/${order.id}`}
+                      id="orderHistoryTitle"
+                    >
+                      <span>ORDER-DATE: {order.date.substring(0, 10)} </span>
+                      <span>STATUS: {order.status} </span>
+                    </Link>
+                  </div>
 
                   {!order.teas ? (
                     <div>No Items Ordered in this Purchase</div>
@@ -31,18 +36,28 @@ class AllOrders extends React.Component {
                     <div>
                       {order.teas.map(tea => {
                         return (
-                          <div key={tea.id}>
-                            <h3>{tea.name}</h3>
-                            <span>
-                              {tea.flavor} {tea.price}
-                              {tea.order_product.quantity}
-                            </span>
-                            <img
-                              src={tea.imageUrl}
-                              width={200}
-                              height={200}
-                              mode="fit"
-                            />
+                          <div key={tea.id} id="singleProductHistory">
+                            <div id="orderHistoryTeaInfo">
+                              <div id="singleTeaNameOrderPage">{tea.name}</div>
+                              <div id="singleTeaFlavorOrderPage">
+                                {tea.flavor}
+                              </div>
+                              <div id="singleTeaQuantityPriceOrderPage">
+                                $ {findPrice(tea.price).toFixed(2)}
+                              </div>
+                              <div id="singleTeaQuantityPriceOrderPage">
+                                QUANTITY: {tea.order_product.quantity}
+                              </div>
+                            </div>
+
+                            <div id="orderHistoryTeaPic">
+                              <img
+                                src={tea.imageUrl}
+                                width={200}
+                                height={200}
+                                mode="fit"
+                              />
+                            </div>
                           </div>
                         )
                       })}
