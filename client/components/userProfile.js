@@ -9,17 +9,24 @@ class UserProfile extends React.Component {
     let user = this.props.user
 
     return (
-      <div>
-        <div>
-          <h1>
+      <div id="userProfilePage">
+        <div id="userInformation">
+          <div>
+            <img src="/pagelogo.png" width={300} />
+          </div>
+          <div id="userPageName">
             {user.firstName} {user.lastName}
-          </h1>
-          <div>{user.email}</div>
+          </div>
+          <div id="userPageEmail">{user.email}</div>
           <div>{user.address}</div>
         </div>
 
-        <div>
-          <AllOrders />
+        <div id="userPageOrderHistory">
+          <div />
+          <div id="scrollOrders">
+            {' '}
+            <AllOrders />
+          </div>
         </div>
       </div>
     )

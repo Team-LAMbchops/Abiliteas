@@ -15,7 +15,7 @@ class CheckoutPage extends React.Component {
     const qty = this.props.cart.qty
     const total = this.props.cart.total
     return (
-      <div>
+      <div className="entirecheckout">
         <h1>Checkout</h1>
         <h2>Order Summary:</h2>
         {items.map(item => {
