@@ -34,7 +34,8 @@
 
 .product-card {
   padding: 2%;
-  flex: 1 25%;
+  flex-grow: 1;
+  flex-basis: 24%;
 }
 
 .product-image img {
@@ -47,30 +48,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.fa fa-cart-plus {
-  box-shadow: inset 0px 1px 0px 0px #ffffff;
-  background: linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
-  background-color: #ffffff;
-  border-radius: 42px;
-  display: inline-block;
-  cursor: pointer;
-  color: #666666;
-  font-family: Arial;
-  font-size: 15px;
-  font-weight: bold;
-  padding: 20px 24px;
-  text-decoration: none;
-  text-shadow: 0px 1px 0px #ffffff;
-}
-.fa fa-cart-plus:hover {
-  background: linear-gradient(to bottom, #f6f6f6 5%, #ffffff 100%);
-  background-color: #f6f6f6;
-}
-.fa fa-cart-plus:active {
-  position: relative;
-  top: 1px;
 }
 
 /* Nav bar */
@@ -184,7 +161,7 @@
   #form_left {
     display: none;
   }
-
+}
 /* single tea page */
 .singleTea {
   margin-top: 50px;
@@ -245,5 +222,200 @@
 #brewright {
   display: flex;
   flex-direction: column;
+}
 
+/* Add To Cart Button */
+.AddToCartButton {
+  margin-top: 10px;
+  backface-visibility: hidden;
+  position: relative;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+  display: inline-block;
+  white-space: nowrap;
+  background: #000000;
+  border-radius: 100px;
+  border: 0px solid #444;
+  border-width: 0px 0px 0px 0px;
+  padding: 10px 13px 10px 13px;
+  color: #000;
+  font-size: 16px;
+  font-family: Helvetica Neue;
+  font-weight: 900;
+  font-style: normal;
+}
+.AddToCartButton > div {
+  color: #999;
+  font-size: 10px;
+  font-family: Helvetica Neue;
+  font-weight: initial;
+  font-style: normal;
+  text-align: center;
+  margin: 0px 0px 0px 0px;
+}
+.AddToCartButton > i {
+  color: #fff;
+  font-size: 1em;
+  border-radius: 0px;
+  border: 0px solid transparent;
+  border-width: 0px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
+  margin: 0px 0px 0px 0px;
+  position: static;
+}
+.AddToCartButton > .ld {
+  font-size: initial;
+}
+
+/* CART COMPONENT */
+
+.shopping-cart {
+  width: 750px;
+  height: 423px;
+  margin: 80px auto;
+  background: #ffffff;
+
+  border-radius: 6px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  height: 60px;
+  border-bottom: 1px solid #e1e8ee;
+  padding: 20px 30px;
+  color: #5e6977;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.item {
+  padding: 20px 30px;
+  height: 120px;
+  display: flex;
+}
+
+.item:nth-child(3) {
+  border-top: 1px solid #e1e8ee;
+  border-bottom: 1px solid #e1e8ee;
+}
+
+.buttons {
+  position: relative;
+  padding-top: 30px;
+  margin-right: 60px;
+}
+.delete-btn,
+.like-btn {
+  display: inline-block;
+  cursor: pointer;
+}
+.delete-btn {
+  width: 18px;
+  height: 17px;
+}
+
+.image {
+  margin-right: 50px;
+}
+
+Let’s add some basic style to product name and description. .description {
+  padding-top: 10px;
+  margin-right: 60px;
+  width: 115px;
+}
+
+.description span {
+  display: block;
+  font-size: 14px;
+  color: #43484d;
+  font-weight: 400;
+}
+
+.description span:first-child {
+  margin-bottom: 5px;
+}
+.description span:last-child {
+  font-weight: 300;
+  margin-top: 8px;
+  color: #86939e;
+}
+
+.quantity {
+  padding-top: 20px;
+  margin-right: 60px;
+}
+.quantity input {
+  -webkit-appearance: none;
+  border: none;
+  text-align: center;
+  width: 32px;
+  font-size: 16px;
+  color: #43484d;
+  font-weight: 300;
+}
+
+button[class*='btn'] {
+  width: 30px;
+  height: 30px;
+  color: white;
+  background-color: black;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+.minus-btn img {
+  margin-bottom: 3px;
+}
+.plus-btn img {
+  margin-top: 2px;
+}
+
+button:focus,
+input:focus {
+  outline: 0;
+}
+
+.total-price {
+  width: 83px;
+  padding-top: 27px;
+  text-align: center;
+  font-size: 16px;
+  color: #43484d;
+  font-weight: 300;
+}
+
+.checkoutbutton {
+  border-top: 1px solid #96d1f8;
+  background: #000000;
+  padding: 5px 10px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  -webkit-box-shadow: rgba(0, 0, 0, 1) 0 1px 0;
+  -moz-box-shadow: rgba(0, 0, 0, 1) 0 1px 0;
+  box-shadow: rgba(0, 0, 0, 1) 0 1px 0;
+  text-shadow: rgba(0, 0, 0, 0.4) 0 1px 0;
+  color: white;
+  font-size: 13px;
+  font-family: 'Lucida Grande', Helvetica, Arial, Sans-Serif;
+  text-decoration: none;
+  vertical-align: middle;
+}
+.button:hover {
+  border-top-color: #9e9e9e;
+  background: #9e9e9e;
+  color: #737273;
+}
+.button:active {
+  border-top-color: #6dbaed;
+  background: #6dbaed;
+}
+.ending {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px;
 }
