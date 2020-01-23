@@ -184,6 +184,7 @@
   #form_left {
     display: none;
   }
+}
 
 /* single tea page */
 .singleTea {
@@ -245,5 +246,19 @@
 #brewright {
   display: flex;
   flex-direction: column;
+}
 
+.entirecheckout {
+  margin-top: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 10px solid transparent;
+  padding: 15px;
+}
+
+.shippingFormContainer {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
 }
