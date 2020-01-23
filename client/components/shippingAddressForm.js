@@ -40,41 +40,43 @@ class ShippingAddressForm extends React.Component {
   render() {
     return (
       <div>
-        <h2> Shipping Address </h2>
+        <div className="shippingFormContainer">
+          <h2> Shipping Address </h2>
 
-        <form onSubmit={this.handleSubmit}>
-          First Name:
-          <input
-            type="text"
-            name="firstName"
-            onChange={this.handleChange}
-            value={this.state.firstName}
-          />
-          Last Name:
-          <input
-            type="text"
-            name="lastName"
-            onChange={this.handleChange}
-            value={this.state.lastName}
-          />
-          Address:
-          <input
-            type="text"
-            name="address"
-            onChange={this.handleChange}
-            value={this.state.address}
-          />
-          Email Address:
-          <input
-            type="text"
-            name="emailAddress"
-            onChange={this.handleChange}
-            value={this.state.emailAddress}
-          />
-          <button type="submit" onClick={this.handleSubmit}>
-            Place Order
-          </button>
-        </form>
+          <form onSubmit={this.handleSubmit}>
+            First Name:
+            <input
+              type="text"
+              name="firstName"
+              onChange={this.handleChange}
+              value={this.state.firstName}
+            />
+            Last Name:
+            <input
+              type="text"
+              name="lastName"
+              onChange={this.handleChange}
+              value={this.state.lastName}
+            />
+            Address:
+            <input
+              type="text"
+              name="address"
+              onChange={this.handleChange}
+              value={this.state.address}
+            />
+            Email Address:
+            <input
+              type="text"
+              name="emailAddress"
+              onChange={this.handleChange}
+              value={this.state.emailAddress}
+            />
+            <button type="submit" onClick={this.handleSubmit}>
+              Submit
+            </button>
+          </form>
+        </div>
       </div>
     )
   }
