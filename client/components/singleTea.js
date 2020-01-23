@@ -20,19 +20,54 @@ class SingleTea extends React.Component {
     const tea = this.props.singleTea
     return (
       <div>
-        <h1>{tea.name}</h1>
-        <h3>{tea.flavor}</h3>
-        <img src={tea.imageUrl} width={200} height={200} mode="fit" />
-        <p>Description: {tea.description}</p>
-        <p>Price: $ {findPrice(tea.price).toFixed(2)}</p>
-        <button
-          type="submit"
-          onClick={() => {
-            this.handleClick()
-          }}
-        >
-          Add To Cart
-        </button>
+        <header id="center">
+          <img src="/pagelogo.png" width={150} />
+        </header>
+
+        <div className="singleTea">
+          <div id="singleTeaImage">
+            <img src={tea.imageUrl} width={300} height={300} mode="fit" />
+          </div>
+          <div id="singleTeaInfo">
+            <div id="singleTeaName">{tea.name}</div>
+            <div id="singleTeaFlavor">{tea.flavor}</div>
+            <p id="singleTeaDescription">{tea.description}</p>
+            <p id="singleTeaPrice">
+              $ {findPrice(tea.price).toFixed(2)}
+              <button
+                type="submit"
+                onClick={() => {
+                  this.handleClick()
+                }}
+              >
+                Add To Cart
+              </button>
+            </p>
+            <div>
+              PREPARATION
+              <div id="brewInstructions">
+                <div id="brewleft">
+                  <div>
+                    {' '}
+                    <img src="/leaf.png" width={50} /> 9 grams | 1.5 tbsp{' '}
+                  </div>
+                  <div>
+                    <img src="/thermometer.png" width={50} /> 160°F | 70°C{' '}
+                  </div>
+                </div>
+                <div id="brewright">
+                  <div>
+                    <img src="/teapot.png" width={50} /> 12 ounces | 350ml
+                  </div>
+                  <div>
+                    <img src="/steep-time.png" width={50} /> 1.5 minutes |
+                    resteep up to 1x{' '}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     )
   }
