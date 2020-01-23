@@ -35,12 +35,13 @@ class SingleTea extends React.Component {
             <p id="singleTeaPrice">
               $ {findPrice(tea.price).toFixed(2)}
               <button
+                className="AddToCartButton"
                 type="submit"
                 onClick={() => {
                   this.handleClick()
                 }}
               >
-                Add To Cart
+                <i className="fa fa-shopping-cart" />
               </button>
             </p>
             <div>

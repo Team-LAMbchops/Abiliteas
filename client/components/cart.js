@@ -14,72 +14,88 @@ class Cart extends React.Component {
     const items = this.props.cart.items
     return (
       <div>
-        <div>
-          <h1>Shopping Cart</h1>
+        <div className="shopping-cart">
+          <header id="center">
+            <img src="/pagelogo.png" width={150} />
+          </header>
+          <div className="title">Shopping Cart</div>
           {!items.length ? (
-            <div>Your cart is empty!</div>
+            <div className="ending">Your cart is empty!</div>
           ) : (
             <div>
               {items.map(item => {
                 return (
                   <div key={item.id}>
-                    <h3>{item.name}</h3>
-                    <img
-                      src={item.imageUrl}
-                      width={100}
-                      height={100}
-                      mode="fit"
-                    />
-                    <p>
-                      Quantity: {qty[item.id]}
+                    <div className="item">
                       <button
-                        type="button"
-                        onClick={() =>
-                          this.props.update(item.id, orderId, 'increment')
-                        }
-                      >
-                        Increment
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() =>
-                          this.props.update(item.id, orderId, 'decrement')
-                        }
-                      >
-                        Decrement
-                      </button>
-                      <button
+                        className="delete-btn"
                         type="button"
                         onClick={() => {
                           this.props.remove(orderId, item.id)
                         }}
                       >
-                        Remove
+                        ✖
                       </button>
-                    </p>
-
-                    <p>
-                      Price: ${(findPrice(item.price) * qty[item.id]).toFixed(
-                        2
-                      )}
-                    </p>
+                      <h3>{item.name}</h3>
+                      <div className="image">
+                        <img
+                          src={item.imageUrl}
+                          width={100}
+                          height={100}
+                          mode="fit"
+                        />
+                      </div>
+                      <div className="quantity">
+                        <button
+                          type="button"
+                          className="minus-btn"
+                          onClick={() =>
+                            this.props.update(item.id, orderId, 'increment')
+                          }
+                        >
+                          -
+                        </button>
+                        Qty: {qty[item.id]}
+                        <button
+                          className="plus-btn"
+                          type="button"
+                          onClick={() =>
+                            this.props.update(item.id, orderId, 'decrement')
+                          }
+                        >
+                          +
+                        </button>
+                      </div>
+                      <p>
+                        Price: ${(findPrice(item.price) * qty[item.id]).toFixed(
+                          2
+                        )}
+                      </p>
+                    </div>
                   </div>
                 )
               })}
-              <h3>Subtotal:${findTotal(items, qty).toFixed(2)}</h3>
+              <div className="ending">
+                <div className="subtotal">
+                  <h3>Subtotal:${findTotal(items, qty).toFixed(2)}</h3>
+                </div>
+                <div className="checkout">
+                  <button
+                    className="checkoutbutton"
+                    type="submit"
+                    onClick={() => {
+                      this.props.redirect('/checkout')
+                      const total = findTotal(items, qty).toFixed(2)
+                      this.props.getTotal(total)
+                    }}
+                  >
+                    Checkout
+                  </button>
+                </div>
+              </div>
             </div>
           )}
         </div>
-        <button
-          type="submit"
-          onClick={() => {
-            this.props.redirect('/checkout')
-            const total = findTotal(items, qty).toFixed(2)
-            this.props.getTotal(total)
-          }}
-        >
-          Checkout
-        </button>
       </div>
     )
   }

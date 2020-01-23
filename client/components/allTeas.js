@@ -38,14 +38,15 @@ class AllTea extends React.Component {
                   </div>
                   <div className="product-info">
                     <h5>{tea.name}</h5>
-
                     <button
+                      className="AddToCartButton"
                       type="submit"
-                      className="fa fa-cart-plus"
                       onClick={() => {
                         this.handleClick(tea)
                       }}
-                    />
+                    >
+                      <i className="fa fa-shopping-cart" />
+                    </button>
                   </div>
                 </div>
               </div>
