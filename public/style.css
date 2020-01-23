@@ -271,6 +271,11 @@
   font-size: initial;
 }
 
+.AddToCartButton:hover {
+  border-top-color: #e6e1d4;
+  background: #96938b;
+}
+
 /* CART COMPONENT */
 
 .shopping-cart {
@@ -490,7 +495,6 @@ input:focus {
   flex-direction: column;
 }
 
-
 /*Checkout Form*/
 #checkoutform_wrapper {
   margin-top: 50px;
@@ -529,7 +533,8 @@ input:focus {
 
 .checkoutqty {
   margin-left: 5px;
-  
+}
+
 /* Order History Page */
 #orderHistoryEmpty {
   font-size: 20px;
