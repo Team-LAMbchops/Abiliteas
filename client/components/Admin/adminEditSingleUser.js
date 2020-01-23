@@ -39,6 +39,9 @@ class AdminEditUser extends React.Component {
   render() {
     return (
       <div>
+        <header id="center">
+          <img src="/pagelogo.png" width={150} />
+        </header>
         <h1>Admin Edit User : {this.state.name}</h1>
         <Link to="/admin/users">Admin All Users</Link>
 

@@ -13,6 +13,9 @@ class AdminAllOrders extends React.Component {
 
     return (
       <div>
+        <header id="center">
+          <img src="/pagelogo.png" width={150} />
+        </header>
         <h1>Admin All Orders</h1>
 
         {orders.map(order => {

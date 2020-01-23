@@ -12,6 +12,9 @@ class AdminAllTeas extends React.Component {
     const teas = this.props.teas
     return (
       <div>
+        <header id="center">
+          <img src="/pagelogo.png" width={150} />
+        </header>
         <h1>Admin All Teas</h1>
         <Link to="/admin/addTea">Add New Tea</Link>
 

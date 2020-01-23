@@ -8,7 +8,9 @@ class AdminPage extends React.Component {
   render() {
     return (
       <div>
-        <h1>Admin Page</h1>
+        <header id="center">
+          <img src="/pagelogo.png" width={150} />
+        </header>
         <div>
           <Link to="/admin/teas">Teas</Link>
         </div>
