@@ -36,7 +36,7 @@ class CheckoutPage extends React.Component {
 
           <div id="checkoutform_right">
             <div id="payment">
-              <h2>Order Total: ${total}</h2>
+              <h2 id="orderTotal">Order Total: ${total}</h2>
               <h3>Payment:</h3>
               <MyStoreCheckout />
             </div>
