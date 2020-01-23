@@ -249,6 +249,7 @@
   flex-direction: column;
 }
 
+
 /* User Homepage */
 
 #userWelcomePage {
@@ -305,4 +306,18 @@
 .orderHistoryEmpty {
   font-size: 20px;
   font-style: italic;
+=======
+.entirecheckout {
+  margin-top: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 10px solid transparent;
+  padding: 15px;
+}
+
+.shippingFormContainer {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
 }
