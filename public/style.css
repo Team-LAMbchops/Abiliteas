@@ -4,26 +4,28 @@
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
     'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
+/* Landing Page */
 #showcase {
   background-image: url('./ABILITEAS\ LANDING\ PAGE.png');
   background-size: cover;
   background-position: center;
   height: 100vh;
 }
+/* Confirmation page */
 #showcase2 {
   background-image: url('./Thank-you-page.png');
   background-size: cover;
   background-position: center;
   height: 100vh;
 }
-
+/* Headers with our sheep */
 #center {
   margin-top: 100px;
   display: flex;
   justify-content: center;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
-
+/* All Products Page */
 .products {
   display: flex;
   flex-wrap: wrap;
@@ -71,6 +73,7 @@
   top: 1px;
 }
 
+/* Nav bar */
 .navBackground {
   background-color: black;
   height: 80px;
@@ -97,6 +100,90 @@
 .navBarIcon {
   padding-left: 30px;
 }
+
+/* Login Page */
+:root {
+  --form_bg: #ffffff;
+  --input_bg: rgb(35, 34, 34);
+  --input_hover: #eaeaea;
+  --submit_bg: black;
+  --submit_hover: #eaeaea;
+}
+
+#form_wrapper {
+  width: 1000px;
+  height: 700px;
+  /* this will help us center it*/
+  margin: auto;
+  background-color: var(--form_bg);
+  border-radius: 50px;
+  /* make it a grid container*/
+  display: grid;
+  /* with two columns of same width*/
+  grid-template-columns: 1fr 1fr;
+  /* with a small gap in between them*/
+  grid-gap: 5vw;
+  /* add some padding around */
+  padding: 5vh 15px;
+}
+
+#form_left {
+  /* center the image */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#form_right {
+  display: grid;
+  /* single column layout */
+  grid-template-columns: 1fr;
+  /* have some gap in between elements*/
+  grid-gap: 20px;
+  padding: 10% 5%;
+  align-self: center;
+}
+
+.input_field {
+  /* customize the input tag with lighter font and some padding*/
+  color: var(--icon_color);
+  background-color: #fffaf0;
+  width: 90%;
+  border: none;
+  font-size: 1.3rem;
+  font-weight: 200;
+  padding-left: 30px;
+  margin-bottom: 10px;
+}
+
+.input_field:hover,
+.input_field:focus {
+  outline: none;
+}
+
+#input_submit {
+  background-color: var(--submit_bg);
+  padding: 5px;
+  font-weight: bold;
+  color: white;
+  text-transform: uppercase;
+}
+
+#input_submit:hover {
+  background-color: var(--submit_hover);
+  transition: background-color, 1s;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  #form_wrapper {
+    grid-template-columns: 1fr;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  #form_left {
+    display: none;
+  }
 
 /* single tea page */
 .singleTea {
@@ -158,4 +245,5 @@
 #brewright {
   display: flex;
   flex-direction: column;
+
 }
