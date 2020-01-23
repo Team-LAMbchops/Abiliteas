@@ -1,35 +1,44 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import AllTeaContainer from './allTeas'
+import {Link} from 'react-router-dom'
+import {fetchTeas} from '../store/teas'
+import userProfile from './userProfile'
 
-/**
- * COMPONENT
- */
-export const UserHome = props => {
-  const {email} = props
+class UserHome extends React.Component {
+  componentDidMount() {
+    this.props.getAllTeas()
+  }
 
-  return (
-    <div>
-      <h3>Welcome, {email}</h3>
-    </div>
-  )
-}
-
-/**
- * CONTAINER
- */
-const mapState = state => {
-  return {
-    email: state.user.email
+  render() {
+    const teas = this.props.teas
+    const user = this.props.user
+    return (
+      <div>
+        <div id="showcase">
+          <div id="userWelcomePage">
+            <div id="userNameWelcome">
+              Do not underestimate your abiliteas, {user.firstName}
+            </div>
+          </div>
+        </div>
+      </div>
+    )
   }
 }
 
-export default connect(mapState)(UserHome)
-
-/**
- * PROP TYPES
- */
-UserHome.propTypes = {
-  email: PropTypes.string
+const mapStateToProps = state => {
+  return {
+    teas: state.teas.allTeas,
+    user: state.user
+  }
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getAllTeas: () => dispatch(fetchTeas())
+  }
+}
+
+const UserHomeContainer = connect(mapStateToProps, mapDispatchToProps)(UserHome)
+
+export default UserHomeContainer

@@ -12,11 +12,10 @@ class AllOrders extends React.Component {
     const orders = this.props.orders
     return (
       <div>
-        <h1>ALL ORDERS FOR SINGLE USER!</h1>
         {!orders.length ? (
-          <div>Your order history is empty</div>
+          <div id="orderHistoryEmpty">Your order history is empty</div>
         ) : (
-          <div>
+          <div id="orderHistorySingleOrder">
             {orders.map(order => {
               return (
                 <div key={order.id}>
@@ -35,7 +34,7 @@ class AllOrders extends React.Component {
                           <div key={tea.id}>
                             <h3>{tea.name}</h3>
                             <span>
-                              {tea.flavor} {tea.price}{' '}
+                              {tea.flavor} {tea.price}
                               {tea.order_product.quantity}
                             </span>
                             <img
