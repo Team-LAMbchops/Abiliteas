@@ -203,6 +203,7 @@
 #singleTeaInfo {
   padding-left: 40px;
 }
+
 #singleTeaName {
   font-size: 80px;
   line-height: 60px;
@@ -248,6 +249,64 @@
   flex-direction: column;
 }
 
+
+/* User Homepage */
+
+#userWelcomePage {
+  margin-top: 75px;
+}
+
+#userNameWelcome {
+  padding-top: 150px;
+  font-size: 60px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* User Profile Page */
+
+#userProfilePage {
+  display: flex;
+  padding-top: 80px;
+  justify-content: space-evenly;
+}
+
+#userInformation {
+  padding-top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#userPageOrderHistory {
+  padding-top: 100px;
+}
+
+#scrollOrders {
+  height: 500px;
+  width: 800px;
+  overflow-y: scroll;
+}
+
+#userPageName {
+  padding-top: 20px;
+  font-size: 40px;
+  line-height: 30px;
+}
+
+#userPageEmail {
+  font-size: 20px;
+  font-style: italic;
+  padding-bottom: 20px;
+}
+
+/* Order History Page */
+.orderHistoryEmpty {
+  font-size: 20px;
+  font-style: italic;
+=======
 .entirecheckout {
   margin-top: 70px;
   display: flex;
