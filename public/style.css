@@ -478,8 +478,8 @@ input:focus {
 .orderHistoryEmpty {
   font-size: 20px;
   font-style: italic;
-  }
-  
+}
+
 .entirecheckout {
   margin-top: 70px;
   display: flex;
@@ -493,4 +493,44 @@ input:focus {
   margin-top: 50px;
   display: flex;
   flex-direction: column;
+}
+
+/*Checkout Form*/
+#checkoutform_wrapper {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+}
+#checkoutform_left {
+  padding-right: 80px;
+  padding-left: 50px;
+  border-right: solid;
+  border-right-color: black;
+  border-width: 1px;
+}
+
+#checkoutform_right {
+  padding-left: 20px;
+  flex-basis: 40%;
+}
+
+#ordersum {
+  border-top: solid;
+  border-right-color: gray;
+  border-width: 1px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+
+#orderTotal {
+  margin-bottom: 10px;
+}
+.chitem {
+  display: flex;
+  flex-direction: row;
+  padding: 5px;
+}
+
+.checkoutqty {
+  margin-left: 5px;
 }

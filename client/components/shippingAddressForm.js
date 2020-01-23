@@ -46,6 +46,7 @@ class ShippingAddressForm extends React.Component {
           <form onSubmit={this.handleSubmit}>
             First Name:
             <input
+              className="input_field"
               type="text"
               name="firstName"
               onChange={this.handleChange}
@@ -53,6 +54,7 @@ class ShippingAddressForm extends React.Component {
             />
             Last Name:
             <input
+              className="input_field"
               type="text"
               name="lastName"
               onChange={this.handleChange}
@@ -60,6 +62,7 @@ class ShippingAddressForm extends React.Component {
             />
             Address:
             <input
+              className="input_field"
               type="text"
               name="address"
               onChange={this.handleChange}
@@ -67,12 +70,13 @@ class ShippingAddressForm extends React.Component {
             />
             Email Address:
             <input
+              className="input_field"
               type="text"
               name="emailAddress"
               onChange={this.handleChange}
               value={this.state.emailAddress}
             />
-            <button type="submit" onClick={this.handleSubmit}>
+            <button id="input_submit" type="submit" onClick={this.handleSubmit}>
               Submit
             </button>
           </form>

@@ -15,26 +15,36 @@ class CheckoutPage extends React.Component {
     const qty = this.props.cart.qty
     const total = this.props.cart.total
     return (
-      <div className="entirecheckout">
-        <h1>Checkout</h1>
-        <h2>Order Summary:</h2>
-        {items.map(item => {
-          return (
-            <div key={item.id}>
-              <h3>{item.name}</h3>
-              <img src={item.imageUrl} width={100} height={100} mode="fit" />
-              Quantity: {qty[item.id]}
+      <div>
+        <header id="center">
+          <img src="/pagelogo.png" width={150} />
+        </header>
+
+        <div id="checkoutform_wrapper">
+          <div id="checkoutform_left">
+            <h1>Checkout</h1>
+            <h2 id="ordersum">Order Summary:</h2>
+            {items.map(item => {
+              return (
+                <div key={item.id} className="chitem">
+                  <h3 className="pName">{item.name}</h3>
+                  <div className="checkoutqty"> x {qty[item.id]}</div>
+                </div>
+              )
+            })}
+          </div>
+
+          <div id="checkoutform_right">
+            <div id="payment">
+              <h2>Order Total: ${total}</h2>
+              <h3>Payment:</h3>
+              <MyStoreCheckout />
             </div>
-          )
-        })}
-        <h3>Order Total: ${total}</h3>
-        <div>
-          <h2>Payment:</h2>
-          <MyStoreCheckout />
-          <div />
-          <div />
+            <div id="shipping">
+              <ShippingAddressForm />
+            </div>
+          </div>
         </div>
-        <ShippingAddressForm />
       </div>
     )
   }

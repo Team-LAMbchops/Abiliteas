@@ -47,20 +47,20 @@ class Cart extends React.Component {
                       </div>
                       <div className="quantity">
                         <button
-                          type="button"
                           className="minus-btn"
+                          type="button"
                           onClick={() =>
-                            this.props.update(item.id, orderId, 'increment')
+                            this.props.update(item.id, orderId, 'decrement')
                           }
                         >
                           -
                         </button>
                         Qty: {qty[item.id]}
                         <button
-                          className="plus-btn"
                           type="button"
+                          className="plus-btn"
                           onClick={() =>
-                            this.props.update(item.id, orderId, 'decrement')
+                            this.props.update(item.id, orderId, 'increment')
                           }
                         >
                           +
