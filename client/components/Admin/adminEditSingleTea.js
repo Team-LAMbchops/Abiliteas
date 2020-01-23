@@ -40,6 +40,9 @@ class AdminEditTea extends React.Component {
   render() {
     return (
       <div>
+        <header id="center">
+          <img src="/pagelogo.png" width={150} />
+        </header>
         <h1>Admin Edit Tea : {this.state.name}</h1>
         <Link to="/admin/teas">Admin All Teas</Link>
 

@@ -14,7 +14,9 @@ class AdminAllUsers extends React.Component {
     return (
       <div>
         <h1>Admin All Users</h1>
-
+        <header id="center">
+          <img src="/pagelogo.png" width={150} />
+        </header>
         {users.map(user => {
           return (
             <div key={user.id}>

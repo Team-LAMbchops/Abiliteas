@@ -43,6 +43,9 @@ class AdminAddTea extends React.Component {
   render() {
     return (
       <div>
+        <header id="center">
+          <img src="/pagelogo.png" width={150} />
+        </header>
         <h1>Admin Add Tea</h1>
         <Link to="/admin/teas">Admin All Teas</Link>
 
