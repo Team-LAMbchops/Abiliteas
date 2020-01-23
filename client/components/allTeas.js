@@ -24,14 +24,14 @@ class AllTea extends React.Component {
         <section className="products">
           {teas.map(tea => {
             return (
-              <div key={tea.id}>
+              <div key={tea.id} className="parentProductCard">
                 <div className="product-card">
                   <div className="product-image">
                     <Link to={`/teas/${tea.id}`}>
                       <img
                         src={tea.imageUrl}
-                        width={200}
-                        height={200}
+                        width={300}
+                        height={300}
                         mode="fit"
                       />
                     </Link>
