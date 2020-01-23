@@ -72,6 +72,7 @@
   position: relative;
   top: 1px;
 }
+
 /* Nav bar */
 .navBackground {
   background-color: black;
@@ -183,4 +184,66 @@
   #form_left {
     display: none;
   }
+
+/* single tea page */
+.singleTea {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+}
+
+#singleTeaImage {
+  padding-right: 80px;
+  border-right: solid;
+  border-right-color: black;
+  border-width: 1px;
+}
+
+#singleTeaInfo {
+  padding-left: 40px;
+}
+#singleTeaName {
+  font-size: 80px;
+  line-height: 60px;
+}
+
+#singleTeaFlavor {
+  font-size: 30px;
+  font-style: italic;
+  padding-bottom: 30px;
+}
+
+#singleTeaDescription {
+  font-size: 14px;
+  font-style: bold;
+  line-height: 20px;
+  padding-bottom: 30px;
+}
+
+#singleTeaPrice {
+  display: flex;
+  font-size: 18px;
+  font-style: bold;
+  justify-content: space-between;
+  padding-bottom: 30px;
+}
+
+#brewInstructions {
+  border-top: solid;
+  border-top-width: 1px;
+  padding-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+}
+
+#brewleft {
+  display: flex;
+  flex-direction: column;
+}
+
+#brewright {
+  display: flex;
+  flex-direction: column;
+
 }
